@@ -1,0 +1,85 @@
+<header class="page-head">
+  <div>
+    <p class="eyebrow">Site bilgileri</p>
+    <h1>Ayarlar</h1>
+    <p class="page-head__lead">Buradaki bilgiler sitenin üst menüsünde, alt bilgisinde ve iletişim sayfasında görünür.</p>
+  </div>
+</header>
+
+<form action="/admin/ayarlar" method="post" enctype="multipart/form-data">
+  <input type="hidden" name="_csrf" value="<%= csrfToken %>">
+
+  <% Object.keys(groups).forEach(function (key) { %>
+    <fieldset class="card">
+      <legend class="card__legend"><%= groupLabels[key] || key %></legend>
+      <div class="form-grid">
+        <% groups[key].forEach(function (s) { %>
+
+          <% if (s.input_type === 'checkbox') { %>
+            <div class="field field--full">
+              <label class="check">
+                <input type="checkbox" id="<%= s.setting_key %>" name="<%= s.setting_key %>" value="1" <%= s.setting_value === '1' ? 'checked' : '' %>>
+                <%= s.label || s.setting_key %>
+              </label>
+              <% if (s.setting_key === 'show_prices') { %>
+                <p class="hint">
+                  Kapalıyken ürün kartlarında ve ürün sayfasında fiyat gösterilmez; sipariş
+                  butonları çalışmaya devam eder. Panelde fiyatlar her zaman görünür.
+                </p>
+              <% } %>
+            </div>
+
+          <% } else if (s.input_type === 'image') { %>
+            <div class="field field--full">
+              <label for="<%= s.setting_key %>_file"><%= s.label || s.setting_key %></label>
+              <div class="image-field">
+                <% if (hasImage(s.setting_value)) { %>
+                  <img class="image-field__preview" src="<%= imageSrc(s.setting_value) %>" alt="Mevcut <%= s.label %>" data-preview-target="<%= s.setting_key %>">
+                <% } else { %>
+                  <span class="image-field__preview image-field__preview--empty" aria-hidden="true" data-preview-target="<%= s.setting_key %>">Görsel yok</span>
+                <% } %>
+                <div class="image-field__controls">
+                  <input type="file" id="<%= s.setting_key %>_file" name="<%= s.setting_key %>_file"
+                         accept="image/jpeg,image/png,image/webp,image/gif,image/svg+xml"
+                         data-preview-for="<%= s.setting_key %>">
+                  <% if (hasImage(s.setting_value)) { %>
+                    <label class="check">
+                      <input type="checkbox" name="<%= s.setting_key %>_remove" value="1"> Kaldır
+                    </label>
+                  <% } %>
+                  <p class="hint">
+                    Şeffaf arka planlı PNG veya SVG önerilir. Yüklenmezse üst menüde site adı yazar.
+                  </p>
+                </div>
+              </div>
+            </div>
+
+          <% } else if (s.input_type === 'textarea') { %>
+            <div class="field field--full">
+              <label for="<%= s.setting_key %>"><%= s.label || s.setting_key %></label>
+              <textarea id="<%= s.setting_key %>" name="<%= s.setting_key %>" rows="3"><%= s.setting_value || '' %></textarea>
+              <% if (s.setting_key === 'map_embed') { %>
+                <p class="hint">Google Haritalar → Paylaş → Harita yerleştir → HTML'yi kopyala.</p>
+              <% } %>
+            </div>
+
+          <% } else { %>
+            <div class="field">
+              <label for="<%= s.setting_key %>"><%= s.label || s.setting_key %></label>
+              <input type="<%= s.input_type %>" id="<%= s.setting_key %>" name="<%= s.setting_key %>" value="<%= s.setting_value || '' %>">
+              <% if (s.setting_key === 'whatsapp_intl') { %>
+                <p class="hint">Sipariş butonları bu alanı kullanır. Başında 90, boşluksuz yazın (örn. 905424787605).</p>
+              <% } %>
+            </div>
+          <% } %>
+
+        <% }); %>
+      </div>
+    </fieldset>
+  <% }); %>
+
+  <div class="form-actions">
+    <button class="btn btn--primary" type="submit">Kaydet</button>
+    <a class="btn btn--ghost" href="/admin">Vazgeç</a>
+  </div>
+</form>

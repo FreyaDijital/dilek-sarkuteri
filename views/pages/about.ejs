@@ -1,0 +1,54 @@
+<%- include('../partials/page-hero', {
+  eyebrow: "Hikâyemiz · " + (settings.site_tagline || "1977'den beri"),
+  heading: "Suadiye'nin lezzet nöbetçisi",
+  lead: "Ayşe Çavuş Caddesi'nde yarım asra yaklaşan bir tezgâh, bir semtin hafızası.",
+  image: siteImage('peynir-tahtasi.jpg', { background: true }),
+}) %>
+
+<section class="section section--cream">
+  <div class="container split">
+    <div>
+      <p class="eyebrow" data-reveal="up">01 — Başlangıç</p>
+      <p class="lead" data-reveal="up">Dilek Şarküteri 1977'de, İstanbul'un bugünkü kalabalığından çok uzak bir Suadiye'de açıldı. Aradan geçen on yıllarda şehir değişti, sokaklar dönüştü, alışkanlıklar savruldu. Dükkân hep aynı yerde, aynı ciddiyetle kaldı.</p>
+      <p class="lead" data-reveal="up" data-reveal-delay="80">Tezgâhın arkasında Ali Yüce var. Tekstil dünyasından şarküteriye uzanan bir hayat hikâyesi — ama asıl anlamını burada, Suadiye'de bulmuş bir hikâye. Raflardaki peynirler, zeytinler, mezeler yalnızca birer gıda maddesi değil; bir semtin ve bir esnaflık ahlakının sessiz tanıkları.</p>
+      <%- include('../partials/stats') %>
+    </div>
+    <figure class="media" data-reveal="wipe">
+      <img src="<%= siteImage('peynir-tabagi.jpg') %>" alt="Dilek Şarküteri peynir tabağı">
+      <figcaption>Tezgâhın arkasında her sabah aynı heyecan.</figcaption>
+    </figure>
+  </div>
+</section>
+
+<%- include('../partials/sourcing', { sourcingEyebrow: '02 — Tedarik' }) %>
+
+<section class="section section--sand">
+  <div class="container split split--center">
+    <div data-reveal="left">
+      <p class="eyebrow">03 — Mutfak</p>
+      <h2 class="h2">Yüksel Bey ve Sami Usta'nın elinden</h2>
+      <p class="lead">Dükkânın asıl ruhu mutfağında. Yüksel Bey'in ve onun yetiştirdiği Sami Usta'nın ellerinden çıkan mezeler yıllardır müdavimlerin vazgeçilmezi — sabah hazırlanır, aynı gün tezgâha iner.</p>
+      <p class="lead" data-reveal-delay="80">Kadınbudu köfteden zeytinyağlılara, ev reçellerinden özenle seçilmiş peynirlere kadar buradaki her tabak bir Anadolu mutfağının zenginliğini taşıyor.</p>
+      <div class="btn-row">
+        <a class="btn btn--red" href="/urunler/meze">Mezeleri gör →</a>
+        <a class="btn btn--ghost" href="<%= waLink('Merhaba, sipariş vermek istiyorum.') %>" target="_blank" rel="noopener">WhatsApp'tan sipariş</a>
+      </div>
+    </div>
+    <div class="duo" data-reveal="scale">
+      <img src="<%= siteImage('meze-tabagi.jpg') %>" alt="Meze tabağı" loading="lazy">
+      <img src="<%= siteImage('patlican-salatasi.jpg') %>" alt="Patlıcan salatası" loading="lazy">
+    </div>
+  </div>
+</section>
+
+<section class="section section--cream section--tight">
+  <div class="container">
+    <p class="eyebrow" data-reveal="up">04 — Meselemiz</p>
+    <blockquote class="pull-quote" data-reveal="up" data-reveal-delay="80">
+      Gerçek esnaf, sadece satmaz; üretimi de ayakta tutar.
+    </blockquote>
+    <p class="lead lead--center" data-reveal="up" data-reveal-delay="160">Küçük üreticiden aldığımız her kilo, bir kooperatifin bir sonraki sezon da üretmesi demek. Yarım asırdır bu zinciri ayakta tutmaya çalışıyoruz.</p>
+  </div>
+</section>
+
+<%- include('../partials/visit', { visitEyebrow: '05 — Uğrayın' }) %>

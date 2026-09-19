@@ -1,0 +1,319 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<script src="./support.js"></script>
+</head>
+<body>
+<x-dc>
+<helmet>
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>Dilek Şarküteri — Suadiye · 1977'den beri</title>
+<link rel="preconnect" href="https://fonts.googleapis.com" />
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin="" />
+<link href="https://fonts.googleapis.com/css2?family=Newsreader:ital,opsz,wght@0,6..72,400;0,6..72,500;0,6..72,600;1,6..72,400&family=Schibsted+Grotesk:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet" />
+<style>
+  html { scroll-behavior: smooth; }
+  body { margin: 0; background: #F7F2E8; -webkit-font-smoothing: antialiased; }
+  * { box-sizing: border-box; }
+  a { color: #A3182B; text-decoration: none; }
+  a:hover { color: #7C1020; }
+  img { display: block; }
+  @keyframes dsMarquee { from { transform: translateX(0); } to { transform: translateX(-50%); } }
+  @keyframes dsBob { 0%, 100% { transform: translateY(0); opacity: .7; } 50% { transform: translateY(8px); opacity: 1; } }
+  ::selection { background: #A3182B; color: #F7F2E8; }
+</style>
+<script src="site.js"></script>
+</helmet>
+
+<div style="position:fixed;top:0;left:0;right:0;height:3px;z-index:60;pointer-events:none">
+  <div id="ds-progress" style="height:100%;width:0%;background:#A3182B"></div>
+</div>
+
+<nav id="ds-nav" data-overlay="1" style="position:fixed;top:0;left:0;right:0;z-index:50;display:flex;align-items:center;justify-content:space-between;gap:20px;padding:22px clamp(18px,5vw,56px);border-bottom:1px solid transparent;transition:background .35s ease,padding .35s ease,border-color .35s ease">
+  <a href="Ana-Sayfa.dc.html" data-navink="1" style="display:flex;align-items:center;gap:11px;color:#F7F2E8;transition:color .35s ease">
+    <span data-navmark="1" style="display:grid;place-items:center;width:44px;height:29px;border-radius:999px;border:1px solid rgba(247,242,232,.5);background:rgba(247,242,232,.15);font:500 10px/1 'JetBrains Mono',monospace;letter-spacing:.05em;color:#F7F2E8;transition:background .35s ease,border-color .35s ease">1977</span>
+    <span style="font:500 clamp(17px,1.5vw,21px)/1 'Newsreader',Georgia,serif;letter-spacing:.02em">Dilek Şarküteri</span>
+  </a>
+  <div style="display:flex;align-items:center;gap:clamp(13px,1.9vw,28px);flex-wrap:wrap;justify-content:flex-end">
+    <a href="Hakkimizda.dc.html" data-navink="1" data-current="0" style="font:500 13px/1 'Schibsted Grotesk',sans-serif;color:#F7F2E8;transition:color .35s ease">Hakkımızda</a>
+    <a href="Urunler.dc.html" data-navink="1" data-current="0" style="font:500 13px/1 'Schibsted Grotesk',sans-serif;color:#F7F2E8;transition:color .35s ease">Ürünler</a>
+    <a href="Tabaklar.dc.html" data-navink="1" data-current="0" style="font:500 13px/1 'Schibsted Grotesk',sans-serif;color:#F7F2E8;transition:color .35s ease">Tabaklar</a>
+    <a href="Iletisim.dc.html" data-navink="1" data-current="0" style="font:500 13px/1 'Schibsted Grotesk',sans-serif;color:#F7F2E8;transition:color .35s ease">İletişim</a>
+    <a href="https://wa.me/905424787605" target="_blank" rel="noopener" style="padding:10px 18px;border-radius:999px;background:#A3182B;color:#F7F2E8;font:600 13px/1 'Schibsted Grotesk',sans-serif" style-hover="background:#7C1020;color:#F7F2E8">Sipariş ver</a>
+  </div>
+</nav>
+
+<header style="position:relative;min-height:min(94vh,920px);display:flex;align-items:flex-end;overflow:hidden;background:#17120F">
+  <div data-parallax="0.07" style="position:absolute;inset:-9%;background-image:url('img/peynir-tahtasi.jpg');background-size:cover;background-position:center;will-change:transform"></div>
+  <div style="position:absolute;inset:0;background:linear-gradient(180deg,rgba(23,18,15,.74) 0%,rgba(23,18,15,.28) 40%,rgba(23,18,15,.9) 100%)"></div>
+  <div style="position:relative;width:100%;max-width:1280px;margin:0 auto;padding:140px clamp(20px,5vw,56px) clamp(54px,7vw,96px)">
+    <p data-reveal="up" style="margin:0 0 20px;font:500 11px/1 'JetBrains Mono',monospace;letter-spacing:.26em;text-transform:uppercase;color:#E8C88A">Suadiye · Kadıköy · 1977'den beri</p>
+    <h1 data-reveal="up" data-reveal-delay="90" style="margin:0;max-width:18ch;font:500 clamp(44px,8.2vw,112px)/0.95 'Newsreader',Georgia,serif;letter-spacing:-.02em;color:#F7F2E8;text-wrap:balance">Suadiye'nin lezzet nöbetçisi</h1>
+    <p data-reveal="up" data-reveal-delay="180" style="margin:26px 0 0;max-width:52ch;font:400 clamp(16px,1.35vw,20px)/1.62 'Schibsted Grotesk',sans-serif;color:rgba(247,242,232,.84)">Ayşe Çavuş Caddesi'nde yarım asra yaklaşan bir tezgâh. El yapımı mezeler, tek tek seçilmiş peynirler, güvenilir şarküteri.</p>
+    <div data-reveal="up" data-reveal-delay="260" style="display:flex;flex-wrap:wrap;gap:12px;margin-top:34px">
+      <a href="Urunler.dc.html" style="display:inline-flex;align-items:center;gap:10px;padding:16px 26px;border-radius:999px;background:#F7F2E8;color:#17120F;font:600 14px/1 'Schibsted Grotesk',sans-serif" style-hover="background:#E8C88A;color:#17120F">Ürünleri gör <span style="font-family:'JetBrains Mono',monospace">→</span></a>
+      <a href="https://wa.me/905424787605" target="_blank" rel="noopener" style="display:inline-flex;align-items:center;gap:10px;padding:16px 26px;border-radius:999px;border:1px solid rgba(247,242,232,.42);color:#F7F2E8;font:600 14px/1 'Schibsted Grotesk',sans-serif" style-hover="background:rgba(247,242,232,.13);color:#F7F2E8">WhatsApp'tan sipariş</a>
+    </div>
+  </div>
+  <div style="position:absolute;right:clamp(20px,5vw,56px);bottom:clamp(54px,7vw,96px);display:flex;flex-direction:column;align-items:center;gap:10px;animation:dsBob 2.6s ease-in-out infinite">
+    <span style="writing-mode:vertical-rl;font:500 10px/1 'JetBrains Mono',monospace;letter-spacing:.24em;text-transform:uppercase;color:rgba(247,242,232,.7)">Kaydır</span>
+    <span style="width:1px;height:52px;background:linear-gradient(180deg,rgba(247,242,232,.7),transparent)"></span>
+  </div>
+</header>
+
+<div style="background:#A3182B;color:#F7F2E8;padding:15px 0;overflow:hidden">
+  <div style="display:flex;width:max-content;animation:dsMarquee 36s linear infinite">
+    <div style="display:flex;align-items:center;gap:28px;padding-right:28px;font:500 12px/1 'JetBrains Mono',monospace;letter-spacing:.2em;text-transform:uppercase;white-space:nowrap">
+      <span>Meze</span><span style="opacity:.45">✦</span><span>Peynir</span><span style="opacity:.45">✦</span><span>Şarküteri</span><span style="opacity:.45">✦</span><span>Zeytinyağlılar</span><span style="opacity:.45">✦</span><span>Kadınbudu köfte</span><span style="opacity:.45">✦</span><span>Dolma</span><span style="opacity:.45">✦</span><span>Tarama</span><span style="opacity:.45">✦</span><span>Ev reçelleri</span><span style="opacity:.45">✦</span><span>Zeytin</span><span style="opacity:.45">✦</span><span>Kahvaltılık</span><span style="opacity:.45">✦</span>
+    </div>
+    <div style="display:flex;align-items:center;gap:28px;padding-right:28px;font:500 12px/1 'JetBrains Mono',monospace;letter-spacing:.2em;text-transform:uppercase;white-space:nowrap">
+      <span>Meze</span><span style="opacity:.45">✦</span><span>Peynir</span><span style="opacity:.45">✦</span><span>Şarküteri</span><span style="opacity:.45">✦</span><span>Zeytinyağlılar</span><span style="opacity:.45">✦</span><span>Kadınbudu köfte</span><span style="opacity:.45">✦</span><span>Dolma</span><span style="opacity:.45">✦</span><span>Tarama</span><span style="opacity:.45">✦</span><span>Ev reçelleri</span><span style="opacity:.45">✦</span><span>Zeytin</span><span style="opacity:.45">✦</span><span>Kahvaltılık</span><span style="opacity:.45">✦</span>
+    </div>
+  </div>
+</div>
+
+<section style="background:#F7F2E8;padding:clamp(72px,10vw,148px) clamp(20px,5vw,56px)">
+  <div style="max-width:1280px;margin:0 auto;display:grid;grid-template-columns:repeat(auto-fit,minmax(min(100%,320px),1fr));gap:clamp(32px,5vw,78px);align-items:start">
+    <div>
+      <p data-reveal="up" style="margin:0 0 22px;font:500 11px/1 'JetBrains Mono',monospace;letter-spacing:.26em;text-transform:uppercase;color:#A3182B">01 — Hikâyemiz</p>
+      <h2 data-reveal="up" data-reveal-delay="70" style="margin:0;font:500 clamp(30px,4.2vw,60px)/1.05 'Newsreader',Georgia,serif;letter-spacing:-.015em;color:#17120F;text-wrap:balance">Bir semtin hafızası, bir tezgâhın ardında</h2>
+      <p data-reveal="up" data-reveal-delay="140" style="margin:28px 0 0;font:400 clamp(16px,1.2vw,19px)/1.68 'Schibsted Grotesk',sans-serif;color:#4A423B;max-width:56ch">Dilek Şarküteri 1977'de, İstanbul'un bugünkü kalabalığından çok uzak bir Suadiye'de açıldı. Aradan geçen on yıllarda şehir değişti, sokaklar dönüştü, alışkanlıklar savruldu. Dükkân hep aynı yerde, aynı ciddiyetle kaldı.</p>
+      <p data-reveal="up" data-reveal-delay="200" style="margin:20px 0 0;font:400 clamp(16px,1.2vw,19px)/1.68 'Schibsted Grotesk',sans-serif;color:#4A423B;max-width:56ch">Raflardaki peynirler, zeytinler, mezeler yalnızca birer gıda maddesi değil; bir semtin ve bir esnaflık ahlakının sessiz tanıkları.</p>
+      <a data-reveal="up" data-reveal-delay="250" href="Hakkimizda.dc.html" style="display:inline-block;margin-top:30px;font:600 14px/1 'Schibsted Grotesk',sans-serif;border-bottom:1px solid #A3182B;padding-bottom:4px">Hikâyenin tamamı →</a>
+      <div data-reveal="up" data-reveal-delay="300" style="margin-top:38px;padding-top:28px;border-top:1px solid rgba(23,18,15,.14);display:grid;grid-template-columns:repeat(auto-fit,minmax(120px,1fr));gap:24px">
+        <div>
+          <p style="margin:0;font:500 clamp(28px,3.2vw,44px)/1 'Newsreader',Georgia,serif;color:#A3182B"><span data-count="1977">1977</span></p>
+          <p style="margin:8px 0 0;font:500 11px/1.4 'JetBrains Mono',monospace;letter-spacing:.14em;text-transform:uppercase;color:#6E645B">Kuruluş</p>
+        </div>
+        <div>
+          <p style="margin:0;font:500 clamp(28px,3.2vw,44px)/1 'Newsreader',Georgia,serif;color:#A3182B"><span data-count="1000" data-count-suffix="+">1000+</span></p>
+          <p style="margin:8px 0 0;font:500 11px/1.4 'JetBrains Mono',monospace;letter-spacing:.14em;text-transform:uppercase;color:#6E645B">Çeşit ürün</p>
+        </div>
+        <div>
+          <p style="margin:0;font:500 clamp(28px,3.2vw,44px)/1 'Newsreader',Georgia,serif;color:#A3182B"><span data-count="49">49</span></p>
+          <p style="margin:8px 0 0;font:500 11px/1.4 'JetBrains Mono',monospace;letter-spacing:.14em;text-transform:uppercase;color:#6E645B">Yıllık tezgâh</p>
+        </div>
+      </div>
+    </div>
+    <div data-reveal="wipe" style="position:relative;overflow:hidden;background:#EDE5D6">
+      <img src="img/peynir-tabagi.jpg" alt="Dilek Şarküteri peynir tabağı" style="width:100%;height:auto;object-fit:cover" />
+      <div style="position:absolute;left:0;bottom:0;right:0;padding:22px;background:linear-gradient(180deg,transparent,rgba(23,18,15,.85))">
+        <p style="margin:0;font:500 clamp(15px,1.1vw,18px)/1.5 'Newsreader',Georgia,serif;font-style:italic;color:#F7F2E8">Tezgâhın arkasında her sabah aynı heyecan.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section style="background:#F7F2E8;padding:0 clamp(20px,5vw,56px) clamp(72px,10vw,148px)">
+  <div style="max-width:1280px;margin:0 auto">
+    <div style="display:flex;flex-wrap:wrap;align-items:flex-end;justify-content:space-between;gap:22px;margin-bottom:clamp(30px,4vw,52px)">
+      <div>
+        <p data-reveal="up" style="margin:0 0 20px;font:500 11px/1 'JetBrains Mono',monospace;letter-spacing:.26em;text-transform:uppercase;color:#A3182B">02 — Üç ana başlık</p>
+        <h2 data-reveal="up" data-reveal-delay="70" style="margin:0;font:500 clamp(30px,4.2vw,60px)/1.05 'Newsreader',Georgia,serif;letter-spacing:-.015em;color:#17120F">Meze, peynir, şarküteri</h2>
+      </div>
+      <a data-reveal="up" data-reveal-delay="120" href="Urunler.dc.html" style="font:600 14px/1 'Schibsted Grotesk',sans-serif;border-bottom:1px solid #A3182B;padding-bottom:4px">Tüm ürünler →</a>
+    </div>
+    <div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(min(100%,288px),1fr));gap:clamp(14px,1.8vw,24px)">
+      <a data-reveal="up" href="Urunler.dc.html#meze" style="position:relative;display:block;aspect-ratio:3/4;overflow:hidden;background:#EDE5D6;color:#F7F2E8">
+        <img src="img/meze-tabagi.jpg" alt="Meze tabağı" style="position:absolute;inset:0;width:100%;height:100%;object-fit:cover" />
+        <span style="position:absolute;inset:0;background:linear-gradient(180deg,rgba(23,18,15,.04),rgba(23,18,15,.84))"></span>
+        <span style="position:absolute;left:24px;right:24px;bottom:24px;display:block">
+          <span style="display:block;font:500 11px/1 'JetBrains Mono',monospace;letter-spacing:.2em;text-transform:uppercase;color:#E8C88A">Mutfağımızdan</span>
+          <span style="display:block;margin-top:10px;font:500 clamp(26px,2.5vw,36px)/1 'Newsreader',Georgia,serif;color:#F7F2E8">Meze</span>
+          <span style="display:block;margin-top:10px;font:400 14px/1.55 'Schibsted Grotesk',sans-serif;color:rgba(247,242,232,.82)">Kadınbudu köfteden dolmaya, zeytinyağlılardan taramaya. Her gün mutfakta hazırlanıyor.</span>
+        </span>
+      </a>
+      <a data-reveal="up" data-reveal-delay="90" href="Urunler.dc.html#peynir" style="position:relative;display:block;aspect-ratio:3/4;overflow:hidden;background:#EDE5D6;color:#F7F2E8">
+        <img src="img/peynir-kutusu.jpg" alt="Peynir kutusu" style="position:absolute;inset:0;width:100%;height:100%;object-fit:cover" />
+        <span style="position:absolute;inset:0;background:linear-gradient(180deg,rgba(23,18,15,.04),rgba(23,18,15,.84))"></span>
+        <span style="position:absolute;left:24px;right:24px;bottom:24px;display:block">
+          <span style="display:block;font:500 11px/1 'JetBrains Mono',monospace;letter-spacing:.2em;text-transform:uppercase;color:#E8C88A">İzi sürülmüş</span>
+          <span style="display:block;margin-top:10px;font:500 clamp(26px,2.5vw,36px)/1 'Newsreader',Georgia,serif;color:#F7F2E8">Peynir</span>
+          <span style="display:block;margin-top:10px;font:400 14px/1.55 'Schibsted Grotesk',sans-serif;color:rgba(247,242,232,.82)">Obruk peynirinden küflüye, yerli kooperatiflerden ithal çeşitlere geniş bir yelpaze.</span>
+        </span>
+      </a>
+      <a data-reveal="up" data-reveal-delay="180" href="Urunler.dc.html#sarkuteri" style="position:relative;display:block;aspect-ratio:3/4;overflow:hidden;background:#EDE5D6;color:#F7F2E8">
+        <img src="img/sarkuteri-tabagi.jpg" alt="Şarküteri tabağı" style="position:absolute;inset:0;width:100%;height:100%;object-fit:cover" />
+        <span style="position:absolute;inset:0;background:linear-gradient(180deg,rgba(23,18,15,.04),rgba(23,18,15,.84))"></span>
+        <span style="position:absolute;left:24px;right:24px;bottom:24px;display:block">
+          <span style="display:block;font:500 11px/1 'JetBrains Mono',monospace;letter-spacing:.2em;text-transform:uppercase;color:#E8C88A">Tezgâhtan</span>
+          <span style="display:block;margin-top:10px;font:500 clamp(26px,2.5vw,36px)/1 'Newsreader',Georgia,serif;color:#F7F2E8">Şarküteri</span>
+          <span style="display:block;margin-top:10px;font:400 14px/1.55 'Schibsted Grotesk',sans-serif;color:rgba(247,242,232,.82)">Pastırma, füme et, salam, sucuk ve dilimlenmiş çeşitler — istediğiniz kalınlıkta.</span>
+        </span>
+      </a>
+    </div>
+  </div>
+</section>
+
+<section style="background:#17120F;color:#F7F2E8;padding:clamp(72px,10vw,148px) clamp(20px,5vw,56px)">
+  <div style="max-width:1000px;margin:0 auto;text-align:center">
+    <p data-reveal="up" style="margin:0 0 30px;font:500 11px/1 'JetBrains Mono',monospace;letter-spacing:.26em;text-transform:uppercase;color:#E8C88A">03 — Tedarik</p>
+    <blockquote data-reveal="scale" style="margin:0;font:500 clamp(32px,5.4vw,76px)/1.08 'Newsreader',Georgia,serif;font-style:italic;letter-spacing:-.02em;color:#F7F2E8;text-wrap:balance">“Sadece satmıyoruz.”</blockquote>
+    <p data-reveal="up" data-reveal-delay="140" style="margin:34px auto 0;max-width:62ch;font:400 clamp(16px,1.2vw,19px)/1.68 'Schibsted Grotesk',sans-serif;color:rgba(247,242,232,.78)">Rafa giren hiçbir ürün tesadüfen seçilmez. Peynirin nerede üretildiğinden, hayvanların hangi bitkilerle beslendiğine kadar iz sürülür. Karaman koyununun endemik bitkilerle beslendiği obruk peyniri de, farklı kooperatiflerden gelen ürünler de bu titizliğin sonucu.</p>
+    <p data-reveal="up" data-reveal-delay="210" style="margin:36px 0 0;font:500 11px/1 'JetBrains Mono',monospace;letter-spacing:.2em;text-transform:uppercase;color:#E8C88A">Ali Yüce — Dilek Şarküteri</p>
+  </div>
+</section>
+
+<section style="background:#EDE5D6;padding:clamp(72px,10vw,148px) 0;overflow:hidden">
+  <div style="max-width:1280px;margin:0 auto;padding:0 clamp(20px,5vw,56px)">
+    <p data-reveal="up" style="margin:0 0 20px;font:500 11px/1 'JetBrains Mono',monospace;letter-spacing:.26em;text-transform:uppercase;color:#A3182B">04 — Mutfağımızdan</p>
+    <h2 data-reveal="up" data-reveal-delay="70" style="margin:0 0 14px;font:500 clamp(30px,4.2vw,60px)/1.05 'Newsreader',Georgia,serif;letter-spacing:-.015em;color:#17120F">Sami Usta'nın elinden</h2>
+    <p data-reveal="up" data-reveal-delay="130" style="margin:0;max-width:56ch;font:400 clamp(16px,1.2vw,19px)/1.68 'Schibsted Grotesk',sans-serif;color:#4A423B">Dükkânın asıl ruhu mutfağında. Yüksel Bey ve onun yetiştirdiği Sami Usta'nın ellerinden çıkan mezeler yıllardır müdavimlerin dilinden düşmüyor.</p>
+  </div>
+  <div style="margin-top:clamp(32px,4vw,52px);display:flex;gap:clamp(12px,1.6vw,22px);overflow-x:auto;scroll-snap-type:x mandatory;padding:0 clamp(20px,5vw,56px) 16px">
+    <figure data-reveal="scale" style="margin:0;flex:0 0 clamp(248px,29vw,380px);scroll-snap-align:start">
+      <img src="img/patlican-salatasi.jpg" alt="Patlıcan salatası" style="width:100%;aspect-ratio:4/3;object-fit:cover;background:#F7F2E8" />
+      <figcaption style="margin-top:14px;display:flex;justify-content:space-between;gap:12px;align-items:baseline">
+        <span style="font:500 clamp(19px,1.5vw,23px)/1.2 'Newsreader',Georgia,serif;color:#17120F">Patlıcan Salatası</span>
+        <span style="font:500 10px/1 'JetBrains Mono',monospace;letter-spacing:.16em;text-transform:uppercase;color:#6E645B">Meze</span>
+      </figcaption>
+    </figure>
+    <figure data-reveal="scale" data-reveal-delay="70" style="margin:0;flex:0 0 clamp(248px,29vw,380px);scroll-snap-align:start">
+      <img src="img/havuc-tarator.jpg" alt="Havuç tarator" style="width:100%;aspect-ratio:4/3;object-fit:cover;background:#F7F2E8" />
+      <figcaption style="margin-top:14px;display:flex;justify-content:space-between;gap:12px;align-items:baseline">
+        <span style="font:500 clamp(19px,1.5vw,23px)/1.2 'Newsreader',Georgia,serif;color:#17120F">Havuç Tarator</span>
+        <span style="font:500 10px/1 'JetBrains Mono',monospace;letter-spacing:.16em;text-transform:uppercase;color:#6E645B">Meze</span>
+      </figcaption>
+    </figure>
+    <figure data-reveal="scale" data-reveal-delay="140" style="margin:0;flex:0 0 clamp(248px,29vw,380px);scroll-snap-align:start">
+      <img src="img/mucver.jpg" alt="Mücver" style="width:100%;aspect-ratio:4/3;object-fit:cover;background:#F7F2E8" />
+      <figcaption style="margin-top:14px;display:flex;justify-content:space-between;gap:12px;align-items:baseline">
+        <span style="font:500 clamp(19px,1.5vw,23px)/1.2 'Newsreader',Georgia,serif;color:#17120F">Mücver</span>
+        <span style="font:500 10px/1 'JetBrains Mono',monospace;letter-spacing:.16em;text-transform:uppercase;color:#6E645B">Meze</span>
+      </figcaption>
+    </figure>
+    <figure data-reveal="scale" data-reveal-delay="210" style="margin:0;flex:0 0 clamp(248px,29vw,380px);scroll-snap-align:start">
+      <img src="img/cig-kofte.jpg" alt="Çiğ köfte" style="width:100%;aspect-ratio:4/3;object-fit:cover;background:#F7F2E8" />
+      <figcaption style="margin-top:14px;display:flex;justify-content:space-between;gap:12px;align-items:baseline">
+        <span style="font:500 clamp(19px,1.5vw,23px)/1.2 'Newsreader',Georgia,serif;color:#17120F">Çiğ Köfte</span>
+        <span style="font:500 10px/1 'JetBrains Mono',monospace;letter-spacing:.16em;text-transform:uppercase;color:#6E645B">Meze</span>
+      </figcaption>
+    </figure>
+    <figure data-reveal="scale" data-reveal-delay="280" style="margin:0;flex:0 0 clamp(248px,29vw,380px);scroll-snap-align:start">
+      <img src="img/yesillik-mezesi.jpg" alt="Zeytinyağlı yeşillik mezesi" style="width:100%;aspect-ratio:4/3;object-fit:cover;background:#F7F2E8" />
+      <figcaption style="margin-top:14px;display:flex;justify-content:space-between;gap:12px;align-items:baseline">
+        <span style="font:500 clamp(19px,1.5vw,23px)/1.2 'Newsreader',Georgia,serif;color:#17120F">Zeytinyağlı Yeşillik</span>
+        <span style="font:500 10px/1 'JetBrains Mono',monospace;letter-spacing:.16em;text-transform:uppercase;color:#6E645B">Meze</span>
+      </figcaption>
+    </figure>
+    <figure data-reveal="scale" data-reveal-delay="350" style="margin:0;flex:0 0 clamp(248px,29vw,380px);scroll-snap-align:start">
+      <img src="img/salam-salatasi.jpg" alt="Salam salatası" style="width:100%;aspect-ratio:4/3;object-fit:cover;background:#F7F2E8" />
+      <figcaption style="margin-top:14px;display:flex;justify-content:space-between;gap:12px;align-items:baseline">
+        <span style="font:500 clamp(19px,1.5vw,23px)/1.2 'Newsreader',Georgia,serif;color:#17120F">Salam Salatası</span>
+        <span style="font:500 10px/1 'JetBrains Mono',monospace;letter-spacing:.16em;text-transform:uppercase;color:#6E645B">Meze</span>
+      </figcaption>
+    </figure>
+  </div>
+  <div style="max-width:1280px;margin:8px auto 0;padding:0 clamp(20px,5vw,56px)">
+    <a href="Urunler.dc.html#meze" style="font:600 14px/1 'Schibsted Grotesk',sans-serif;border-bottom:1px solid #A3182B;padding-bottom:4px">Tüm mezeler →</a>
+  </div>
+</section>
+
+<section style="background:#F7F2E8;padding:clamp(72px,10vw,148px) clamp(20px,5vw,56px)">
+  <div style="max-width:1280px;margin:0 auto;display:grid;grid-template-columns:repeat(auto-fit,minmax(min(100%,320px),1fr));gap:clamp(30px,4vw,64px);align-items:center">
+    <div data-reveal="left">
+      <p style="margin:0 0 20px;font:500 11px/1 'JetBrains Mono',monospace;letter-spacing:.26em;text-transform:uppercase;color:#A3182B">05 — Tabaklar & kutular</p>
+      <h2 style="margin:0;font:500 clamp(30px,4.2vw,60px)/1.05 'Newsreader',Georgia,serif;letter-spacing:-.015em;color:#17120F;text-wrap:balance">Misafiriniz varsa, tabağı biz hazırlayalım</h2>
+      <p style="margin:26px 0 0;max-width:52ch;font:400 clamp(16px,1.2vw,19px)/1.68 'Schibsted Grotesk',sans-serif;color:#4A423B">Peynir tahtası, şarküteri tabağı, bölmeli meze tabağı ve hediyeye uygun peynir kutuları. Kişi sayısını söylüyorsunuz, gerisini tezgâh düşünüyor.</p>
+      <div style="display:flex;flex-wrap:wrap;gap:12px;margin-top:32px">
+        <a href="Tabaklar.dc.html" style="display:inline-flex;align-items:center;gap:10px;padding:16px 26px;border-radius:999px;background:#A3182B;color:#F7F2E8;font:600 14px/1 'Schibsted Grotesk',sans-serif" style-hover="background:#7C1020;color:#F7F2E8">Tabakları gör →</a>
+        <a href="https://wa.me/905424787605" target="_blank" rel="noopener" style="display:inline-flex;align-items:center;gap:10px;padding:16px 26px;border-radius:999px;border:1px solid rgba(23,18,15,.22);color:#17120F;font:600 14px/1 'Schibsted Grotesk',sans-serif" style-hover="background:rgba(23,18,15,.06);color:#17120F">Sipariş için yaz</a>
+      </div>
+    </div>
+    <div data-reveal="scale" style="display:grid;grid-template-columns:1fr 1fr;gap:clamp(10px,1.4vw,18px)">
+      <img src="img/peynir-kutusu.jpg" alt="Peynir kutusu" style="width:100%;aspect-ratio:4/5;object-fit:cover;background:#EDE5D6" />
+      <img src="img/sandvic.jpg" alt="Dilek sandviç" style="width:100%;aspect-ratio:4/5;object-fit:cover;background:#EDE5D6;margin-top:clamp(18px,3vw,44px)" />
+    </div>
+  </div>
+</section>
+
+<section style="background:#EDE5D6;padding:clamp(72px,10vw,148px) clamp(20px,5vw,56px)">
+  <div style="max-width:1280px;margin:0 auto">
+    <p data-reveal="up" style="margin:0 0 20px;font:500 11px/1 'JetBrains Mono',monospace;letter-spacing:.26em;text-transform:uppercase;color:#A3182B">06 — Müdavimler</p>
+    <h2 data-reveal="up" data-reveal-delay="70" style="margin:0 0 clamp(32px,4vw,54px);font:500 clamp(30px,4.2vw,60px)/1.05 'Newsreader',Georgia,serif;letter-spacing:-.015em;color:#17120F">Yıllardır aynı şeyi söylüyorlar</h2>
+    <div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(min(100%,268px),1fr));gap:clamp(14px,1.8vw,22px)">
+      <figure data-reveal="up" style="margin:0;background:#F7F2E8;padding:clamp(24px,2.6vw,34px);display:flex;flex-direction:column;gap:18px;justify-content:space-between">
+        <blockquote style="margin:0;font:500 clamp(18px,1.5vw,23px)/1.45 'Newsreader',Georgia,serif;color:#17120F">“Kadınbudu köfte, balık tarama, dolma çeşitleri ve özellikle tatlıları çok güzeldir.”</blockquote>
+        <figcaption style="font:500 11px/1 'JetBrains Mono',monospace;letter-spacing:.14em;text-transform:uppercase;color:#6E645B">Uğur G.</figcaption>
+      </figure>
+      <figure data-reveal="up" data-reveal-delay="90" style="margin:0;background:#F7F2E8;padding:clamp(24px,2.6vw,34px);display:flex;flex-direction:column;gap:18px;justify-content:space-between">
+        <blockquote style="margin:0;font:500 clamp(18px,1.5vw,23px)/1.45 'Newsreader',Georgia,serif;color:#17120F">“Peynirleri ve reçelleri muhteşem. O kadar çok ikram var ki alışveriş yapmadan doyabilirsiniz.”</blockquote>
+        <figcaption style="font:500 11px/1 'JetBrains Mono',monospace;letter-spacing:.14em;text-transform:uppercase;color:#6E645B">Aykut Y.</figcaption>
+      </figure>
+      <figure data-reveal="up" data-reveal-delay="180" style="margin:0;background:#A3182B;padding:clamp(24px,2.6vw,34px);display:flex;flex-direction:column;gap:18px;justify-content:space-between">
+        <blockquote style="margin:0;font:500 clamp(18px,1.5vw,23px)/1.45 'Newsreader',Georgia,serif;color:#F7F2E8">“Benim yıllardır favorim midye dolması.”</blockquote>
+        <figcaption style="font:500 11px/1 'JetBrains Mono',monospace;letter-spacing:.14em;text-transform:uppercase;color:rgba(247,242,232,.75)">Melih T.</figcaption>
+      </figure>
+    </div>
+  </div>
+</section>
+
+<section style="position:relative;overflow:hidden;background:#17120F;color:#F7F2E8">
+  <div data-parallax="0.05" style="position:absolute;inset:-9%;background-image:url('img/sarkuteri-tabagi.jpg');background-size:cover;background-position:center;opacity:.34;will-change:transform"></div>
+  <div style="position:relative;max-width:1280px;margin:0 auto;padding:clamp(72px,10vw,148px) clamp(20px,5vw,56px);display:grid;grid-template-columns:repeat(auto-fit,minmax(min(100%,300px),1fr));gap:clamp(30px,4vw,64px);align-items:end">
+    <div data-reveal="up">
+      <p style="margin:0 0 20px;font:500 11px/1 'JetBrains Mono',monospace;letter-spacing:.26em;text-transform:uppercase;color:#E8C88A">07 — Uğrayın</p>
+      <h2 style="margin:0;font:500 clamp(30px,4.2vw,60px)/1.05 'Newsreader',Georgia,serif;letter-spacing:-.015em;color:#F7F2E8;text-wrap:balance">Suadiye, Ayşe Çavuş Caddesi No: 12/A</h2>
+      <p style="margin:24px 0 0;max-width:46ch;font:400 clamp(16px,1.2vw,19px)/1.68 'Schibsted Grotesk',sans-serif;color:rgba(247,242,232,.78)">Pazartesi–Cumartesi 08:00–21:00, Pazar 08:00–20:00. Tezgâhta ne olduğunu sormak için arayın, sipariş için WhatsApp'tan yazın.</p>
+      <a href="Iletisim.dc.html" style="display:inline-block;margin-top:30px;font:600 14px/1 'Schibsted Grotesk',sans-serif;color:#E8C88A;border-bottom:1px solid #E8C88A;padding-bottom:4px" style-hover="color:#F7F2E8">Yol tarifi ve iletişim →</a>
+    </div>
+    <div data-reveal="up" data-reveal-delay="120" style="display:grid;gap:2px">
+      <a href="tel:+902163732752" style="display:flex;justify-content:space-between;align-items:baseline;gap:16px;padding:20px 0;border-top:1px solid rgba(247,242,232,.2);color:#F7F2E8" style-hover="color:#E8C88A">
+        <span style="font:500 11px/1 'JetBrains Mono',monospace;letter-spacing:.16em;text-transform:uppercase;color:rgba(247,242,232,.6)">Dükkân</span>
+        <span style="font:500 clamp(19px,1.7vw,26px)/1 'Newsreader',Georgia,serif">0216 373 27 52</span>
+      </a>
+      <a href="tel:+905424787605" style="display:flex;justify-content:space-between;align-items:baseline;gap:16px;padding:20px 0;border-top:1px solid rgba(247,242,232,.2);color:#F7F2E8" style-hover="color:#E8C88A">
+        <span style="font:500 11px/1 'JetBrains Mono',monospace;letter-spacing:.16em;text-transform:uppercase;color:rgba(247,242,232,.6)">WhatsApp</span>
+        <span style="font:500 clamp(19px,1.7vw,26px)/1 'Newsreader',Georgia,serif">0542 478 76 05</span>
+      </a>
+      <a href="https://www.instagram.com/dilekmezesarkuteri" target="_blank" rel="noopener" style="display:flex;justify-content:space-between;align-items:baseline;gap:16px;padding:20px 0;border-top:1px solid rgba(247,242,232,.2);border-bottom:1px solid rgba(247,242,232,.2);color:#F7F2E8" style-hover="color:#E8C88A">
+        <span style="font:500 11px/1 'JetBrains Mono',monospace;letter-spacing:.16em;text-transform:uppercase;color:rgba(247,242,232,.6)">Instagram</span>
+        <span style="font:500 clamp(17px,1.5vw,23px)/1 'Newsreader',Georgia,serif">@dilekmezesarkuteri</span>
+      </a>
+    </div>
+  </div>
+</section>
+
+<footer style="background:#F7F2E8;color:#17120F;padding:clamp(52px,6vw,88px) clamp(20px,5vw,56px) 34px">
+  <div style="max-width:1280px;margin:0 auto">
+    <div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(min(100%,210px),1fr));gap:clamp(28px,3.5vw,56px)">
+      <div>
+        <p style="margin:0;font:500 clamp(24px,2.4vw,34px)/1 'Newsreader',Georgia,serif">Dilek Şarküteri</p>
+        <p style="margin:12px 0 0;font:500 11px/1.6 'JetBrains Mono',monospace;letter-spacing:.14em;text-transform:uppercase;color:#6E645B">Şarküteri & Meze<br />Suadiye · 1977'den beri</p>
+      </div>
+      <div>
+        <p style="margin:0 0 14px;font:500 11px/1 'JetBrains Mono',monospace;letter-spacing:.18em;text-transform:uppercase;color:#6E645B">Sayfalar</p>
+        <div style="display:grid;gap:9px">
+          <a href="Ana-Sayfa.dc.html" style="font:500 14px/1 'Schibsted Grotesk',sans-serif;color:#17120F" style-hover="color:#A3182B">Ana sayfa</a>
+          <a href="Hakkimizda.dc.html" style="font:500 14px/1 'Schibsted Grotesk',sans-serif;color:#17120F" style-hover="color:#A3182B">Hakkımızda</a>
+          <a href="Urunler.dc.html" style="font:500 14px/1 'Schibsted Grotesk',sans-serif;color:#17120F" style-hover="color:#A3182B">Ürünler</a>
+          <a href="Tabaklar.dc.html" style="font:500 14px/1 'Schibsted Grotesk',sans-serif;color:#17120F" style-hover="color:#A3182B">Tabaklar & kampanyalar</a>
+          <a href="Iletisim.dc.html" style="font:500 14px/1 'Schibsted Grotesk',sans-serif;color:#17120F" style-hover="color:#A3182B">İletişim</a>
+        </div>
+      </div>
+      <div>
+        <p style="margin:0 0 14px;font:500 11px/1 'JetBrains Mono',monospace;letter-spacing:.18em;text-transform:uppercase;color:#6E645B">Mağaza</p>
+        <p style="margin:0;font:400 14px/1.7 'Schibsted Grotesk',sans-serif;color:#4A423B">Suadiye Mah. Ayşe Çavuş Cad.<br />No: 12/A Kadıköy / İstanbul</p>
+        <p style="margin:12px 0 0;font:400 14px/1.7 'Schibsted Grotesk',sans-serif;color:#4A423B">Pzt–Cmt 08:00–21:00<br />Pazar 08:00–20:00</p>
+      </div>
+      <div>
+        <p style="margin:0 0 14px;font:500 11px/1 'JetBrains Mono',monospace;letter-spacing:.18em;text-transform:uppercase;color:#6E645B">İletişim</p>
+        <div style="display:grid;gap:9px">
+          <a href="tel:+902163732752" style="font:500 14px/1 'Schibsted Grotesk',sans-serif;color:#17120F" style-hover="color:#A3182B">0216 373 27 52</a>
+          <a href="tel:+905424787605" style="font:500 14px/1 'Schibsted Grotesk',sans-serif;color:#17120F" style-hover="color:#A3182B">0542 478 76 05</a>
+          <a href="mailto:dileksarkuteri@gmail.com" style="font:500 14px/1 'Schibsted Grotesk',sans-serif;color:#17120F" style-hover="color:#A3182B">dileksarkuteri@gmail.com</a>
+          <a href="https://www.instagram.com/dilekmezesarkuteri" target="_blank" rel="noopener" style="font:500 14px/1 'Schibsted Grotesk',sans-serif;color:#17120F" style-hover="color:#A3182B">@dilekmezesarkuteri</a>
+          <a href="https://www.instagram.com/dilek_sarkuteri_suadiye" target="_blank" rel="noopener" style="font:500 14px/1 'Schibsted Grotesk',sans-serif;color:#17120F" style-hover="color:#A3182B">@dilek_sarkuteri_suadiye</a>
+        </div>
+      </div>
+    </div>
+    <p style="margin:clamp(40px,5vw,64px) 0 0;padding-top:22px;border-top:1px solid rgba(23,18,15,.14);font:500 11px/1.6 'JetBrains Mono',monospace;letter-spacing:.1em;text-transform:uppercase;color:#6E645B">© 2026 Dilek Şarküteri · Tüm hakları saklıdır</p>
+  </div>
+</footer>
+
+</x-dc>
+<script type="text/x-dc" data-dc-script data-props="{}"></script>
+</body>
+</html>

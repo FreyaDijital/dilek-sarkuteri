@@ -1,0 +1,212 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<script src="./support.js"></script>
+</head>
+<body>
+<x-dc>
+<helmet>
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>Tabaklar & Kampanyalar — Dilek Şarküteri</title>
+<link rel="preconnect" href="https://fonts.googleapis.com" />
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin="" />
+<link href="https://fonts.googleapis.com/css2?family=Newsreader:ital,opsz,wght@0,6..72,400;0,6..72,500;0,6..72,600;1,6..72,400&family=Schibsted+Grotesk:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet" />
+<style>
+  html { scroll-behavior: smooth; }
+  body { margin: 0; background: #F7F2E8; -webkit-font-smoothing: antialiased; }
+  * { box-sizing: border-box; }
+  a { color: #A3182B; text-decoration: none; }
+  a:hover { color: #7C1020; }
+  img { display: block; }
+  ::selection { background: #A3182B; color: #F7F2E8; }
+</style>
+<script src="site.js"></script>
+</helmet>
+
+<div style="position:fixed;top:0;left:0;right:0;height:3px;z-index:60;pointer-events:none">
+  <div id="ds-progress" style="height:100%;width:0%;background:#A3182B"></div>
+</div>
+
+<nav id="ds-nav" data-overlay="0" style="position:fixed;top:0;left:0;right:0;z-index:50;display:flex;align-items:center;justify-content:space-between;gap:20px;padding:13px clamp(18px,5vw,56px);border-bottom:1px solid rgba(23,18,15,.11);background:rgba(247,242,232,.94);transition:background .35s ease,padding .35s ease,border-color .35s ease">
+  <a href="Ana-Sayfa.dc.html" data-navink="1" style="display:flex;align-items:center;gap:11px;color:#17120F">
+    <span data-navmark="1" style="display:grid;place-items:center;width:44px;height:29px;border-radius:999px;border:1px solid #A3182B;background:#A3182B;font:500 10px/1 'JetBrains Mono',monospace;color:#F7F2E8">1977</span>
+    <span style="font:500 clamp(17px,1.5vw,21px)/1 'Newsreader',Georgia,serif;letter-spacing:.01em">Dilek Şarküteri</span>
+  </a>
+  <div style="display:flex;align-items:center;gap:clamp(13px,1.9vw,28px);flex-wrap:wrap;justify-content:flex-end">
+    <a href="Hakkimizda.dc.html" data-navink="1" data-current="0" style="font:500 13px/1 'Schibsted Grotesk',sans-serif;color:#17120F">Hakkımızda</a>
+    <a href="Urunler.dc.html" data-navink="1" data-current="0" style="font:500 13px/1 'Schibsted Grotesk',sans-serif;color:#17120F">Ürünler</a>
+    <a href="Tabaklar.dc.html" data-navink="1" data-current="1" style="font:500 13px/1 'Schibsted Grotesk',sans-serif;color:#A3182B">Tabaklar</a>
+    <a href="Iletisim.dc.html" data-navink="1" data-current="0" style="font:500 13px/1 'Schibsted Grotesk',sans-serif;color:#17120F">İletişim</a>
+    <a href="https://wa.me/905424787605" target="_blank" rel="noopener" style="padding:10px 18px;border-radius:999px;background:#A3182B;color:#F7F2E8;font:600 13px/1 'Schibsted Grotesk',sans-serif" style-hover="background:#7C1020;color:#F7F2E8">Sipariş ver</a>
+  </div>
+</nav>
+
+<header style="background:#F7F2E8;padding:clamp(112px,13vw,182px) clamp(20px,5vw,56px) clamp(40px,5vw,64px)">
+  <div style="max-width:1280px;margin:0 auto">
+    <p style="margin:0 0 20px;font:500 11px/1 'JetBrains Mono',monospace;letter-spacing:.26em;text-transform:uppercase;color:#A3182B">Tabaklar & kampanyalar</p>
+    <h1 style="margin:0;max-width:24ch;font:500 clamp(38px,6.4vw,88px)/1.02 'Newsreader',Georgia,serif;letter-spacing:-.02em;color:#17120F;text-wrap:balance">Kişi sayısını söyleyin, gerisini tezgâh düşünsün</h1>
+    <p style="margin:28px 0 0;max-width:58ch;font:400 clamp(16px,1.3vw,20px)/1.62 'Schibsted Grotesk',sans-serif;color:#4A423B">Davet, kahvaltı ya da hediye — tabaklar sipariş üzerine hazırlanıyor. En az bir gün önceden haber vermeniz yeterli.</p>
+  </div>
+</header>
+
+<section style="background:#F7F2E8;padding:0 clamp(20px,5vw,56px) clamp(56px,7vw,104px)">
+  <div style="max-width:1280px;margin:0 auto;display:grid;gap:clamp(14px,1.8vw,26px)">
+    <article data-reveal="up" style="display:grid;grid-template-columns:repeat(auto-fit,minmax(min(100%,320px),1fr));background:#FFFDF8;border:1px solid rgba(23,18,15,.08)">
+      <img src="img/peynir-tahtasi.jpg" alt="Karışık peynir tahtası" style="width:100%;height:100%;min-height:260px;object-fit:cover;background:#EDE5D6" />
+      <div style="padding:clamp(26px,3vw,46px);display:flex;flex-direction:column;justify-content:center;gap:16px">
+        <p style="margin:0;font:500 11px/1 'JetBrains Mono',monospace;letter-spacing:.2em;text-transform:uppercase;color:#A3182B">Peynir</p>
+        <h2 style="margin:0;font:500 clamp(25px,2.8vw,40px)/1.14 'Newsreader',Georgia,serif;color:#17120F">Karışık Peynir Tahtası</h2>
+        <p style="margin:0;max-width:48ch;font:400 clamp(15px,1.15vw,18px)/1.66 'Schibsted Grotesk',sans-serif;color:#4A423B">Sekiz-on çeşit peynir, ceviz, taze incir ve nane ile ahşap tahta üzerinde. Küçük, orta ve büyük boy.</p>
+        <p style="margin:0;font:500 12px/1.6 'JetBrains Mono',monospace;letter-spacing:.1em;text-transform:uppercase;color:#6E645B">4–6 kişi · 8–12 kişi · 15+ kişi</p>
+        <a href="https://wa.me/905424787605?text=Merhaba,%20kar%C4%B1%C5%9F%C4%B1k%20peynir%20tahtas%C4%B1%20sipari%C5%9F%20etmek%20istiyorum." target="_blank" rel="noopener" style="align-self:flex-start;margin-top:6px;padding:14px 24px;border-radius:999px;background:#A3182B;color:#F7F2E8;font:600 14px/1 'Schibsted Grotesk',sans-serif" style-hover="background:#7C1020;color:#F7F2E8">WhatsApp'tan sipariş ver</a>
+      </div>
+    </article>
+
+    <article data-reveal="up" style="display:grid;grid-template-columns:repeat(auto-fit,minmax(min(100%,320px),1fr));background:#FFFDF8;border:1px solid rgba(23,18,15,.08)">
+      <div style="padding:clamp(26px,3vw,46px);display:flex;flex-direction:column;justify-content:center;gap:16px;order:2">
+        <p style="margin:0;font:500 11px/1 'JetBrains Mono',monospace;letter-spacing:.2em;text-transform:uppercase;color:#A3182B">Şarküteri</p>
+        <h2 style="margin:0;font:500 clamp(25px,2.8vw,40px)/1.14 'Newsreader',Georgia,serif;color:#17120F">Karışık Şarküteri Tabağı</h2>
+        <p style="margin:0;max-width:48ch;font:400 clamp(15px,1.15vw,18px)/1.66 'Schibsted Grotesk',sans-serif;color:#4A423B">Pastırma, füme dana, roast beef, salam ve sucuk; turşu, kuru kayısı ve taze kekikle. Rakı ve şarap sofralarının tabağı.</p>
+        <p style="margin:0;font:500 12px/1.6 'JetBrains Mono',monospace;letter-spacing:.1em;text-transform:uppercase;color:#6E645B">4–6 kişi · 8–12 kişi · 15+ kişi</p>
+        <a href="https://wa.me/905424787605?text=Merhaba,%20kar%C4%B1%C5%9F%C4%B1k%20%C5%9Fark%C3%BCteri%20taba%C4%9F%C4%B1%20sipari%C5%9F%20etmek%20istiyorum." target="_blank" rel="noopener" style="align-self:flex-start;margin-top:6px;padding:14px 24px;border-radius:999px;background:#A3182B;color:#F7F2E8;font:600 14px/1 'Schibsted Grotesk',sans-serif" style-hover="background:#7C1020;color:#F7F2E8">WhatsApp'tan sipariş ver</a>
+      </div>
+      <img src="img/sarkuteri-tabagi.jpg" alt="Karışık şarküteri tabağı" style="width:100%;height:100%;min-height:260px;object-fit:cover;background:#EDE5D6" />
+    </article>
+
+    <div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(min(100%,290px),1fr));gap:clamp(14px,1.8vw,26px)">
+      <article data-reveal="up" style="background:#FFFDF8;border:1px solid rgba(23,18,15,.08)">
+        <img src="img/meze-tabagi.jpg" alt="Bölmeli meze tabağı" style="width:100%;aspect-ratio:4/3;object-fit:cover;background:#EDE5D6" />
+        <div style="padding:24px;display:flex;flex-direction:column;gap:14px">
+          <p style="margin:0;font:500 11px/1 'JetBrains Mono',monospace;letter-spacing:.2em;text-transform:uppercase;color:#A3182B">Meze</p>
+          <h2 style="margin:0;font:500 clamp(22px,1.9vw,28px)/1.2 'Newsreader',Georgia,serif;color:#17120F">Altı Bölmeli Meze Tabağı</h2>
+          <p style="margin:0;font:400 15px/1.64 'Schibsted Grotesk',sans-serif;color:#4A423B">Seçtiğiniz altı meze, ortada şarküteri güllerinin yer aldığı kapaklı tabakta. Taşımaya uygun.</p>
+          <a href="https://wa.me/905424787605?text=Merhaba,%20alt%C4%B1%20b%C3%B6lmeli%20meze%20taba%C4%9F%C4%B1%20sipari%C5%9F%20etmek%20istiyorum." target="_blank" rel="noopener" style="align-self:flex-start;font:600 14px/1 'Schibsted Grotesk',sans-serif;border-bottom:1px solid #A3182B;padding-bottom:4px">Sipariş ver →</a>
+        </div>
+      </article>
+      <article data-reveal="up" data-reveal-delay="90" style="background:#FFFDF8;border:1px solid rgba(23,18,15,.08)">
+        <img src="img/peynir-kutusu.jpg" alt="Gurme peynir kutusu" style="width:100%;aspect-ratio:4/3;object-fit:cover;background:#EDE5D6" />
+        <div style="padding:24px;display:flex;flex-direction:column;gap:14px">
+          <p style="margin:0;font:500 11px/1 'JetBrains Mono',monospace;letter-spacing:.2em;text-transform:uppercase;color:#A3182B">Hediye</p>
+          <h2 style="margin:0;font:500 clamp(22px,1.9vw,28px)/1.2 'Newsreader',Georgia,serif;color:#17120F">Gurme Peynir Kutusu</h2>
+          <p style="margin:0;font:400 15px/1.64 'Schibsted Grotesk',sans-serif;color:#4A423B">Kraft kutuda cevizli, otlu ve olgunlaşmış peynirler; isterseniz şarap eşleştirmesiyle. Kurumsal hediye için uygun.</p>
+          <a href="https://wa.me/905424787605?text=Merhaba,%20gurme%20peynir%20kutusu%20hakk%C4%B1nda%20bilgi%20almak%20istiyorum." target="_blank" rel="noopener" style="align-self:flex-start;font:600 14px/1 'Schibsted Grotesk',sans-serif;border-bottom:1px solid #A3182B;padding-bottom:4px">Sipariş ver →</a>
+        </div>
+      </article>
+      <article data-reveal="up" data-reveal-delay="180" style="background:#FFFDF8;border:1px solid rgba(23,18,15,.08)">
+        <img src="img/sandvic.jpg" alt="Dilek sandviç" style="width:100%;aspect-ratio:4/3;object-fit:cover;background:#EDE5D6" />
+        <div style="padding:24px;display:flex;flex-direction:column;gap:14px">
+          <p style="margin:0;font:500 11px/1 'JetBrains Mono',monospace;letter-spacing:.2em;text-transform:uppercase;color:#A3182B">Günlük</p>
+          <h2 style="margin:0;font:500 clamp(22px,1.9vw,28px)/1.2 'Newsreader',Georgia,serif;color:#17120F">Sandviç & Kutu Servis</h2>
+          <p style="margin:0;font:400 15px/1.64 'Schibsted Grotesk',sans-serif;color:#4A423B">Toplantı ve etkinlikler için baget sandviç, kutu kahvaltı ve meze tabaklarından oluşan servis.</p>
+          <a href="https://wa.me/905424787605?text=Merhaba,%20toplant%C4%B1%20i%C3%A7in%20sandvi%C3%A7%20%2F%20kutu%20servis%20hakk%C4%B1nda%20bilgi%20almak%20istiyorum." target="_blank" rel="noopener" style="align-self:flex-start;font:600 14px/1 'Schibsted Grotesk',sans-serif;border-bottom:1px solid #A3182B;padding-bottom:4px">Teklif isteyin →</a>
+        </div>
+      </article>
+    </div>
+  </div>
+</section>
+
+<section style="background:#17120F;color:#F7F2E8;padding:clamp(56px,7vw,104px) clamp(20px,5vw,56px)">
+  <div style="max-width:1280px;margin:0 auto">
+    <p data-reveal="up" style="margin:0 0 20px;font:500 11px/1 'JetBrains Mono',monospace;letter-spacing:.26em;text-transform:uppercase;color:#E8C88A">Nasıl çalışıyor</p>
+    <h2 data-reveal="up" style="margin:0 0 clamp(32px,4vw,52px);font:500 clamp(26px,3.3vw,44px)/1.14 'Newsreader',Georgia,serif;letter-spacing:-.015em;color:#F7F2E8">Üç adımda hazır</h2>
+    <div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(min(100%,240px),1fr));gap:1px;background:rgba(247,242,232,.18)">
+      <div data-reveal="up" style="background:#17120F;padding:clamp(26px,3vw,38px)">
+        <p style="margin:0;font:500 clamp(30px,3.2vw,46px)/1 'Newsreader',Georgia,serif;color:#A3182B">01</p>
+        <p style="margin:16px 0 0;font:500 clamp(18px,1.5vw,22px)/1.3 'Newsreader',Georgia,serif;color:#F7F2E8">Yazın ya da arayın</p>
+        <p style="margin:10px 0 0;font:400 15px/1.64 'Schibsted Grotesk',sans-serif;color:rgba(247,242,232,.68)">Kişi sayısı, tarih ve tercih ettiğiniz çeşitleri iletin.</p>
+      </div>
+      <div data-reveal="up" data-reveal-delay="90" style="background:#17120F;padding:clamp(26px,3vw,38px)">
+        <p style="margin:0;font:500 clamp(30px,3.2vw,46px)/1 'Newsreader',Georgia,serif;color:#A3182B">02</p>
+        <p style="margin:16px 0 0;font:500 clamp(18px,1.5vw,22px)/1.3 'Newsreader',Georgia,serif;color:#F7F2E8">Tabağı birlikte kuralım</p>
+        <p style="margin:10px 0 0;font:400 15px/1.64 'Schibsted Grotesk',sans-serif;color:rgba(247,242,232,.68)">O gün tezgâhta ne varsa söyleriz; boyu ve içeriği beraber belirleriz.</p>
+      </div>
+      <div data-reveal="up" data-reveal-delay="180" style="background:#17120F;padding:clamp(26px,3vw,38px)">
+        <p style="margin:0;font:500 clamp(30px,3.2vw,46px)/1 'Newsreader',Georgia,serif;color:#A3182B">03</p>
+        <p style="margin:16px 0 0;font:500 clamp(18px,1.5vw,22px)/1.3 'Newsreader',Georgia,serif;color:#F7F2E8">Dükkândan teslim</p>
+        <p style="margin:10px 0 0;font:400 15px/1.64 'Schibsted Grotesk',sans-serif;color:rgba(247,242,232,.68)">Söylediğiniz saatte hazır olur. Suadiye çevresine teslim için sorun.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section style="background:#EDE5D6;padding:clamp(56px,7vw,104px) clamp(20px,5vw,56px)">
+  <div style="max-width:1280px;margin:0 auto">
+    <p data-reveal="up" style="margin:0 0 20px;font:500 11px/1 'JetBrains Mono',monospace;letter-spacing:.26em;text-transform:uppercase;color:#A3182B">Kampanyalar</p>
+    <h2 data-reveal="up" style="margin:0 0 20px;font:500 clamp(26px,3.3vw,44px)/1.14 'Newsreader',Georgia,serif;letter-spacing:-.015em;color:#17120F">Dönemsel fırsatlar</h2>
+    <p data-reveal="up" style="margin:0 0 clamp(30px,3.6vw,48px);max-width:56ch;font:400 clamp(16px,1.2vw,19px)/1.68 'Schibsted Grotesk',sans-serif;color:#4A423B">Kampanyalar mevsime ve özel günlere göre değişiyor. Güncel duyurular Instagram hesaplarımızdan ve bu sayfadan paylaşılıyor.</p>
+    <div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(min(100%,280px),1fr));gap:clamp(14px,1.8vw,22px)">
+      <div data-reveal="up" style="background:#F7F2E8;padding:clamp(26px,3vw,36px);display:flex;flex-direction:column;gap:14px;border-top:3px solid #A3182B">
+        <p style="margin:0;font:500 11px/1 'JetBrains Mono',monospace;letter-spacing:.18em;text-transform:uppercase;color:#6E645B">Hafta sonu</p>
+        <p style="margin:0;font:500 clamp(21px,1.9vw,27px)/1.24 'Newsreader',Georgia,serif;color:#17120F">Kahvaltı sepeti</p>
+        <p style="margin:0;font:400 15px/1.64 'Schibsted Grotesk',sans-serif;color:#4A423B">Peynir, zeytin, reçel ve tereyağından oluşan hazır sepet. Cuma–Pazar tezgâhta.</p>
+      </div>
+      <div data-reveal="up" data-reveal-delay="90" style="background:#F7F2E8;padding:clamp(26px,3vw,36px);display:flex;flex-direction:column;gap:14px;border-top:3px solid #A3182B">
+        <p style="margin:0;font:500 11px/1 'JetBrains Mono',monospace;letter-spacing:.18em;text-transform:uppercase;color:#6E645B">Özel günler</p>
+        <p style="margin:0;font:500 clamp(21px,1.9vw,27px)/1.24 'Newsreader',Georgia,serif;color:#17120F">Bayram & yılbaşı kutuları</p>
+        <p style="margin:0;font:400 15px/1.64 'Schibsted Grotesk',sans-serif;color:#4A423B">Kurumsal ve bireysel hediye kutuları. Adet siparişlerinde önceden haber vermeniz yeterli.</p>
+      </div>
+      <div data-reveal="up" data-reveal-delay="180" style="background:#F7F2E8;padding:clamp(26px,3vw,36px);display:flex;flex-direction:column;gap:14px;border-top:3px solid #A3182B">
+        <p style="margin:0;font:500 11px/1 'JetBrains Mono',monospace;letter-spacing:.18em;text-transform:uppercase;color:#6E645B">Yeni</p>
+        <p style="margin:0;font:500 clamp(21px,1.9vw,27px)/1.24 'Newsreader',Georgia,serif;color:#17120F">Şaşkınbakkal şubesi</p>
+        <p style="margin:0;font:400 15px/1.64 'Schibsted Grotesk',sans-serif;color:#4A423B">Suadiye merkez şube olarak kalıyor; Şaşkınbakkal'da yeni bir dükkân yolda. Açılış duyurusu için takipte kalın.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section style="background:#A3182B;color:#F7F2E8;padding:clamp(56px,7vw,100px) clamp(20px,5vw,56px)">
+  <div style="max-width:1280px;margin:0 auto;display:flex;flex-wrap:wrap;gap:28px;align-items:center;justify-content:space-between">
+    <div>
+      <h2 style="margin:0;max-width:26ch;font:500 clamp(26px,3.3vw,44px)/1.12 'Newsreader',Georgia,serif;color:#F7F2E8;text-wrap:balance">Tabağınızı bugün konuşalım</h2>
+      <p style="margin:16px 0 0;max-width:50ch;font:400 clamp(15px,1.15vw,18px)/1.62 'Schibsted Grotesk',sans-serif;color:rgba(247,242,232,.85)">Fiyatlar kişi sayısına ve seçilen çeşitlere göre belirleniyor. Yazın, aynı gün dönüş yapıyoruz.</p>
+    </div>
+    <div style="display:flex;flex-wrap:wrap;gap:12px">
+      <a href="https://wa.me/905424787605" target="_blank" rel="noopener" style="display:inline-flex;align-items:center;padding:16px 26px;border-radius:999px;background:#F7F2E8;color:#A3182B;font:600 14px/1 'Schibsted Grotesk',sans-serif" style-hover="background:#E8C88A;color:#7C1020">WhatsApp: 0542 478 76 05</a>
+      <a href="tel:+902163732752" style="display:inline-flex;align-items:center;padding:16px 26px;border-radius:999px;border:1px solid rgba(247,242,232,.5);color:#F7F2E8;font:600 14px/1 'Schibsted Grotesk',sans-serif" style-hover="background:rgba(247,242,232,.14);color:#F7F2E8">0216 373 27 52</a>
+    </div>
+  </div>
+</section>
+
+<footer style="background:#F7F2E8;color:#17120F;padding:clamp(52px,6vw,88px) clamp(20px,5vw,56px) 34px">
+  <div style="max-width:1280px;margin:0 auto">
+    <div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(min(100%,210px),1fr));gap:clamp(28px,3.5vw,56px)">
+      <div>
+        <p style="margin:0;font:500 clamp(24px,2.3vw,32px)/1 'Newsreader',Georgia,serif">Dilek Şarküteri</p>
+        <p style="margin:12px 0 0;font:500 11px/1.6 'JetBrains Mono',monospace;letter-spacing:.14em;text-transform:uppercase;color:#6E645B">Şarküteri & Meze<br />Suadiye · 1977'den beri</p>
+      </div>
+      <div>
+        <p style="margin:0 0 14px;font:500 11px/1 'JetBrains Mono',monospace;letter-spacing:.18em;text-transform:uppercase;color:#6E645B">Sayfalar</p>
+        <div style="display:grid;gap:9px">
+          <a href="Ana-Sayfa.dc.html" style="font:500 14px/1 'Schibsted Grotesk',sans-serif;color:#17120F" style-hover="color:#A3182B">Ana sayfa</a>
+          <a href="Hakkimizda.dc.html" style="font:500 14px/1 'Schibsted Grotesk',sans-serif;color:#17120F" style-hover="color:#A3182B">Hakkımızda</a>
+          <a href="Urunler.dc.html" style="font:500 14px/1 'Schibsted Grotesk',sans-serif;color:#17120F" style-hover="color:#A3182B">Ürünler</a>
+          <a href="Tabaklar.dc.html" style="font:500 14px/1 'Schibsted Grotesk',sans-serif;color:#17120F" style-hover="color:#A3182B">Tabaklar & kampanyalar</a>
+          <a href="Iletisim.dc.html" style="font:500 14px/1 'Schibsted Grotesk',sans-serif;color:#17120F" style-hover="color:#A3182B">İletişim</a>
+        </div>
+      </div>
+      <div>
+        <p style="margin:0 0 14px;font:500 11px/1 'JetBrains Mono',monospace;letter-spacing:.18em;text-transform:uppercase;color:#6E645B">Mağaza</p>
+        <p style="margin:0;font:400 14px/1.7 'Schibsted Grotesk',sans-serif;color:#4A423B">Suadiye Mah. Ayşe Çavuş Cad.<br />No: 12/A Kadıköy / İstanbul</p>
+        <p style="margin:12px 0 0;font:400 14px/1.7 'Schibsted Grotesk',sans-serif;color:#4A423B">Pzt–Cmt 08:00–21:00<br />Pazar 08:00–20:00</p>
+      </div>
+      <div>
+        <p style="margin:0 0 14px;font:500 11px/1 'JetBrains Mono',monospace;letter-spacing:.18em;text-transform:uppercase;color:#6E645B">İletişim</p>
+        <div style="display:grid;gap:9px">
+          <a href="tel:+902163732752" style="font:500 14px/1 'Schibsted Grotesk',sans-serif;color:#17120F" style-hover="color:#A3182B">0216 373 27 52</a>
+          <a href="tel:+905424787605" style="font:500 14px/1 'Schibsted Grotesk',sans-serif;color:#17120F" style-hover="color:#A3182B">0542 478 76 05</a>
+          <a href="mailto:dileksarkuteri@gmail.com" style="font:500 14px/1 'Schibsted Grotesk',sans-serif;color:#17120F" style-hover="color:#A3182B">dileksarkuteri@gmail.com</a>
+          <a href="https://www.instagram.com/dilekmezesarkuteri" target="_blank" rel="noopener" style="font:500 14px/1 'Schibsted Grotesk',sans-serif;color:#17120F" style-hover="color:#A3182B">@dilekmezesarkuteri</a>
+          <a href="https://www.instagram.com/dilek_sarkuteri_suadiye" target="_blank" rel="noopener" style="font:500 14px/1 'Schibsted Grotesk',sans-serif;color:#17120F" style-hover="color:#A3182B">@dilek_sarkuteri_suadiye</a>
+        </div>
+      </div>
+    </div>
+    <p style="margin:clamp(40px,5vw,64px) 0 0;padding-top:22px;border-top:1px solid rgba(23,18,15,.14);font:500 11px/1.6 'JetBrains Mono',monospace;letter-spacing:.1em;text-transform:uppercase;color:#6E645B">© 2026 Dilek Şarküteri · Tüm hakları saklıdır</p>
+  </div>
+</footer>
+
+</x-dc>
+<script type="text/x-dc" data-dc-script data-props="{}"></script>
+</body>
+</html>

@@ -1,0 +1,69 @@
+<%
+  // Ortak görsel alanı.
+  //   record   : mevcut kayıt (veya boş nesne)
+  //   gallery  : (opsiyonel) public/img'den seçilebilir görseller [{ file, value, label }]
+  //   suggested: (opsiyonel) ürün adıyla eşleşen dosya
+  const currentImage = record && record.image ? record.image : null;
+  const galleryList = typeof gallery !== 'undefined' && gallery ? gallery : [];
+  const match = typeof suggested !== 'undefined' ? suggested : null;
+  const currentIsGallery = typeof currentImage === 'string' && currentImage.indexOf('img/') === 0;
+%>
+<div class="field field--full">
+  <div class="image-field">
+    <% if (hasImage(currentImage)) { %>
+      <img class="image-field__preview" src="<%= imageSrc(currentImage) %>" alt="Mevcut görsel" data-preview-target="image">
+    <% } else { %>
+      <span class="image-field__preview image-field__preview--empty" aria-hidden="true" data-preview-target="image">Görsel yok</span>
+    <% } %>
+
+    <div class="image-field__controls">
+      <div class="field">
+        <label for="image">Bilgisayardan yükle</label>
+        <input type="file" id="image" name="image"
+               accept="image/jpeg,image/png,image/webp,image/gif"
+               data-preview-for="image">
+        <p class="hint">JPG, PNG, WEBP veya GIF. En fazla 5 MB. Yüklenen dosyalar sunucuda kalıcı klasöre yazılır.</p>
+      </div>
+
+      <% if (galleryList.length) { %>
+        <div class="field">
+          <label for="gallery_image">Ya da hazır fotoğraflardan seç</label>
+          <select id="gallery_image" name="gallery_image" data-gallery-for="image">
+            <option value="" data-src="">— Seçilmedi —</option>
+            <% if (match) { %>
+              <option value="<%= match.value %>" data-src="/img/<%= match.file %>"
+                      <%= currentImage === match.value ? 'selected' : '' %>>
+                ★ Önerilen — <%= match.file %>
+              </option>
+            <% } %>
+            <% galleryList.forEach(function (g) { %>
+              <% if (!match || g.file !== match.file) { %>
+                <option value="<%= g.value %>" data-src="/img/<%= g.file %>"
+                        <%= currentImage === g.value ? 'selected' : '' %>><%= g.file %></option>
+              <% } %>
+            <% }); %>
+          </select>
+          <p class="hint">
+            <code>public/img/</code> klasöründeki <%= galleryList.length %> fotoğraf.
+            Dosyayı <code>urun-adi.jpg</code> biçiminde koyarsanız ürünle aynı adı taşıyan dosya
+            listenin başında <strong>★ Önerilen</strong> olarak çıkar.
+          </p>
+        </div>
+      <% } %>
+
+      <% if (hasImage(currentImage)) { %>
+        <label class="check">
+          <input type="checkbox" name="remove_image" value="1" data-remove-for="image">
+          Görseli kaldır
+        </label>
+        <p class="hint">
+          Şu an kullanılan: <code><%= currentImage %></code>
+          <%= currentIsGallery ? '(public/img klasöründen)' : '(panelden yüklenmiş)' %>
+          <% if (!currentIsGallery) { %>
+            — değiştirirseniz eski dosya sunucudan silinir.
+          <% } %>
+        </p>
+      <% } %>
+    </div>
+  </div>
+</div>

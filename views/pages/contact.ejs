@@ -1,0 +1,81 @@
+<%- include('../partials/page-hero', {
+  eyebrow: 'Uğrayın',
+  heading: 'İletişim',
+  lead: [settings.hours_weekday, settings.hours_sunday].filter(Boolean).join(' · '),
+}) %>
+
+<section class="section section--cream section--tight">
+  <div class="container split">
+    <div class="contact-info" data-reveal="up">
+      <p class="eyebrow">Dükkânımız</p>
+      <% if (settings.address) { %>
+        <address class="contact-info__address"><%= settings.address %></address>
+      <% } %>
+      <% if (settings.hours_note) { %><p class="note note--alert"><%= settings.hours_note %></p><% } %>
+
+      <%- include('../partials/contact-rows', { rowsTheme: 'light' }) %>
+
+      <div class="btn-row">
+        <a class="btn btn--red" href="<%= waLink('Merhaba, sipariş vermek istiyorum.') %>" target="_blank" rel="noopener">WhatsApp'tan sipariş ver</a>
+      </div>
+    </div>
+
+    <div class="form-card" data-reveal="up" data-reveal-delay="100">
+      <h2 class="form-card__title">Bize yazın</h2>
+      <p class="form-card__intro">Siparişleriniz için WhatsApp daha hızlıdır. Diğer her şey için bu formu kullanabilirsiniz.</p>
+
+      <%- include('../partials/flash') %>
+
+      <% if (errors.length) { %>
+        <div class="form-errors" role="alert">
+          <ul>
+            <% errors.forEach(function (e) { %><li><%= e %></li><% }); %>
+          </ul>
+        </div>
+      <% } %>
+
+      <form class="form" action="/iletisim" method="post" novalidate>
+        <input type="hidden" name="_csrf" value="<%= csrfToken %>">
+
+        <%# Bot tuzağı: gizlidir, gerçek kullanıcı doldurmaz. %>
+        <div aria-hidden="true" hidden>
+          <label for="website">Web siteniz</label>
+          <input type="text" id="website" name="website" tabindex="-1" autocomplete="off">
+        </div>
+
+        <div class="field">
+          <label for="name">Adınız *</label>
+          <input type="text" id="name" name="name" value="<%= form.name %>" maxlength="100" required autocomplete="name">
+        </div>
+        <div class="form__row">
+          <div class="field">
+            <label for="phone">Telefon</label>
+            <input type="tel" id="phone" name="phone" value="<%= form.phone %>" maxlength="30" autocomplete="tel">
+          </div>
+          <div class="field">
+            <label for="email">E-posta</label>
+            <input type="email" id="email" name="email" value="<%= form.email %>" maxlength="150" autocomplete="email">
+          </div>
+        </div>
+        <p class="field__hint">Telefon veya e-postadan en az birini yazın.</p>
+        <div class="field">
+          <label for="subject">Konu</label>
+          <input type="text" id="subject" name="subject" value="<%= form.subject %>" maxlength="150">
+        </div>
+        <div class="field">
+          <label for="body">Mesajınız *</label>
+          <textarea id="body" name="body" rows="6" maxlength="5000" required><%= form.body %></textarea>
+        </div>
+        <button class="btn btn--red" type="submit">Gönder</button>
+      </form>
+    </div>
+  </div>
+</section>
+
+<% const mapSrc = mapEmbedSrc(settings.map_embed); %>
+<% if (mapSrc) { %>
+  <div class="map">
+    <iframe src="<%= mapSrc %>" title="Dükkân konumu" loading="lazy"
+            referrerpolicy="no-referrer-when-downgrade" allowfullscreen></iframe>
+  </div>
+<% } %>

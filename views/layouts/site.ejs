@@ -1,0 +1,27 @@
+<% const siteName = settings.site_title || 'Dilek Şarküteri'; %>
+<!DOCTYPE html>
+<html lang="tr">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title><%= typeof title !== 'undefined' && title ? title + ' | ' + siteName : siteName + ' — Suadiye · ' + (settings.site_tagline || "1977'den beri") %></title>
+  <meta name="description" content="<%= typeof description !== 'undefined' && description ? description : (settings.site_description || '') %>">
+  <meta name="theme-color" content="#17120F">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Newsreader:ital,opsz,wght@0,6..72,400;0,6..72,500;0,6..72,600;1,6..72,400;1,6..72,500&family=Schibsted+Grotesk:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500&display=swap">
+  <link rel="stylesheet" href="/css/style.css?v=<%= assetVersion %>">
+  <%# Animasyonla gizlenen öğeler yalnızca JS varsa gizlenir; site.js yüklenemezse geri açılır. %>
+  <script>document.documentElement.classList.add('js');setTimeout(function(){if(!window.dsReady)document.documentElement.classList.remove('js')},2500)</script>
+  <script src="/js/site.js?v=<%= assetVersion %>" defer></script>
+</head>
+<body>
+  <%- include('../partials/header') %>
+
+  <main id="icerik">
+    <%- body %>
+  </main>
+
+  <%- include('../partials/footer') %>
+</body>
+</html>

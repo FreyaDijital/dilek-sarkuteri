@@ -1,0 +1,27 @@
+<%# include('../partials/contact-rows', { rowsTheme: 'light' | 'dark' }) %>
+<div class="contact-rows<%= locals.rowsTheme === 'light' ? ' contact-rows--light' : '' %>">
+  <% if (settings.phone) { %>
+    <a class="contact-row" href="tel:<%= telLink(settings.phone) %>">
+      <span class="contact-row__label">Dükkân</span>
+      <span class="contact-row__value"><%= settings.phone %></span>
+    </a>
+  <% } %>
+  <% if (settings.whatsapp) { %>
+    <a class="contact-row" href="<%= waLink('Merhaba, bilgi almak istiyorum.') %>" target="_blank" rel="noopener">
+      <span class="contact-row__label">WhatsApp</span>
+      <span class="contact-row__value"><%= settings.whatsapp %></span>
+    </a>
+  <% } %>
+  <% if (settings.instagram_1) { %>
+    <a class="contact-row" href="https://www.instagram.com/<%= settings.instagram_1 %>" target="_blank" rel="noopener">
+      <span class="contact-row__label">Instagram</span>
+      <span class="contact-row__value">@<%= settings.instagram_1 %></span>
+    </a>
+  <% } %>
+  <% if (locals.rowsTheme === 'light' && settings.email) { %>
+    <a class="contact-row" href="mailto:<%= settings.email %>">
+      <span class="contact-row__label">E-posta</span>
+      <span class="contact-row__value"><%= settings.email %></span>
+    </a>
+  <% } %>
+</div>

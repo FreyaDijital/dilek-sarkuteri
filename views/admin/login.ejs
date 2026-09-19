@@ -1,0 +1,33 @@
+<div class="login">
+  <div class="login__brand">
+    <span class="brand__mark" aria-hidden="true">1977</span>
+    <span class="login__name"><%= settings.site_title || 'Dilek Şarküteri' %></span>
+  </div>
+
+  <div class="card login__card">
+    <h1 class="login__title">Yönetim girişi</h1>
+
+    <% if (error) { %>
+      <div class="flash flash--error" role="alert"><%= error %></div>
+    <% } %>
+
+    <form class="stack" action="/admin/giris" method="post">
+      <input type="hidden" name="_csrf" value="<%= csrfToken %>">
+      <input type="hidden" name="next" value="<%= next %>">
+
+      <div class="field">
+        <label for="username">Kullanıcı adı</label>
+        <input type="text" id="username" name="username" value="<%= username %>" autocomplete="username" required autofocus>
+      </div>
+
+      <div class="field">
+        <label for="password">Şifre</label>
+        <input type="password" id="password" name="password" autocomplete="current-password" required>
+      </div>
+
+      <button class="btn btn--primary btn--block" type="submit">Giriş yap</button>
+    </form>
+  </div>
+
+  <p class="login__back"><a href="/">&larr; Siteye dön</a></p>
+</div>

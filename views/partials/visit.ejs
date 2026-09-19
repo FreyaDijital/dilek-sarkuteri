@@ -1,0 +1,18 @@
+<%# include('../partials/visit', { visitEyebrow }) %>
+<section class="visit">
+  <div class="visit__bg" data-parallax="0.05" style="background-image:url('<%= siteImage('sarkuteri-tabagi.jpg', { background: true }) %>')"></div>
+  <div class="visit__inner">
+    <div data-reveal="up">
+      <p class="eyebrow eyebrow--gold"><%= locals.visitEyebrow || 'Uğrayın' %></p>
+      <h2 class="h2"><%= settings.address || 'Suadiye, Kadıköy' %></h2>
+      <p class="lead">
+        <%= [settings.hours_weekday, settings.hours_sunday].filter(Boolean).join(' · ') %>.
+        Tezgâhta ne olduğunu sormak için arayın, sipariş için WhatsApp'tan yazın.
+      </p>
+      <p class="more"><a class="link-arrow link-arrow--gold" href="/iletisim">Yol tarifi ve iletişim →</a></p>
+    </div>
+    <div data-reveal="up" data-reveal-delay="120">
+      <%- include('contact-rows', { rowsTheme: 'dark' }) %>
+    </div>
+  </div>
+</section>

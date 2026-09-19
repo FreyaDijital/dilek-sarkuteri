@@ -1,0 +1,53 @@
+<%- include('../partials/page-hero', {
+  crumbs: category
+    ? [['/', 'Ana Sayfa'], ['/urunler', 'Ürünler'], [null, category.name]]
+    : [['/', 'Ana Sayfa'], [null, 'Ürünler']],
+  heading: category ? category.name : 'Ürünler',
+  lead: category && category.description
+    ? category.description
+    : 'Meze, peynir ve şarküteri. Fiyat ve stok için arayın, sipariş için WhatsApp\'tan yazın.',
+}) %>
+
+<section class="section section--cream section--tight">
+  <div class="container">
+    <div class="toolbar">
+      <% if (categories.length) { %>
+        <nav aria-label="Kategoriler">
+          <ul class="chips">
+            <li><a class="chip" href="/urunler"<% if (!category) { %> aria-current="page"<% } %>>Tümü</a></li>
+            <% categories.forEach(function (c) { %>
+              <li>
+                <a class="chip" href="/urunler/<%= c.slug %>"<% if (category && category.id === c.id) { %> aria-current="page"<% } %>>
+                  <%= c.name %> <small><%= c.product_count %></small>
+                </a>
+              </li>
+            <% }); %>
+          </ul>
+        </nav>
+      <% } %>
+
+      <form class="search" action="/urunler" method="get" role="search">
+        <label class="sr-only" for="ara">Ürün ara</label>
+        <input type="search" id="ara" name="ara" value="<%= search %>" maxlength="100" placeholder="Ürün ara, örn. beyaz peynir">
+        <button class="btn btn--red btn--sm" type="submit">Ara</button>
+      </form>
+    </div>
+
+    <% if (search) { %>
+      <p class="result-note">"<%= search %>" için <%= products.length %> sonuç · <a href="/urunler">Aramayı temizle</a></p>
+    <% } %>
+
+    <% if (products.length) { %>
+      <div class="product-grid">
+        <% products.forEach(function (product) { %>
+          <%- include('../partials/product-card', { product }) %>
+        <% }); %>
+      </div>
+    <% } else { %>
+      <div class="empty">
+        <p><%= search ? 'Aradığınız ürün bulunamadı.' : 'Bu kategoride henüz ürün yok.' %></p>
+        <p>Tezgâhta ne olduğunu sormak için <a href="<%= waLink('Merhaba, bir ürün hakkında bilgi almak istiyorum.') %>" target="_blank" rel="noopener">WhatsApp'tan yazabilirsiniz</a>.</p>
+      </div>
+    <% } %>
+  </div>
+</section>

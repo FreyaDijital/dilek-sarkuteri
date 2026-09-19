@@ -1,0 +1,11 @@
+<% const marqueeItems = ['Meze', 'Peynir', 'Şarküteri', 'Zeytinyağlılar', 'Kadınbudu köfte', 'Dolma', 'Tarama', 'Ev reçelleri', 'Zeytin', 'Kahvaltılık']; %>
+<div class="marquee">
+  <p class="sr-only"><%= marqueeItems.join(', ') %></p>
+  <div class="marquee__track" aria-hidden="true">
+    <% [0, 1].forEach(function () { %>
+      <div class="marquee__group">
+        <% marqueeItems.forEach(function (item) { %><span><%= item %></span><span class="marquee__sep">✦</span><% }); %>
+      </div>
+    <% }); %>
+  </div>
+</div>

@@ -1,0 +1,19 @@
+node_modules/
+.env
+.env.local
+npm-debug.log*
+*.log
+
+# Yerel geliştirmede kullanılan yükleme klasörü
+uploads/
+public/uploads/
+
+# SQLite veritabanı dosyaları (WAL modu yanında -wal / -shm üretir)
+data/
+*.db
+*.db-wal
+*.db-shm
+
+.DS_Store
+.vscode/
+.idea/

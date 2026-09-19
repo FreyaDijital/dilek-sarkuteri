@@ -1,0 +1,61 @@
+<header class="page-head">
+  <div>
+    <p class="eyebrow">Genel bakış</p>
+    <h1>Panel</h1>
+  </div>
+  <div class="page-head__actions">
+    <a class="btn btn--ghost" href="/admin/kampanyalar/yeni">+ Kampanya</a>
+    <a class="btn btn--primary" href="/admin/urunler/yeni">+ Yeni ürün</a>
+  </div>
+</header>
+
+<div class="stats">
+  <a class="stat" href="/admin/urunler">
+    <span class="stat__label">Ürün</span>
+    <span class="stat__value"><%= stats.products %></span>
+    <span class="stat__link">Yönet →</span>
+  </a>
+  <a class="stat" href="/admin/kategoriler">
+    <span class="stat__label">Kategori</span>
+    <span class="stat__value"><%= stats.categories %></span>
+    <span class="stat__link">Yönet →</span>
+  </a>
+  <a class="stat" href="/admin/kampanyalar">
+    <span class="stat__label">Yayındaki kampanya</span>
+    <span class="stat__value"><%= stats.activeCampaigns %></span>
+    <span class="stat__link">Yönet →</span>
+  </a>
+  <a class="stat<%= stats.unreadMessages ? ' stat--alert' : '' %>" href="/admin/mesajlar?filtre=okunmamis">
+    <span class="stat__label">Okunmamış mesaj</span>
+    <span class="stat__value"><%= stats.unreadMessages %></span>
+    <span class="stat__link">Gör →</span>
+  </a>
+</div>
+
+<section class="card card--flush">
+  <div class="card__head">
+    <h2>Son mesajlar</h2>
+    <a class="link" href="/admin/mesajlar">Tümü →</a>
+  </div>
+  <% if (!latestMessages.length) { %>
+    <p class="empty">Henüz mesaj yok.</p>
+  <% } else { %>
+    <div class="table-wrap">
+      <table class="table">
+        <thead>
+          <tr><th>Tarih</th><th>Ad</th><th>Konu</th><th>Durum</th></tr>
+        </thead>
+        <tbody>
+          <% latestMessages.forEach(function (m) { %>
+            <tr<% if (!m.is_read) { %> class="is-unread"<% } %>>
+              <td class="nowrap muted"><%= formatDate(m.created_at) %></td>
+              <td><a href="/admin/mesajlar/<%= m.id %>"><%= m.name %></a></td>
+              <td><%= m.subject || excerpt(m.body, 50) %></td>
+              <td><span class="badge <%= m.is_read ? 'badge--muted' : 'badge--new' %>"><%= m.is_read ? 'Okundu' : 'Yeni' %></span></td>
+            </tr>
+          <% }); %>
+        </tbody>
+      </table>
+    </div>
+  <% } %>
+</section>

@@ -1,0 +1,113 @@
+<header class="page-head">
+  <div>
+    <p class="eyebrow">Katalog</p>
+    <h1>Ürünler</h1>
+  </div>
+  <div class="page-head__actions">
+    <a class="btn btn--primary" href="/admin/urunler/yeni">+ Yeni ürün</a>
+  </div>
+</header>
+
+<form class="filters card" action="/admin/urunler" method="get">
+  <div class="field">
+    <label for="kategori">Kategori</label>
+    <select id="kategori" name="kategori">
+      <option value="">Hepsi</option>
+      <% categories.forEach(function (c) { %>
+        <option value="<%= c.slug %>" <%= filter.categorySlug === c.slug ? 'selected' : '' %>><%= c.name %></option>
+      <% }); %>
+    </select>
+  </div>
+  <div class="field field--grow">
+    <label for="ara">Ara</label>
+    <input type="search" id="ara" name="ara" value="<%= filter.search %>" placeholder="Ürün adı veya kısa açıklama">
+  </div>
+  <div class="filters__actions">
+    <button class="btn btn--dark" type="submit">Filtrele</button>
+    <% if (filter.categorySlug || filter.search) { %><a class="btn btn--ghost" href="/admin/urunler">Temizle</a><% } %>
+  </div>
+</form>
+
+<section class="card card--flush">
+  <div class="card__head">
+    <h2><%= products.length %> ürün</h2>
+    <% if (!showPrices) { %>
+      <p class="card__note">
+        Fiyatlar sitede <strong>gizli</strong>. <a class="link" href="/admin/ayarlar#show_prices">Ayarlar</a>'dan açabilirsiniz.
+      </p>
+    <% } %>
+  </div>
+
+  <% if (!products.length) { %>
+    <p class="empty">Kayıt bulunamadı.</p>
+  <% } else { %>
+    <div class="table-wrap">
+      <table class="table">
+        <thead>
+          <tr>
+            <th class="num">Sıra</th><th>Ürün</th><th>Kategori</th>
+            <th>Fiyat</th><th>Durum</th><th class="actions-col"><span class="sr-only">İşlem</span></th>
+          </tr>
+        </thead>
+        <tbody>
+          <% products.forEach(function (p, i) { %>
+            <tr>
+              <td class="num">
+                <div class="reorder">
+                  <form class="inline-form" action="/admin/urunler/<%= p.id %>/tasi<%= listQuery %>" method="post">
+                    <input type="hidden" name="_csrf" value="<%= csrfToken %>">
+                    <input type="hidden" name="yon" value="up">
+                    <button class="btn-icon" type="submit" title="Yukarı taşı"
+                            aria-label="<%= p.name %> yukarı taşı" <%= i === 0 ? 'disabled' : '' %>>↑</button>
+                  </form>
+                  <span class="reorder__value"><%= p.sort_order %></span>
+                  <form class="inline-form" action="/admin/urunler/<%= p.id %>/tasi<%= listQuery %>" method="post">
+                    <input type="hidden" name="_csrf" value="<%= csrfToken %>">
+                    <input type="hidden" name="yon" value="down">
+                    <button class="btn-icon" type="submit" title="Aşağı taşı"
+                            aria-label="<%= p.name %> aşağı taşı" <%= i === products.length - 1 ? 'disabled' : '' %>>↓</button>
+                  </form>
+                </div>
+              </td>
+              <td>
+                <div class="item">
+                  <% if (hasImage(p.image)) { %>
+                    <img class="thumb" src="<%= imageSrc(p.image) %>" alt="">
+                  <% } else { %>
+                    <span class="thumb thumb--empty" aria-hidden="true"></span>
+                  <% } %>
+                  <a class="item__name" href="/admin/urunler/<%= p.id %>/duzenle"><%= p.name %></a>
+                </div>
+              </td>
+              <td><%= p.category_name || 'Kategorisiz' %></td>
+              <td class="nowrap mono"><%= formatPrice(p.price, p.unit) %></td>
+              <td class="badges">
+                <form class="inline-form" action="/admin/urunler/<%= p.id %>/durum<%= listQuery %>" method="post">
+                  <input type="hidden" name="_csrf" value="<%= csrfToken %>">
+                  <button class="badge badge--btn <%= p.is_active ? 'badge--ok' : 'badge--muted' %>" type="submit"
+                          title="<%= p.is_active ? 'Siteden gizle' : 'Sitede yayına al' %>">
+                    <%= p.is_active ? 'Aktif' : 'Pasif' %>
+                  </button>
+                </form>
+                <form class="inline-form" action="/admin/urunler/<%= p.id %>/one-cikar<%= listQuery %>" method="post">
+                  <input type="hidden" name="_csrf" value="<%= csrfToken %>">
+                  <button class="badge badge--btn <%= p.is_featured ? 'badge--gold' : 'badge--outline' %>" type="submit"
+                          title="<%= p.is_featured ? 'Öne çıkanlardan kaldır' : 'Ana sayfada öne çıkar' %>">
+                    <%= p.is_featured ? '★ Öne çıkan' : '☆ Öne çıkar' %>
+                  </button>
+                </form>
+              </td>
+              <td class="actions">
+                <a class="btn btn--ghost btn--sm" href="/admin/urunler/<%= p.id %>/duzenle">Düzenle</a>
+                <%- include('../partials/delete-button', {
+                  action: '/admin/urunler/' + p.id + listQuery,
+                  confirmText: p.name + ' silinecek. Onaylıyor musunuz?',
+                }) %>
+              </td>
+            </tr>
+          <% }); %>
+        </tbody>
+      </table>
+    </div>
+  <% } %>
+</section>

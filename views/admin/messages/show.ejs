@@ -1,0 +1,47 @@
+<header class="page-head">
+  <div>
+    <p class="eyebrow"><a href="/admin/mesajlar">Mesajlar</a></p>
+    <h1><%= message.subject || 'Mesaj' %></h1>
+    <p class="page-head__lead"><%= message.name %> · <%= formatDate(message.created_at) %></p>
+  </div>
+</header>
+
+<div class="message-layout">
+  <section class="card">
+    <h2 class="card__title">Mesaj</h2>
+    <p class="message-body"><%= message.body %></p>
+  </section>
+
+  <aside class="card">
+    <h2 class="card__title">Gönderen</h2>
+    <dl class="details">
+      <dt>Ad</dt><dd><%= message.name %></dd>
+      <dt>Telefon</dt>
+      <dd><% if (message.phone) { %><a href="tel:<%= telLink(message.phone) %>"><%= message.phone %></a><% } else { %>—<% } %></dd>
+      <dt>E-posta</dt>
+      <dd><% if (message.email) { %><a href="mailto:<%= message.email %>"><%= message.email %></a><% } else { %>—<% } %></dd>
+      <dt>Tarih</dt><dd><%= formatDate(message.created_at) %></dd>
+    </dl>
+
+    <div class="stack stack--sm">
+      <% if (message.phone) { %>
+        <%# Müşterinin numarasına yazar (dükkânın numarasına değil) %>
+        <a class="btn btn--primary btn--block" href="<%= whatsappLink(telLink(message.phone), 'Merhaba ' + message.name + ', mesajınız için teşekkürler.') %>" target="_blank" rel="noopener">WhatsApp ile yanıtla</a>
+      <% } %>
+      <% if (message.email) { %>
+        <a class="btn btn--ghost btn--block" href="mailto:<%= message.email %>?subject=<%= encodeURIComponent('Re: ' + (message.subject || 'Mesajınız')) %>">E-posta ile yanıtla</a>
+      <% } %>
+    </div>
+
+    <div class="card__foot">
+      <form class="inline-form" action="/admin/mesajlar/<%= message.id %>/okunmadi" method="post">
+        <input type="hidden" name="_csrf" value="<%= csrfToken %>">
+        <button class="btn btn--ghost btn--sm" type="submit">Okunmadı işaretle</button>
+      </form>
+      <%- include('../partials/delete-button', {
+        action: '/admin/mesajlar/' + message.id,
+        confirmText: 'Bu mesaj silinecek. Onaylıyor musunuz?',
+      }) %>
+    </div>
+  </aside>
+</div>

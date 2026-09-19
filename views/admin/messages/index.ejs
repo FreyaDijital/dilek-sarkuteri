@@ -1,0 +1,50 @@
+<header class="page-head">
+  <div>
+    <p class="eyebrow">İletişim formu</p>
+    <h1>Mesajlar</h1>
+  </div>
+</header>
+
+<nav class="tabs" aria-label="Mesaj filtresi">
+  <a class="tabs__item" href="/admin/mesajlar"<% if (!unreadOnly) { %> aria-current="page"<% } %>>Tümü</a>
+  <a class="tabs__item" href="/admin/mesajlar?filtre=okunmamis"<% if (unreadOnly) { %> aria-current="page"<% } %>>
+    Okunmamış <span class="tabs__count"><%= unreadCount %></span>
+  </a>
+</nav>
+
+<section class="card card--flush">
+  <% if (!messages.length) { %>
+    <p class="empty"><%= unreadOnly ? 'Okunmamış mesaj yok.' : 'Henüz mesaj yok.' %></p>
+  <% } else { %>
+    <div class="table-wrap">
+      <table class="table">
+        <thead>
+          <tr><th>Tarih</th><th>Gönderen</th><th>Konu</th><th>Durum</th><th class="actions-col"><span class="sr-only">İşlem</span></th></tr>
+        </thead>
+        <tbody>
+          <% messages.forEach(function (m) { %>
+            <tr<% if (!m.is_read) { %> class="is-unread"<% } %>>
+              <td class="nowrap muted"><%= formatDate(m.created_at) %></td>
+              <td>
+                <div class="stacked">
+                  <span class="item__name"><%= m.name %></span>
+                  <% if (m.phone) { %><a class="muted" href="tel:<%= telLink(m.phone) %>"><%= m.phone %></a><% } %>
+                  <% if (m.email) { %><a class="muted" href="mailto:<%= m.email %>"><%= m.email %></a><% } %>
+                </div>
+              </td>
+              <td><a href="/admin/mesajlar/<%= m.id %>"><%= m.subject || excerpt(m.body, 60) %></a></td>
+              <td><span class="badge <%= m.is_read ? 'badge--muted' : 'badge--new' %>"><%= m.is_read ? 'Okundu' : 'Yeni' %></span></td>
+              <td class="actions">
+                <a class="btn btn--ghost btn--sm" href="/admin/mesajlar/<%= m.id %>">Oku</a>
+                <%- include('../partials/delete-button', {
+                  action: '/admin/mesajlar/' + m.id,
+                  confirmText: 'Bu mesaj silinecek. Onaylıyor musunuz?',
+                }) %>
+              </td>
+            </tr>
+          <% }); %>
+        </tbody>
+      </table>
+    </div>
+  <% } %>
+</section>

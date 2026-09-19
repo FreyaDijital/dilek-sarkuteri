@@ -1,0 +1,187 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<script src="./support.js"></script>
+</head>
+<body>
+<x-dc>
+<helmet>
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>İletişim — Dilek Şarküteri</title>
+<link rel="preconnect" href="https://fonts.googleapis.com" />
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin="" />
+<link href="https://fonts.googleapis.com/css2?family=Newsreader:ital,opsz,wght@0,6..72,400;0,6..72,500;0,6..72,600;1,6..72,400&family=Schibsted+Grotesk:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet" />
+<style>
+  html { scroll-behavior: smooth; }
+  body { margin: 0; background: #F7F2E8; -webkit-font-smoothing: antialiased; }
+  * { box-sizing: border-box; }
+  a { color: #A3182B; text-decoration: none; }
+  a:hover { color: #7C1020; }
+  img { display: block; }
+  input, textarea { font-family: 'Schibsted Grotesk', sans-serif; }
+  input:focus, textarea:focus { outline: none; border-color: #A3182B; }
+  ::selection { background: #A3182B; color: #F7F2E8; }
+</style>
+<script src="site.js"></script>
+</helmet>
+
+<div style="position:fixed;top:0;left:0;right:0;height:3px;z-index:60;pointer-events:none">
+  <div id="ds-progress" style="height:100%;width:0%;background:#A3182B"></div>
+</div>
+
+<nav id="ds-nav" data-overlay="0" style="position:fixed;top:0;left:0;right:0;z-index:50;display:flex;align-items:center;justify-content:space-between;gap:20px;padding:13px clamp(18px,5vw,56px);border-bottom:1px solid rgba(23,18,15,.11);background:rgba(247,242,232,.94);transition:background .35s ease,padding .35s ease,border-color .35s ease">
+  <a href="Ana-Sayfa.dc.html" data-navink="1" style="display:flex;align-items:center;gap:11px;color:#17120F">
+    <span data-navmark="1" style="display:grid;place-items:center;width:44px;height:29px;border-radius:999px;border:1px solid #A3182B;background:#A3182B;font:500 10px/1 'JetBrains Mono',monospace;color:#F7F2E8">1977</span>
+    <span style="font:500 clamp(17px,1.5vw,21px)/1 'Newsreader',Georgia,serif;letter-spacing:.01em">Dilek Şarküteri</span>
+  </a>
+  <div style="display:flex;align-items:center;gap:clamp(13px,1.9vw,28px);flex-wrap:wrap;justify-content:flex-end">
+    <a href="Hakkimizda.dc.html" data-navink="1" data-current="0" style="font:500 13px/1 'Schibsted Grotesk',sans-serif;color:#17120F">Hakkımızda</a>
+    <a href="Urunler.dc.html" data-navink="1" data-current="0" style="font:500 13px/1 'Schibsted Grotesk',sans-serif;color:#17120F">Ürünler</a>
+    <a href="Tabaklar.dc.html" data-navink="1" data-current="0" style="font:500 13px/1 'Schibsted Grotesk',sans-serif;color:#17120F">Tabaklar</a>
+    <a href="Iletisim.dc.html" data-navink="1" data-current="1" style="font:500 13px/1 'Schibsted Grotesk',sans-serif;color:#A3182B">İletişim</a>
+    <a href="https://wa.me/905424787605" target="_blank" rel="noopener" style="padding:10px 18px;border-radius:999px;background:#A3182B;color:#F7F2E8;font:600 13px/1 'Schibsted Grotesk',sans-serif" style-hover="background:#7C1020;color:#F7F2E8">Sipariş ver</a>
+  </div>
+</nav>
+
+<header style="background:#F7F2E8;padding:clamp(112px,13vw,182px) clamp(20px,5vw,56px) clamp(40px,5vw,60px)">
+  <div style="max-width:1280px;margin:0 auto">
+    <p style="margin:0 0 20px;font:500 11px/1 'JetBrains Mono',monospace;letter-spacing:.26em;text-transform:uppercase;color:#A3182B">İletişim</p>
+    <h1 style="margin:0;max-width:22ch;font:500 clamp(38px,6.4vw,88px)/1.02 'Newsreader',Georgia,serif;letter-spacing:-.02em;color:#17120F;text-wrap:balance">Ayşe Çavuş Caddesi No: 12/A</h1>
+    <p style="margin:28px 0 0;max-width:56ch;font:400 clamp(16px,1.3vw,20px)/1.62 'Schibsted Grotesk',sans-serif;color:#4A423B">Suadiye'de, çarşının içinde. Tezgâhta ne olduğunu sormak için arayın; sipariş için WhatsApp'tan yazmanız yeterli.</p>
+  </div>
+</header>
+
+<section style="background:#F7F2E8;padding:0 clamp(20px,5vw,56px) clamp(56px,7vw,104px)">
+  <div style="max-width:1280px;margin:0 auto;display:grid;grid-template-columns:repeat(auto-fit,minmax(min(100%,300px),1fr));gap:clamp(24px,3vw,44px);align-items:start">
+    <div data-reveal="up" style="display:grid;gap:2px">
+      <div style="background:#EDE5D6;padding:clamp(24px,2.6vw,34px)">
+        <p style="margin:0 0 12px;font:500 11px/1 'JetBrains Mono',monospace;letter-spacing:.18em;text-transform:uppercase;color:#6E645B">Adres</p>
+        <p style="margin:0;font:500 clamp(19px,1.6vw,24px)/1.44 'Newsreader',Georgia,serif;color:#17120F">Suadiye Mah. Ayşe Çavuş Cad. No: 12/A<br />Kadıköy / İstanbul</p>
+        <a href="https://www.google.com/maps/search/?api=1&query=Dilek+%C5%9Eark%C3%BCteri+Suadiye+Ay%C5%9Fe+%C3%87avu%C5%9F+Caddesi+12%2FA+Kad%C4%B1k%C3%B6y" target="_blank" rel="noopener" style="display:inline-block;margin-top:16px;font:600 14px/1 'Schibsted Grotesk',sans-serif;border-bottom:1px solid #A3182B;padding-bottom:4px">Google Maps'te aç →</a>
+      </div>
+      <div style="background:#EDE5D6;padding:clamp(24px,2.6vw,34px)">
+        <p style="margin:0 0 12px;font:500 11px/1 'JetBrains Mono',monospace;letter-spacing:.18em;text-transform:uppercase;color:#6E645B">Çalışma saatleri</p>
+        <div style="display:grid;gap:10px">
+          <p style="margin:0;display:flex;justify-content:space-between;gap:16px;font:400 16px/1.4 'Schibsted Grotesk',sans-serif;color:#17120F"><span>Pazartesi – Cumartesi</span><span style="font-family:'JetBrains Mono',monospace;font-size:14px">08:00 – 21:00</span></p>
+          <p style="margin:0;display:flex;justify-content:space-between;gap:16px;font:400 16px/1.4 'Schibsted Grotesk',sans-serif;color:#17120F"><span>Pazar</span><span style="font-family:'JetBrains Mono',monospace;font-size:14px">08:00 – 20:00</span></p>
+        </div>
+      </div>
+      <div style="background:#EDE5D6;padding:clamp(24px,2.6vw,34px)">
+        <p style="margin:0 0 12px;font:500 11px/1 'JetBrains Mono',monospace;letter-spacing:.18em;text-transform:uppercase;color:#6E645B">Telefon & e-posta</p>
+        <div style="display:grid;gap:10px">
+          <a href="tel:+902163732752" style="font:500 clamp(17px,1.4vw,21px)/1.3 'Newsreader',Georgia,serif;color:#17120F" style-hover="color:#A3182B">0216 373 27 52 — dükkân</a>
+          <a href="https://wa.me/905424787605" target="_blank" rel="noopener" style="font:500 clamp(17px,1.4vw,21px)/1.3 'Newsreader',Georgia,serif;color:#17120F" style-hover="color:#A3182B">0542 478 76 05 — WhatsApp</a>
+          <a href="mailto:dileksarkuteri@gmail.com" style="font:500 clamp(17px,1.4vw,21px)/1.3 'Newsreader',Georgia,serif;color:#17120F" style-hover="color:#A3182B">dileksarkuteri@gmail.com</a>
+        </div>
+      </div>
+      <div style="background:#EDE5D6;padding:clamp(24px,2.6vw,34px)">
+        <p style="margin:0 0 12px;font:500 11px/1 'JetBrains Mono',monospace;letter-spacing:.18em;text-transform:uppercase;color:#6E645B">Sosyal medya</p>
+        <div style="display:flex;flex-wrap:wrap;gap:10px">
+          <a href="https://www.instagram.com/dilekmezesarkuteri" target="_blank" rel="noopener" style="padding:11px 17px;background:#F7F2E8;font:500 14px/1 'Schibsted Grotesk',sans-serif;color:#17120F" style-hover="background:#A3182B;color:#F7F2E8">@dilekmezesarkuteri</a>
+          <a href="https://www.instagram.com/dilek_sarkuteri_suadiye" target="_blank" rel="noopener" style="padding:11px 17px;background:#F7F2E8;font:500 14px/1 'Schibsted Grotesk',sans-serif;color:#17120F" style-hover="background:#A3182B;color:#F7F2E8">@dilek_sarkuteri_suadiye</a>
+        </div>
+      </div>
+    </div>
+
+    <form data-reveal="up" data-reveal-delay="100" onsubmit="event.preventDefault();this.querySelector('[data-formnote]').style.display='block';" style="background:#FFFDF8;border:1px solid rgba(23,18,15,.1);padding:clamp(24px,3vw,40px);display:grid;gap:18px">
+      <div>
+        <h2 style="margin:0;font:500 clamp(24px,2.4vw,34px)/1.16 'Newsreader',Georgia,serif;color:#17120F">Bize yazın</h2>
+        <p style="margin:10px 0 0;font:400 15px/1.6 'Schibsted Grotesk',sans-serif;color:#6E645B">Sipariş, tabak talebi ya da sorularınız için formu doldurun. Acil işler için WhatsApp daha hızlı.</p>
+      </div>
+      <label style="display:grid;gap:8px">
+        <span style="font:500 11px/1 'JetBrains Mono',monospace;letter-spacing:.16em;text-transform:uppercase;color:#6E645B">Ad soyad</span>
+        <input type="text" name="ad" required="required" placeholder="Adınız" style="padding:14px 16px;border:1px solid rgba(23,18,15,.18);background:#F7F2E8;font-size:16px;color:#17120F;border-radius:0" />
+      </label>
+      <label style="display:grid;gap:8px">
+        <span style="font:500 11px/1 'JetBrains Mono',monospace;letter-spacing:.16em;text-transform:uppercase;color:#6E645B">Telefon</span>
+        <input type="tel" name="telefon" required="required" placeholder="05xx xxx xx xx" style="padding:14px 16px;border:1px solid rgba(23,18,15,.18);background:#F7F2E8;font-size:16px;color:#17120F;border-radius:0" />
+      </label>
+      <label style="display:grid;gap:8px">
+        <span style="font:500 11px/1 'JetBrains Mono',monospace;letter-spacing:.16em;text-transform:uppercase;color:#6E645B">E-posta</span>
+        <input type="email" name="eposta" placeholder="ornek@eposta.com" style="padding:14px 16px;border:1px solid rgba(23,18,15,.18);background:#F7F2E8;font-size:16px;color:#17120F;border-radius:0" />
+      </label>
+      <label style="display:grid;gap:8px">
+        <span style="font:500 11px/1 'JetBrains Mono',monospace;letter-spacing:.16em;text-transform:uppercase;color:#6E645B">Mesajınız</span>
+        <textarea name="mesaj" rows="5" required="required" placeholder="Kaç kişilik, hangi tarih, hangi çeşitler?" style="padding:14px 16px;border:1px solid rgba(23,18,15,.18);background:#F7F2E8;font-size:16px;color:#17120F;border-radius:0;resize:vertical"></textarea>
+      </label>
+      <button type="submit" style="padding:16px 26px;border:none;border-radius:999px;background:#A3182B;color:#F7F2E8;font:600 14px/1 'Schibsted Grotesk',sans-serif;cursor:pointer" style-hover="background:#7C1020">Gönder</button>
+      <p data-formnote="1" style="display:none;margin:0;padding:14px 16px;background:#EDE5D6;font:500 14px/1.5 'Schibsted Grotesk',sans-serif;color:#17120F">Teşekkürler — mesajınız alındı. Form altyapısı yayına alınırken bağlanacak; şimdilik WhatsApp'tan da yazabilirsiniz.</p>
+    </form>
+  </div>
+</section>
+
+<section style="background:#EDE5D6;padding:0 0 clamp(56px,7vw,104px)">
+  <div style="max-width:1280px;margin:0 auto;padding:clamp(56px,7vw,104px) clamp(20px,5vw,56px) clamp(28px,3.4vw,44px)">
+    <p data-reveal="up" style="margin:0 0 20px;font:500 11px/1 'JetBrains Mono',monospace;letter-spacing:.26em;text-transform:uppercase;color:#A3182B">Konum</p>
+    <h2 data-reveal="up" style="margin:0;font:500 clamp(26px,3.3vw,44px)/1.14 'Newsreader',Georgia,serif;letter-spacing:-.015em;color:#17120F">Suadiye çarşısının içinde</h2>
+  </div>
+  <div data-reveal="up" style="padding:0 clamp(20px,5vw,56px)">
+    <div style="max-width:1280px;margin:0 auto;border:1px solid rgba(23,18,15,.12);background:#F7F2E8">
+      <iframe title="Dilek Şarküteri konum" src="https://www.google.com/maps?q=Ay%C5%9Fe%20%C3%87avu%C5%9F%20Caddesi%2012%20Suadiye%20Kad%C4%B1k%C3%B6y%20%C4%B0stanbul&output=embed" loading="lazy" referrerpolicy="no-referrer-when-downgrade" style="display:block;width:100%;height:clamp(300px,52vh,520px);border:0;filter:saturate(.85)"></iframe>
+    </div>
+  </div>
+</section>
+
+<section style="background:#17120F;color:#F7F2E8;padding:clamp(52px,6vw,92px) clamp(20px,5vw,56px)">
+  <div style="max-width:1280px;margin:0 auto;display:grid;grid-template-columns:repeat(auto-fit,minmax(min(100%,280px),1fr));gap:clamp(24px,3vw,48px)">
+    <div data-reveal="up">
+      <p style="margin:0 0 14px;font:500 11px/1 'JetBrains Mono',monospace;letter-spacing:.2em;text-transform:uppercase;color:#E8C88A">Merkez şube</p>
+      <p style="margin:0;font:500 clamp(21px,1.9vw,27px)/1.3 'Newsreader',Georgia,serif;color:#F7F2E8">Suadiye</p>
+      <p style="margin:10px 0 0;font:400 15px/1.66 'Schibsted Grotesk',sans-serif;color:rgba(247,242,232,.7)">Ayşe Çavuş Cad. No: 12/A. 1977'den beri aynı adres.</p>
+    </div>
+    <div data-reveal="up" data-reveal-delay="90">
+      <p style="margin:0 0 14px;font:500 11px/1 'JetBrains Mono',monospace;letter-spacing:.2em;text-transform:uppercase;color:#E8C88A">Yolda</p>
+      <p style="margin:0;font:500 clamp(21px,1.9vw,27px)/1.3 'Newsreader',Georgia,serif;color:#F7F2E8">Şaşkınbakkal</p>
+      <p style="margin:10px 0 0;font:400 15px/1.66 'Schibsted Grotesk',sans-serif;color:rgba(247,242,232,.7)">Yeni şube hazırlıkları sürüyor. Açılış duyurusu Instagram'dan paylaşılacak.</p>
+    </div>
+    <div data-reveal="up" data-reveal-delay="180">
+      <p style="margin:0 0 14px;font:500 11px/1 'JetBrains Mono',monospace;letter-spacing:.2em;text-transform:uppercase;color:#E8C88A">Ulaşım</p>
+      <p style="margin:0;font:500 clamp(21px,1.9vw,27px)/1.3 'Newsreader',Georgia,serif;color:#F7F2E8">Nasıl gelinir</p>
+      <p style="margin:10px 0 0;font:400 15px/1.66 'Schibsted Grotesk',sans-serif;color:rgba(247,242,232,.7)">Suadiye metro istasyonundan yürüme mesafesinde; çarşı içinde kısa süreli park imkânı var.</p>
+    </div>
+  </div>
+</section>
+
+<footer style="background:#F7F2E8;color:#17120F;padding:clamp(52px,6vw,88px) clamp(20px,5vw,56px) 34px">
+  <div style="max-width:1280px;margin:0 auto">
+    <div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(min(100%,210px),1fr));gap:clamp(28px,3.5vw,56px)">
+      <div>
+        <p style="margin:0;font:500 clamp(24px,2.3vw,32px)/1 'Newsreader',Georgia,serif">Dilek Şarküteri</p>
+        <p style="margin:12px 0 0;font:500 11px/1.6 'JetBrains Mono',monospace;letter-spacing:.14em;text-transform:uppercase;color:#6E645B">Şarküteri & Meze<br />Suadiye · 1977'den beri</p>
+      </div>
+      <div>
+        <p style="margin:0 0 14px;font:500 11px/1 'JetBrains Mono',monospace;letter-spacing:.18em;text-transform:uppercase;color:#6E645B">Sayfalar</p>
+        <div style="display:grid;gap:9px">
+          <a href="Ana-Sayfa.dc.html" style="font:500 14px/1 'Schibsted Grotesk',sans-serif;color:#17120F" style-hover="color:#A3182B">Ana sayfa</a>
+          <a href="Hakkimizda.dc.html" style="font:500 14px/1 'Schibsted Grotesk',sans-serif;color:#17120F" style-hover="color:#A3182B">Hakkımızda</a>
+          <a href="Urunler.dc.html" style="font:500 14px/1 'Schibsted Grotesk',sans-serif;color:#17120F" style-hover="color:#A3182B">Ürünler</a>
+          <a href="Tabaklar.dc.html" style="font:500 14px/1 'Schibsted Grotesk',sans-serif;color:#17120F" style-hover="color:#A3182B">Tabaklar & kampanyalar</a>
+          <a href="Iletisim.dc.html" style="font:500 14px/1 'Schibsted Grotesk',sans-serif;color:#17120F" style-hover="color:#A3182B">İletişim</a>
+        </div>
+      </div>
+      <div>
+        <p style="margin:0 0 14px;font:500 11px/1 'JetBrains Mono',monospace;letter-spacing:.18em;text-transform:uppercase;color:#6E645B">Mağaza</p>
+        <p style="margin:0;font:400 14px/1.7 'Schibsted Grotesk',sans-serif;color:#4A423B">Suadiye Mah. Ayşe Çavuş Cad.<br />No: 12/A Kadıköy / İstanbul</p>
+        <p style="margin:12px 0 0;font:400 14px/1.7 'Schibsted Grotesk',sans-serif;color:#4A423B">Pzt–Cmt 08:00–21:00<br />Pazar 08:00–20:00</p>
+      </div>
+      <div>
+        <p style="margin:0 0 14px;font:500 11px/1 'JetBrains Mono',monospace;letter-spacing:.18em;text-transform:uppercase;color:#6E645B">İletişim</p>
+        <div style="display:grid;gap:9px">
+          <a href="tel:+902163732752" style="font:500 14px/1 'Schibsted Grotesk',sans-serif;color:#17120F" style-hover="color:#A3182B">0216 373 27 52</a>
+          <a href="tel:+905424787605" style="font:500 14px/1 'Schibsted Grotesk',sans-serif;color:#17120F" style-hover="color:#A3182B">0542 478 76 05</a>
+          <a href="mailto:dileksarkuteri@gmail.com" style="font:500 14px/1 'Schibsted Grotesk',sans-serif;color:#17120F" style-hover="color:#A3182B">dileksarkuteri@gmail.com</a>
+          <a href="https://www.instagram.com/dilekmezesarkuteri" target="_blank" rel="noopener" style="font:500 14px/1 'Schibsted Grotesk',sans-serif;color:#17120F" style-hover="color:#A3182B">@dilekmezesarkuteri</a>
+          <a href="https://www.instagram.com/dilek_sarkuteri_suadiye" target="_blank" rel="noopener" style="font:500 14px/1 'Schibsted Grotesk',sans-serif;color:#17120F" style-hover="color:#A3182B">@dilek_sarkuteri_suadiye</a>
+        </div>
+      </div>
+    </div>
+    <p style="margin:clamp(40px,5vw,64px) 0 0;padding-top:22px;border-top:1px solid rgba(23,18,15,.14);font:500 11px/1.6 'JetBrains Mono',monospace;letter-spacing:.1em;text-transform:uppercase;color:#6E645B">© 2026 Dilek Şarküteri · Tüm hakları saklıdır</p>
+  </div>
+</footer>
+
+</x-dc>
+<script type="text/x-dc" data-dc-script data-props="{}"></script>
+</body>
+</html>

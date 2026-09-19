@@ -1,0 +1,58 @@
+<header class="page-head">
+  <div>
+    <p class="eyebrow"><a href="/admin/kategoriler">Kategoriler</a></p>
+    <h1><%= isNew ? 'Yeni kategori' : category.name || 'Kategoriyi düzenle' %></h1>
+  </div>
+</header>
+
+<%- include('../partials/errors') %>
+
+<form action="<%= isNew ? '/admin/kategoriler' : '/admin/kategoriler/' + category.id + '?_method=PUT' %>"
+      method="post" enctype="multipart/form-data">
+  <input type="hidden" name="_csrf" value="<%= csrfToken %>">
+
+  <section class="card">
+    <h2 class="card__title">Temel bilgiler</h2>
+    <div class="form-grid">
+      <div class="field field--full">
+        <label for="name">Kategori adı *</label>
+        <input type="text" id="name" name="name" value="<%= category.name || '' %>" maxlength="100" required>
+        <% if (!isNew) { %>
+          <p class="hint">Adı değiştirirseniz adres (slug) da değişir; eski adrese gelen linkler kırılır.</p>
+        <% } %>
+      </div>
+      <div class="field field--full">
+        <label for="description">Açıklama</label>
+        <textarea id="description" name="description" rows="3"><%= category.description || '' %></textarea>
+        <p class="hint">Ana sayfadaki kategori kartında ve kategori sayfasının başlığında görünür.</p>
+      </div>
+    </div>
+  </section>
+
+  <section class="card">
+    <h2 class="card__title">Görsel</h2>
+    <%- include('../partials/image-field', { record: category }) %>
+  </section>
+
+  <section class="card">
+    <h2 class="card__title">Yayın</h2>
+    <div class="form-grid">
+      <div class="field">
+        <label for="sort_order">Sıra</label>
+        <input type="number" id="sort_order" name="sort_order" value="<%= category.sort_order || 0 %>">
+        <p class="hint">Küçük sayı önce gösterilir.</p>
+      </div>
+      <div class="field checks">
+        <label class="check">
+          <input type="checkbox" name="is_active" value="1" <%= category.is_active ? 'checked' : '' %>>
+          Sitede göster
+        </label>
+      </div>
+    </div>
+  </section>
+
+  <div class="form-actions">
+    <button class="btn btn--primary" type="submit"><%= isNew ? 'Ekle' : 'Kaydet' %></button>
+    <a class="btn btn--ghost" href="/admin/kategoriler">Vazgeç</a>
+  </div>
+</form>

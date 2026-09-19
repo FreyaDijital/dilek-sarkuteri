@@ -1,0 +1,134 @@
+<section class="hero">
+  <div class="hero__bg" data-parallax="0.07" style="background-image:url('<%= siteImage('peynir-tahtasi.jpg', { background: true }) %>')"></div>
+  <div class="hero__shade"></div>
+  <div class="hero__inner">
+    <p class="eyebrow eyebrow--gold" data-reveal="up">Suadiye · Kadıköy · <%= settings.site_tagline || "1977'den beri" %></p>
+    <h1 class="display" data-reveal="up" data-reveal-delay="90">Suadiye'nin lezzet nöbetçisi</h1>
+    <p class="hero__lead" data-reveal="up" data-reveal-delay="180">Ayşe Çavuş Caddesi'nde yarım asra yaklaşan bir tezgâh. El yapımı mezeler, tek tek seçilmiş peynirler, güvenilir şarküteri.</p>
+    <div class="btn-row" data-reveal="up" data-reveal-delay="260">
+      <a class="btn btn--light" href="/urunler">Ürünleri gör <span class="mono" aria-hidden="true">→</span></a>
+      <a class="btn btn--ghost-light" href="<%= waLink('Merhaba, sipariş vermek istiyorum.') %>" target="_blank" rel="noopener">WhatsApp'tan sipariş</a>
+    </div>
+  </div>
+  <div class="hero__scroll" aria-hidden="true">
+    <span class="hero__scroll-text">Kaydır</span>
+    <span class="hero__scroll-line"></span>
+  </div>
+</section>
+
+<%- include('../partials/marquee') %>
+
+<%# 01 — Hikâye %>
+<section class="section section--cream">
+  <div class="container split">
+    <div>
+      <p class="eyebrow" data-reveal="up">01 — Hikâyemiz</p>
+      <h2 class="h2" data-reveal="up" data-reveal-delay="70">Bir semtin hafızası, bir tezgâhın ardında</h2>
+      <p class="lead" data-reveal="up" data-reveal-delay="140">Dilek Şarküteri 1977'de, İstanbul'un bugünkü kalabalığından çok uzak bir Suadiye'de açıldı. Aradan geçen on yıllarda şehir değişti, sokaklar dönüştü, alışkanlıklar savruldu. Dükkân hep aynı yerde, aynı ciddiyetle kaldı.</p>
+      <p class="lead" data-reveal="up" data-reveal-delay="200">Raflardaki peynirler, zeytinler, mezeler yalnızca birer gıda maddesi değil; bir semtin ve bir esnaflık ahlakının sessiz tanıkları.</p>
+      <p class="more" data-reveal="up" data-reveal-delay="250"><a class="link-arrow" href="/hakkimizda">Hikâyenin tamamı →</a></p>
+      <%- include('../partials/stats') %>
+    </div>
+    <figure class="media" data-reveal="wipe">
+      <img src="<%= siteImage('peynir-tabagi.jpg') %>" alt="Dilek Şarküteri peynir tabağı">
+      <figcaption>Tezgâhın arkasında her sabah aynı heyecan.</figcaption>
+    </figure>
+  </div>
+</section>
+
+<%# 02 — Kategoriler (panelden) %>
+<% if (categories.length) { %>
+<section class="section section--cream section--flush-top">
+  <div class="container">
+    <div class="section-head">
+      <div>
+        <p class="eyebrow" data-reveal="up">02 — <%= categories.length === 3 ? 'Üç ana başlık' : 'Ana başlıklar' %></p>
+        <h2 class="h2" data-reveal="up" data-reveal-delay="70"><%= categories.map(function (c, i) { return i ? c.name.toLocaleLowerCase('tr-TR') : c.name; }).join(', ') %></h2>
+      </div>
+      <a class="link-arrow" data-reveal="up" data-reveal-delay="120" href="/urunler">Tüm ürünler →</a>
+    </div>
+    <div class="cat-grid">
+      <% categories.forEach(function (c, i) { %>
+        <a class="cat-card" href="/urunler/<%= c.slug %>" data-reveal="up" data-reveal-delay="<%= (i % 3) * 90 %>">
+          <img src="<%= c.imageSrc %>" alt="" loading="lazy">
+          <span class="cat-card__body">
+            <% if (c.kicker) { %><span class="cat-card__kicker"><%= c.kicker %></span><% } %>
+            <span class="cat-card__title"><%= c.name %></span>
+            <% if (c.description) { %><span class="cat-card__desc"><%= c.description %></span><% } %>
+          </span>
+        </a>
+      <% }); %>
+    </div>
+  </div>
+</section>
+<% } %>
+
+<%- include('../partials/sourcing', { sourcingEyebrow: '03 — Tedarik' }) %>
+
+<%# 04 — Mutfak şeridi: öne çıkarılan ürünler, yoksa tasarımdaki örnekler %>
+<section class="section section--sand section--clip">
+  <div class="container">
+    <p class="eyebrow" data-reveal="up">04 — Mutfağımızdan</p>
+    <h2 class="h2" data-reveal="up" data-reveal-delay="70">Sami Usta'nın elinden</h2>
+    <p class="lead" data-reveal="up" data-reveal-delay="130">Dükkânın asıl ruhu mutfağında. Yüksel Bey ve onun yetiştirdiği Sami Usta'nın ellerinden çıkan mezeler yıllardır müdavimlerin dilinden düşmüyor.</p>
+  </div>
+  <div class="rail" tabindex="0" aria-label="Mutfaktan ürünler">
+    <% kitchen.forEach(function (item, i) { %>
+      <figure class="rail__item" data-reveal="scale" data-reveal-delay="<%= Math.min(i, 5) * 70 %>">
+        <a href="<%= item.href %>">
+          <img src="<%= item.image %>" alt="" loading="lazy">
+          <figcaption class="rail__caption">
+            <span class="rail__name"><%= item.name %></span>
+            <% if (item.tag) { %><span class="rail__tag"><%= item.tag %></span><% } %>
+          </figcaption>
+        </a>
+      </figure>
+    <% }); %>
+  </div>
+  <div class="container">
+    <a class="link-arrow" href="/urunler/meze">Tüm mezeler →</a>
+  </div>
+</section>
+
+<%# 05 — Tabaklar %>
+<section class="section section--cream">
+  <div class="container split split--center">
+    <div data-reveal="left">
+      <p class="eyebrow">05 — Tabaklar &amp; kutular</p>
+      <h2 class="h2">Misafiriniz varsa, tabağı biz hazırlayalım</h2>
+      <p class="lead">Peynir tahtası, şarküteri tabağı, bölmeli meze tabağı ve hediyeye uygun peynir kutuları. Kişi sayısını söylüyorsunuz, gerisini tezgâh düşünüyor.</p>
+      <div class="btn-row">
+        <a class="btn btn--red" href="/tabaklar">Tabakları gör →</a>
+        <a class="btn btn--ghost" href="<%= waLink('Merhaba, tabak siparişi vermek istiyorum.') %>" target="_blank" rel="noopener">Sipariş için yaz</a>
+      </div>
+    </div>
+    <div class="duo" data-reveal="scale">
+      <img src="<%= siteImage('peynir-kutusu.jpg') %>" alt="Peynir kutusu" loading="lazy">
+      <img src="<%= siteImage('sandvic.jpg') %>" alt="Dilek sandviç" loading="lazy">
+    </div>
+  </div>
+</section>
+
+<%# 06 — Müdavimler %>
+<section class="section section--sand">
+  <div class="container">
+    <p class="eyebrow" data-reveal="up">06 — Müdavimler</p>
+    <h2 class="h2 h2--spaced" data-reveal="up" data-reveal-delay="70">Yıllardır aynı şeyi söylüyorlar</h2>
+    <div class="testimonials">
+      <figure class="testimonial" data-reveal="up">
+        <blockquote>“Kadınbudu köfte, balık tarama, dolma çeşitleri ve özellikle tatlıları çok güzeldir.”</blockquote>
+        <figcaption>Uğur G.</figcaption>
+      </figure>
+      <figure class="testimonial" data-reveal="up" data-reveal-delay="90">
+        <blockquote>“Peynirleri ve reçelleri muhteşem. O kadar çok ikram var ki alışveriş yapmadan doyabilirsiniz.”</blockquote>
+        <figcaption>Aykut Y.</figcaption>
+      </figure>
+      <figure class="testimonial testimonial--red" data-reveal="up" data-reveal-delay="180">
+        <blockquote>“Benim yıllardır favorim midye dolması.”</blockquote>
+        <figcaption>Melih T.</figcaption>
+      </figure>
+    </div>
+  </div>
+</section>
+
+<%- include('../partials/visit', { visitEyebrow: '07 — Uğrayın' }) %>

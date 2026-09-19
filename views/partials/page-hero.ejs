@@ -1,0 +1,23 @@
+<%#
+  İç sayfaların koyu başlık alanı.
+  include('../partials/page-hero', { heading, eyebrow?, lead?, crumbs?, image? })
+  crumbs: [['/', 'Ana Sayfa'], ['/urunler', 'Ürünler'], [null, 'Peynir']]
+%>
+<section class="page-hero">
+  <% if (locals.image) { %>
+    <div class="page-hero__bg" data-parallax="0.05" style="background-image:url('<%= image %>')"></div>
+  <% } %>
+  <div class="page-hero__inner">
+    <% if (locals.crumbs) { %>
+      <nav class="breadcrumb" aria-label="Konum" data-reveal="up">
+        <% crumbs.forEach(function ([href, label], i) { %>
+          <% if (i) { %><span aria-hidden="true">/</span><% } %>
+          <% if (href) { %><a href="<%= href %>"><%= label %></a><% } else { %><span aria-current="page"><%= label %></span><% } %>
+        <% }); %>
+      </nav>
+    <% } %>
+    <% if (locals.eyebrow) { %><p class="eyebrow eyebrow--gold" data-reveal="up"><%= eyebrow %></p><% } %>
+    <h1 class="page-hero__title" data-reveal="up" data-reveal-delay="80"><%= heading %></h1>
+    <% if (locals.lead) { %><p class="page-hero__lead" data-reveal="up" data-reveal-delay="160"><%= lead %></p><% } %>
+  </div>
+</section>

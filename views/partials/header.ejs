@@ -1,0 +1,41 @@
+<%
+  const navItems = [
+    ['/hakkimizda', 'Hakkımızda'],
+    ['/urunler', 'Ürünler'],
+    ['/tabaklar', 'Tabaklar'],
+    ['/iletisim', 'İletişim'],
+  ];
+  const isActive = (href) =>
+    currentPath === href || currentPath.startsWith(href + '/') ||
+    (href === '/urunler' && currentPath.startsWith('/urun/')) ||
+    (href === '/tabaklar' && currentPath.startsWith('/kampanyalar'));
+%>
+<a class="skip-link" href="#icerik">İçeriğe geç</a>
+
+<div class="progress" aria-hidden="true"><div class="progress__bar" data-progress></div></div>
+
+<header class="site-nav" data-nav>
+  <a class="site-nav__brand" href="/">
+    <%# locals.* kullanımı bilinçli: middleware çalışmadığı bir render yolunda
+        çıplak değişken ReferenceError atar ve asıl hatayı gizler. %>
+    <% if (locals.logoSrc) { %>
+      <img class="site-nav__logo" src="<%= locals.logoSrc %>" alt="<%= settings.site_title || 'Dilek Şarküteri' %>">
+    <% } else { %>
+      <span class="site-nav__mark" aria-hidden="true">1977</span>
+      <span class="site-nav__name"><%= settings.site_title || 'Dilek Şarküteri' %></span>
+    <% } %>
+  </a>
+
+  <nav class="site-nav__menu" id="site-menu" aria-label="Ana menü">
+    <% navItems.forEach(function ([href, label]) { %>
+      <a class="site-nav__link" href="<%= href %>"<% if (isActive(href)) { %> aria-current="page"<% } %>><%= label %></a>
+    <% }); %>
+  </nav>
+
+  <a class="btn btn--red btn--sm site-nav__cta" href="<%= waLink('Merhaba, sipariş vermek istiyorum.') %>" target="_blank" rel="noopener">Sipariş ver</a>
+
+  <button class="site-nav__toggle" type="button" aria-expanded="false" aria-controls="site-menu" data-nav-toggle>
+    <span class="sr-only">Menüyü aç</span>
+    <span class="site-nav__bars" aria-hidden="true"></span>
+  </button>
+</header>

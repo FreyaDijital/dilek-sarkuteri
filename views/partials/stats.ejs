@@ -1,0 +1,15 @@
+<% const founded = 1977; %>
+<dl class="stats" data-reveal="up" data-reveal-delay="300">
+  <div class="stat">
+    <dt class="label">Kuruluş</dt>
+    <dd class="stat__num"><span data-count="<%= founded %>"><%= founded %></span></dd>
+  </div>
+  <div class="stat">
+    <dt class="label">Çeşit ürün</dt>
+    <dd class="stat__num"><span data-count="1000" data-count-suffix="+">1000+</span></dd>
+  </div>
+  <div class="stat">
+    <dt class="label">Yıllık tezgâh</dt>
+    <dd class="stat__num"><span data-count="<%= new Date().getFullYear() - founded %>"><%= new Date().getFullYear() - founded %></span></dd>
+  </div>
+</dl>

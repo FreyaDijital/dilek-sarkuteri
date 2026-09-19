@@ -1,0 +1,67 @@
+<%
+  const stateBadge = {
+    'Yayında': 'badge--ok',
+    'Taslak': 'badge--muted',
+    'Henüz başlamadı': 'badge--warn',
+    'Süresi doldu': 'badge--muted',
+  };
+%>
+<header class="page-head">
+  <div>
+    <p class="eyebrow">Tabaklar sayfası</p>
+    <h1>Kampanyalar</h1>
+    <p class="page-head__lead">"Yayında" olmayan kampanyalar sitede görünmez. Tarihi geçmiş veya henüz başlamamış olanlar da gizlenir.</p>
+  </div>
+  <div class="page-head__actions">
+    <a class="btn btn--primary" href="/admin/kampanyalar/yeni">+ Yeni kampanya</a>
+  </div>
+</header>
+
+<section class="card card--flush">
+  <% if (!campaigns.length) { %>
+    <p class="empty">Henüz kampanya yok.</p>
+  <% } else { %>
+    <div class="table-wrap">
+      <table class="table">
+        <thead>
+          <tr>
+            <th class="num">Sıra</th><th>Kampanya</th>
+            <th>Tarih aralığı</th><th>Durum</th><th class="actions-col"><span class="sr-only">İşlem</span></th>
+          </tr>
+        </thead>
+        <tbody>
+          <% campaigns.forEach(function (c) { %>
+            <tr>
+              <td class="num muted"><%= c.sort_order %></td>
+              <td>
+                <div class="item">
+                  <% if (hasImage(c.image)) { %>
+                    <img class="thumb" src="<%= imageSrc(c.image) %>" alt="">
+                  <% } else { %>
+                    <span class="thumb thumb--empty" aria-hidden="true"></span>
+                  <% } %>
+                  <a class="item__name" href="/admin/kampanyalar/<%= c.id %>/duzenle"><%= c.title %></a>
+                </div>
+              </td>
+              <td class="nowrap muted">
+                <%= c.starts_at ? formatDate(c.starts_at) : 'sınırsız' %> – <%= c.ends_at ? formatDate(c.ends_at) : 'sınırsız' %>
+              </td>
+              <td><span class="badge <%= stateBadge[c.state] || 'badge--muted' %>"><%= c.state %></span></td>
+              <td class="actions">
+                <form class="inline-form" action="/admin/kampanyalar/<%= c.id %>/yayin" method="post">
+                  <input type="hidden" name="_csrf" value="<%= csrfToken %>">
+                  <button class="btn btn--ghost btn--sm" type="submit"><%= c.is_published ? 'Yayından kaldır' : 'Yayına al' %></button>
+                </form>
+                <a class="btn btn--ghost btn--sm" href="/admin/kampanyalar/<%= c.id %>/duzenle">Düzenle</a>
+                <%- include('../partials/delete-button', {
+                  action: '/admin/kampanyalar/' + c.id,
+                  confirmText: c.title + ' silinecek. Onaylıyor musunuz?',
+                }) %>
+              </td>
+            </tr>
+          <% }); %>
+        </tbody>
+      </table>
+    </div>
+  <% } %>
+</section>

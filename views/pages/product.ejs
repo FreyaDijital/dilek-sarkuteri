@@ -1,0 +1,60 @@
+<%
+  const crumbs = [['/', 'Ana Sayfa'], ['/urunler', 'Ürünler']];
+  if (product.category_slug) crumbs.push(['/urunler/' + product.category_slug, product.category_name]);
+  crumbs.push([null, product.name]);
+%>
+<%- include('../partials/page-hero', {
+  crumbs,
+  heading: product.name,
+  lead: product.short_desc || null,
+}) %>
+
+<section class="section section--cream section--tight">
+  <div class="container product-detail">
+    <figure class="product-detail__media" data-reveal="wipe">
+      <img src="<%= imageSrc(product.image) %>" alt="<%= product.name %>">
+    </figure>
+
+    <div class="product-detail__info" data-reveal="up">
+      <% if (product.category_name) { %><p class="eyebrow"><%= product.category_name %></p><% } %>
+      <% if (showPrices) { %>
+        <p class="product-detail__price"><%= formatPrice(product.price, product.unit) %></p>
+      <% } %>
+      <% if (product.origin) { %>
+        <p class="product-detail__origin"><span class="label">Yöre</span> <%= product.origin %></p>
+      <% } %>
+
+      <div class="btn-row">
+        <a class="btn btn--red" href="<%= waLink('Merhaba, ' + product.name + ' sipariş vermek istiyorum.') %>" target="_blank" rel="noopener">WhatsApp'tan sipariş ver</a>
+        <% if (settings.phone) { %>
+          <a class="btn btn--ghost" href="tel:<%= telLink(settings.phone) %>">Ara: <%= settings.phone %></a>
+        <% } %>
+      </div>
+
+      <% const paras = paragraphs(product.description); %>
+      <% if (paras.length) { %>
+        <div class="prose">
+          <% paras.forEach(function (p) { %><p><%= p %></p><% }); %>
+        </div>
+      <% } %>
+
+      <p class="note">Online satış yoktur. Siparişlerinizi WhatsApp'tan iletebilir ya da dükkâna uğrayabilirsiniz.</p>
+    </div>
+  </div>
+</section>
+
+<% if (related.length) { %>
+<section class="section section--sand">
+  <div class="container">
+    <div class="section-head">
+      <h2 class="h2">Aynı kategoriden</h2>
+      <a class="link-arrow" href="/urunler/<%= product.category_slug %>">Tümü →</a>
+    </div>
+    <div class="product-grid">
+      <% related.forEach(function (product) { %>
+        <%- include('../partials/product-card', { product }) %>
+      <% }); %>
+    </div>
+  </div>
+</section>
+<% } %>

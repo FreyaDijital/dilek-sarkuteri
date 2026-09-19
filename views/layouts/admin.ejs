@@ -1,0 +1,72 @@
+<%
+  const navItems = [
+    ['/admin', 'Panel'],
+    ['/admin/urunler', 'Ürünler'],
+    ['/admin/kategoriler', 'Kategoriler'],
+    ['/admin/kampanyalar', 'Kampanyalar'],
+    ['/admin/mesajlar', 'Mesajlar'],
+    ['/admin/ayarlar', 'Ayarlar'],
+  ];
+  const isActive = (href) => href === '/admin'
+    ? currentPath === '/admin' || currentPath === '/admin/'
+    : currentPath === href || currentPath.startsWith(href + '/');
+  const unread = locals.unreadMessages || 0;
+%>
+<!DOCTYPE html>
+<html lang="tr">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title><%= typeof title !== 'undefined' ? title + ' | ' : '' %>Yönetim Paneli</title>
+  <meta name="robots" content="noindex, nofollow">
+  <%- include('../admin/partials/head-assets') %>
+</head>
+<body>
+  <a class="skip-link" href="#icerik">İçeriğe geç</a>
+
+  <div class="shell">
+    <aside class="sidebar">
+      <a class="brand" href="/admin">
+        <span class="brand__mark" aria-hidden="true">1977</span>
+        <span class="brand__text">
+          <span class="brand__name"><%= settings.site_title || 'Dilek Şarküteri' %></span>
+          <span class="brand__sub">Yönetim paneli</span>
+        </span>
+      </a>
+
+      <nav class="side-nav" aria-label="Panel menüsü">
+        <% navItems.forEach(function ([href, label]) { %>
+          <a class="side-nav__link" href="<%= href %>"<% if (isActive(href)) { %> aria-current="page"<% } %>>
+            <span><%= label %></span>
+            <% if (href === '/admin/mesajlar' && unread) { %>
+              <span class="side-nav__count" title="Okunmamış mesaj"><%= unread %><span class="sr-only"> okunmamış</span></span>
+            <% } %>
+          </a>
+        <% }); %>
+      </nav>
+
+      <div class="sidebar__foot">
+        <a class="side-link" href="/" target="_blank" rel="noopener">Siteyi gör <span aria-hidden="true">↗</span></a>
+        <% if (currentUser) { %>
+          <div class="user">
+            <span class="user__name"><%= currentUser.fullName || currentUser.username %></span>
+            <form action="/admin/cikis" method="post">
+              <input type="hidden" name="_csrf" value="<%= csrfToken %>">
+              <button class="side-link" type="submit">Çıkış</button>
+            </form>
+          </div>
+        <% } %>
+      </div>
+    </aside>
+
+    <main class="main" id="icerik">
+      <% if (flash) { %>
+        <div class="flash flash--<%= flash.type %>" role="status"><%= flash.message %></div>
+      <% } %>
+      <%- body %>
+    </main>
+  </div>
+
+  <script src="/js/admin.js?v=<%= assetVersion %>" defer></script>
+</body>
+</html>

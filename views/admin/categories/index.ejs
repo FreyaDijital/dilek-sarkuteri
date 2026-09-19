@@ -1,0 +1,79 @@
+<header class="page-head">
+  <div>
+    <p class="eyebrow">Katalog</p>
+    <h1>Kategoriler</h1>
+  </div>
+  <div class="page-head__actions">
+    <a class="btn btn--primary" href="/admin/kategoriler/yeni">+ Yeni kategori</a>
+  </div>
+</header>
+
+<section class="card card--flush">
+  <% if (!categories.length) { %>
+    <p class="empty">Henüz kategori yok.</p>
+  <% } else { %>
+    <div class="table-wrap">
+      <table class="table">
+        <thead>
+          <tr>
+            <th class="num">Sıra</th><th>Kategori</th><th>Adres</th>
+            <th class="num">Ürün</th><th>Durum</th><th class="actions-col"><span class="sr-only">İşlem</span></th>
+          </tr>
+        </thead>
+        <tbody>
+          <% categories.forEach(function (c, i) { %>
+            <tr>
+              <td class="num">
+                <div class="reorder">
+                  <form class="inline-form" action="/admin/kategoriler/<%= c.id %>/tasi" method="post">
+                    <input type="hidden" name="_csrf" value="<%= csrfToken %>">
+                    <input type="hidden" name="yon" value="up">
+                    <button class="btn-icon" type="submit" title="Yukarı taşı"
+                            aria-label="<%= c.name %> yukarı taşı" <%= i === 0 ? 'disabled' : '' %>>↑</button>
+                  </form>
+                  <span class="reorder__value"><%= c.sort_order %></span>
+                  <form class="inline-form" action="/admin/kategoriler/<%= c.id %>/tasi" method="post">
+                    <input type="hidden" name="_csrf" value="<%= csrfToken %>">
+                    <input type="hidden" name="yon" value="down">
+                    <button class="btn-icon" type="submit" title="Aşağı taşı"
+                            aria-label="<%= c.name %> aşağı taşı" <%= i === categories.length - 1 ? 'disabled' : '' %>>↓</button>
+                  </form>
+                </div>
+              </td>
+              <td>
+                <div class="item">
+                  <% if (hasImage(c.image)) { %>
+                    <img class="thumb" src="<%= imageSrc(c.image) %>" alt="">
+                  <% } else { %>
+                    <span class="thumb thumb--empty" aria-hidden="true"></span>
+                  <% } %>
+                  <a class="item__name" href="/admin/kategoriler/<%= c.id %>/duzenle"><%= c.name %></a>
+                </div>
+              </td>
+              <td><code>/urunler/<%= c.slug %></code></td>
+              <td class="num"><%= c.product_count %></td>
+              <td class="badges">
+                <form class="inline-form" action="/admin/kategoriler/<%= c.id %>/durum" method="post">
+                  <input type="hidden" name="_csrf" value="<%= csrfToken %>">
+                  <button class="badge badge--btn <%= c.is_active ? 'badge--ok' : 'badge--muted' %>" type="submit"
+                          title="<%= c.is_active ? 'Siteden gizle' : 'Sitede yayına al' %>">
+                    <%= c.is_active ? 'Aktif' : 'Pasif' %>
+                  </button>
+                </form>
+              </td>
+              <td class="actions">
+                <a class="btn btn--ghost btn--sm" href="/admin/kategoriler/<%= c.id %>/duzenle">Düzenle</a>
+                <%- include('../partials/delete-button', {
+                  action: '/admin/kategoriler/' + c.id,
+                  confirmText: c.name + ' kategorisi silinecek.'
+                    + (c.product_count > 0 ? ' ' + c.product_count + ' ürün kategorisiz kalacak (ürünler silinmez).' : '')
+                    + ' Onaylıyor musunuz?',
+                }) %>
+              </td>
+            </tr>
+          <% }); %>
+        </tbody>
+      </table>
+    </div>
+  <% } %>
+</section>

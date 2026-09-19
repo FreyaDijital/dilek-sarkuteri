@@ -1,0 +1,72 @@
+<%
+  // "tabaklar" kategorisinde ürün yoksa tasarımdaki sabit seçenekler gösterilir.
+  const staticPlatters = [
+    ['Peynir tahtası', 'Tezgâhtaki peynirlerden, kişi sayısına göre seçilir.', 'peynir-tahtasi.jpg'],
+    ['Şarküteri tabağı', 'Pastırma, füme et, salam ve sucuk; istediğiniz kalınlıkta dilimlenir.', 'sarkuteri-tabagi.jpg'],
+    ['Bölmeli meze tabağı', 'Günün mezelerinden, bölmeli tabakta.', 'meze-tabagi.jpg'],
+    ['Peynir kutusu', 'Hediyeye uygun, seçilmiş peynirlerle hazırlanan kutu.', 'peynir-kutusu.jpg'],
+  ];
+%>
+<%- include('../partials/page-hero', {
+  eyebrow: 'Tabaklar & kutular',
+  heading: 'Misafiriniz varsa, tabağı biz hazırlayalım',
+  lead: 'Kişi sayısını söylüyorsunuz, gerisini tezgâh düşünüyor.',
+  image: siteImage('peynir-tahtasi.jpg', { background: true }),
+}) %>
+
+<section class="section section--cream section--tight">
+  <div class="container">
+    <% if (platters.length) { %>
+      <div class="product-grid">
+        <% platters.forEach(function (product) { %>
+          <%- include('../partials/product-card', { product }) %>
+        <% }); %>
+      </div>
+    <% } else { %>
+      <div class="offer-grid">
+        <% staticPlatters.forEach(function ([name, text, image], i) { %>
+          <article class="offer" data-reveal="up" data-reveal-delay="<%= (i % 4) * 80 %>">
+            <img src="<%= siteImage(image) %>" alt="" loading="lazy">
+            <div class="offer__body">
+              <h2 class="offer__title"><%= name %></h2>
+              <p><%= text %></p>
+              <a class="product-card__order" href="<%= waLink('Merhaba, ' + name.toLocaleLowerCase('tr-TR') + ' siparişi vermek istiyorum.') %>" target="_blank" rel="noopener">Fiyat ve sipariş için yaz <span aria-hidden="true">→</span></a>
+            </div>
+          </article>
+        <% }); %>
+      </div>
+    <% } %>
+  </div>
+</section>
+
+<section class="section section--sand" id="kampanyalar">
+  <div class="container">
+    <p class="eyebrow" data-reveal="up">Kampanyalar</p>
+    <h2 class="h2 h2--spaced" data-reveal="up" data-reveal-delay="70">Tezgâhta bu aralar</h2>
+
+    <% if (campaigns.length) { %>
+      <div class="campaign-grid">
+        <% campaigns.forEach(function (campaign, i) { %>
+          <article class="campaign-card" data-reveal="up" data-reveal-delay="<%= (i % 3) * 90 %>">
+            <a class="campaign-card__media" href="/kampanyalar/<%= campaign.slug %>" tabindex="-1" aria-hidden="true">
+              <img src="<%= imageSrc(campaign.image) %>" alt="" loading="lazy">
+            </a>
+            <div class="campaign-card__body">
+              <%- include('../partials/campaign-dates', { campaign }) %>
+              <h3 class="campaign-card__title"><a href="/kampanyalar/<%= campaign.slug %>"><%= campaign.title %></a></h3>
+              <% if (campaign.short_desc) { %><p><%= campaign.short_desc %></p><% } %>
+              <a class="link-arrow" href="/kampanyalar/<%= campaign.slug %>">Detaylar →</a>
+            </div>
+          </article>
+        <% }); %>
+      </div>
+    <% } else { %>
+      <div class="empty">
+        <p>Şu an aktif bir kampanyamız yok.</p>
+        <% if (settings.instagram_1) { %>
+          <p>Yenilerinden haberdar olmak için Instagram'da <a href="https://www.instagram.com/<%= settings.instagram_1 %>" target="_blank" rel="noopener">@<%= settings.instagram_1 %></a> hesabımızı takip edebilirsiniz.</p>
+        <% } %>
+      </div>
+    <% } %>
+  </div>
+</section>

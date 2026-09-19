@@ -1,0 +1,48 @@
+<% const siteName = settings.site_title || 'Dilek Şarküteri'; %>
+<footer class="site-footer">
+  <div class="site-footer__grid">
+    <div>
+      <p class="site-footer__brand"><%= siteName %></p>
+      <p class="site-footer__tag">Şarküteri &amp; Meze<br>Suadiye · <%= settings.site_tagline || "1977'den beri" %></p>
+    </div>
+
+    <nav aria-label="Alt menü">
+      <p class="site-footer__title">Sayfalar</p>
+      <div class="site-footer__links">
+        <a href="/">Ana sayfa</a>
+        <a href="/hakkimizda">Hakkımızda</a>
+        <a href="/urunler">Ürünler</a>
+        <a href="/tabaklar">Tabaklar &amp; kampanyalar</a>
+        <a href="/iletisim">İletişim</a>
+      </div>
+    </nav>
+
+    <div>
+      <p class="site-footer__title">Mağaza</p>
+      <% if (settings.address) { %><p class="site-footer__text"><%= settings.address %></p><% } %>
+      <p class="site-footer__text">
+        <%= settings.hours_weekday || '' %><br>
+        <%= settings.hours_sunday || '' %>
+        <% if (settings.hours_note) { %><br><strong><%= settings.hours_note %></strong><% } %>
+      </p>
+    </div>
+
+    <div>
+      <p class="site-footer__title">İletişim</p>
+      <div class="site-footer__links">
+        <% if (settings.phone) { %><a href="tel:<%= telLink(settings.phone) %>"><%= settings.phone %></a><% } %>
+        <% if (settings.whatsapp) { %><a href="<%= waLink() %>" target="_blank" rel="noopener"><%= settings.whatsapp %> <span class="sr-only">(WhatsApp)</span></a><% } %>
+        <% if (settings.email) { %><a href="mailto:<%= settings.email %>"><%= settings.email %></a><% } %>
+        <% ['instagram_1', 'instagram_2'].forEach(function (key) { if (settings[key]) { %>
+          <a href="https://www.instagram.com/<%= settings[key] %>" target="_blank" rel="noopener">@<%= settings[key] %></a>
+        <% } }); %>
+        <% if (settings.facebook) { %><a href="<%= settings.facebook %>" target="_blank" rel="noopener">Facebook</a><% } %>
+      </div>
+    </div>
+  </div>
+
+  <div class="site-footer__bottom">
+    <span>© <%= new Date().getFullYear() %> <%= siteName %> · Tüm hakları saklıdır</span>
+    <span>Online satış yoktur · siparişler WhatsApp'tan alınır</span>
+  </div>
+</footer>

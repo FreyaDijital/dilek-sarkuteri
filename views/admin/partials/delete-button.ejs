@@ -1,0 +1,9 @@
+<%#
+  include('../partials/delete-button', { action, confirmText, label? })
+  Onay metni data özniteliğinde tutulur; addaki ' veya " işareti JS'i bozmaz.
+%>
+<form class="inline-form" action="<%= action %><%= action.indexOf('?') === -1 ? '?' : '&' %>_method=DELETE" method="post"
+      data-confirm="<%= confirmText %>" onsubmit="return confirm(this.dataset.confirm)">
+  <input type="hidden" name="_csrf" value="<%= csrfToken %>">
+  <button class="btn btn--danger btn--sm" type="submit"><%= locals.label || 'Sil' %></button>
+</form>

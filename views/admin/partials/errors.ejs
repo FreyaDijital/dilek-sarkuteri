@@ -1,0 +1,8 @@
+<% if (errors && errors.length) { %>
+  <div class="flash flash--error" role="alert">
+    <strong>Kaydedilemedi:</strong>
+    <ul>
+      <% errors.forEach(function (e) { %><li><%= e %></li><% }); %>
+    </ul>
+  </div>
+<% } %>

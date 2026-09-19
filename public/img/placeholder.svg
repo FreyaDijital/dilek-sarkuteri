@@ -1,0 +1,14 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="800" height="800" viewBox="0 0 800 800" preserveAspectRatio="xMidYMid slice">
+  <defs>
+    <pattern id="p" width="28" height="28" patternUnits="userSpaceOnUse" patternTransform="rotate(45)">
+      <rect width="28" height="28" fill="#E4D9C6"/>
+      <line x1="0" y1="0" x2="0" y2="28" stroke="#D8CAB2" stroke-width="10"/>
+    </pattern>
+  </defs>
+  <rect width="800" height="800" fill="url(#p)"/>
+  <g transform="translate(400 400)" font-family="Menlo, monospace" text-anchor="middle">
+    <rect x="-66" y="-28" width="132" height="56" rx="28" fill="none" stroke="#A3182B" stroke-width="2" opacity=".5"/>
+    <text y="9" font-size="24" letter-spacing="2" fill="#A3182B" opacity=".6">1977</text>
+    <text y="72" font-size="16" letter-spacing="5" fill="#6E645B" opacity=".75">GÖRSEL</text>
+  </g>
+</svg>

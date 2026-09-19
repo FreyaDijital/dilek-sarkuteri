@@ -1,0 +1,68 @@
+<header class="page-head">
+  <div>
+    <p class="eyebrow"><a href="/admin/kampanyalar">Kampanyalar</a></p>
+    <h1><%= isNew ? 'Yeni kampanya' : campaign.title || 'Kampanyayı düzenle' %></h1>
+  </div>
+</header>
+
+<%- include('../partials/errors') %>
+
+<form action="<%= isNew ? '/admin/kampanyalar' : '/admin/kampanyalar/' + campaign.id + '?_method=PUT' %>"
+      method="post" enctype="multipart/form-data">
+  <input type="hidden" name="_csrf" value="<%= csrfToken %>">
+
+  <section class="card">
+    <h2 class="card__title">Temel bilgiler</h2>
+    <div class="form-grid">
+      <div class="field field--full">
+        <label for="title">Başlık *</label>
+        <input type="text" id="title" name="title" value="<%= campaign.title || '' %>" maxlength="180" required>
+      </div>
+      <div class="field field--full">
+        <label for="short_desc">Kısa açıklama</label>
+        <input type="text" id="short_desc" name="short_desc" value="<%= campaign.short_desc || '' %>" maxlength="300">
+        <p class="hint">Kampanya kartında görünür.</p>
+      </div>
+      <div class="field field--full">
+        <label for="description">Açıklama</label>
+        <textarea id="description" name="description" rows="6"><%= campaign.description || '' %></textarea>
+        <p class="hint">Paragrafları boş bir satırla ayırın.</p>
+      </div>
+    </div>
+  </section>
+
+  <section class="card">
+    <h2 class="card__title">Görsel</h2>
+    <%- include('../partials/image-field', { record: campaign }) %>
+  </section>
+
+  <section class="card">
+    <h2 class="card__title">Yayın</h2>
+    <div class="form-grid">
+      <div class="field">
+        <label for="starts_at">Başlangıç tarihi</label>
+        <input type="date" id="starts_at" name="starts_at" value="<%= campaign.starts_at || '' %>">
+      </div>
+      <div class="field">
+        <label for="ends_at">Bitiş tarihi</label>
+        <input type="date" id="ends_at" name="ends_at" value="<%= campaign.ends_at || '' %>">
+      </div>
+      <p class="hint field--full">Boş bırakılan tarih sınır koymaz.</p>
+      <div class="field">
+        <label for="sort_order">Sıra</label>
+        <input type="number" id="sort_order" name="sort_order" value="<%= campaign.sort_order || 0 %>">
+      </div>
+      <div class="field checks">
+        <label class="check">
+          <input type="checkbox" name="is_published" value="1" <%= campaign.is_published ? 'checked' : '' %>>
+          Yayında
+        </label>
+      </div>
+    </div>
+  </section>
+
+  <div class="form-actions">
+    <button class="btn btn--primary" type="submit"><%= isNew ? 'Ekle' : 'Kaydet' %></button>
+    <a class="btn btn--ghost" href="/admin/kampanyalar">Vazgeç</a>
+  </div>
+</form>

@@ -1,0 +1,30 @@
+<%- include('../partials/page-hero', {
+  crumbs: [['/', 'Ana Sayfa'], ['/tabaklar#kampanyalar', 'Kampanyalar'], [null, campaign.title]],
+  eyebrow: 'Kampanya',
+  heading: campaign.title,
+  lead: campaign.short_desc || null,
+}) %>
+
+<section class="section section--cream section--tight">
+  <div class="container product-detail">
+    <figure class="product-detail__media" data-reveal="wipe">
+      <img src="<%= imageSrc(campaign.image) %>" alt="<%= campaign.title %>">
+    </figure>
+
+    <div class="product-detail__info" data-reveal="up">
+      <%- include('../partials/campaign-dates', { campaign }) %>
+
+      <% const paras = paragraphs(campaign.description); %>
+      <% if (paras.length) { %>
+        <div class="prose">
+          <% paras.forEach(function (p) { %><p><%= p %></p><% }); %>
+        </div>
+      <% } %>
+
+      <div class="btn-row">
+        <a class="btn btn--red" href="<%= waLink('Merhaba, ' + campaign.title + ' kampanyası hakkında bilgi almak istiyorum.') %>" target="_blank" rel="noopener">WhatsApp'tan bilgi al</a>
+        <a class="btn btn--ghost" href="/tabaklar#kampanyalar">Tüm kampanyalar</a>
+      </div>
+    </div>
+  </div>
+</section>
