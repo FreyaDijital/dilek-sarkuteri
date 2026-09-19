@@ -18,11 +18,7 @@
   <a class="site-nav__brand" href="/">
     <%# locals.* kullanımı bilinçli: middleware çalışmadığı bir render yolunda
         çıplak değişken ReferenceError atar ve asıl hatayı gizler. %>
-    <% if (locals.logoSrc) { %>
-      <img class="site-nav__logo" src="<%= locals.logoSrc %>" alt="<%= settings.site_title || 'Dilek Şarküteri' %>">
-    <% } else { %>
-      <span class="site-nav__mark" aria-hidden="true">1977</span>
-      <span class="site-nav__name"><%= settings.site_title || 'Dilek Şarküteri' %></span>
+    <img class="site-nav__logo" src="/img/logo.png" alt="Dilek Şarküteri">
     <% } %>
   </a>
 
