@@ -1,0 +1,36 @@
+<%#
+  Ana sayfa · Organizasyonlar
+  Metinler ve WhatsApp mesajı Panel > Ayarlar > Ana Sayfa · Organizasyonlar altından düzenlenir.
+%>
+<% if (settings.events_enabled !== '0' && (settings.events_title || settings.events_text)) { %>
+<% const items = lines(settings.events_items); %>
+<section class="section section--ink">
+  <div class="container events">
+    <div class="events__text" data-reveal="up">
+      <% if (settings.events_eyebrow) { %>
+        <p class="eyebrow eyebrow--gold"><%= settings.events_eyebrow %></p>
+      <% } %>
+      <h2 class="h2"><%= settings.events_title || 'Organizasyonlar' %></h2>
+      <% if (settings.events_text) { %>
+        <p class="lead"><%= settings.events_text %></p>
+      <% } %>
+      <div class="btn-row">
+        <a class="btn btn--light"
+           href="<%= waLink(settings.events_wa_message || 'Merhaba, organizasyon için toplu sipariş hakkında bilgi almak istiyorum.') %>"
+           target="_blank" rel="noopener"><%= settings.events_cta || "WhatsApp'tan teklif alın" %></a>
+        <% if (settings.phone) { %>
+          <a class="btn btn--ghost-light" href="tel:<%= telLink(settings.phone) %>">Ara: <%= settings.phone %></a>
+        <% } %>
+      </div>
+    </div>
+
+    <% if (items.length) { %>
+      <ul class="events__list" data-reveal="up" data-reveal-delay="120">
+        <% items.forEach(function (item) { %>
+          <li class="events__item"><%= item %></li>
+        <% }); %>
+      </ul>
+    <% } %>
+  </div>
+</section>
+<% } %>

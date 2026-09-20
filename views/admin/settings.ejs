@@ -6,10 +6,12 @@
   </div>
 </header>
 
+<%- include('./partials/errors') %>
+
 <form action="/admin/ayarlar" method="post" enctype="multipart/form-data">
   <input type="hidden" name="_csrf" value="<%= csrfToken %>">
 
-  <% Object.keys(groups).forEach(function (key) { %>
+  <% groupOrder.forEach(function (key) { %>
     <fieldset class="card">
       <legend class="card__legend"><%= groupLabels[key] || key %></legend>
       <div class="form-grid">
@@ -69,6 +71,14 @@
               <input type="<%= s.input_type %>" id="<%= s.setting_key %>" name="<%= s.setting_key %>" value="<%= s.setting_value || '' %>">
               <% if (s.setting_key === 'whatsapp_intl') { %>
                 <p class="hint">Sipariş butonları bu alanı kullanır. Başında 90, boşluksuz yazın (örn. 905424787605).</p>
+              <% } %>
+              <% if (s.setting_key === 'video_url') { %>
+                <p class="hint">
+                  Adres çubuğundaki linki olduğu gibi yapıştırın:
+                  <code>youtube.com/watch?v=XXX</code> veya <code>youtu.be/XXX</code>
+                  (<code>youtube.com/shorts/…</code> ve <code>vimeo.com/…</code> de çalışır).
+                  <strong>Boş bırakırsanız video bölümü ana sayfada hiç görünmez.</strong>
+                </p>
               <% } %>
             </div>
           <% } %>

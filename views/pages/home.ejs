@@ -18,11 +18,11 @@
 
 <%- include('../partials/marquee') %>
 
-<%# 01 — Hikâye %>
+<%# Hikâye %>
 <section class="section section--cream">
   <div class="container split">
     <div>
-      <p class="eyebrow" data-reveal="up">01 — Hikâyemiz</p>
+      <p class="eyebrow" data-reveal="up">Hikâyemiz</p>
       <h2 class="h2" data-reveal="up" data-reveal-delay="70">Bir semtin hafızası, bir tezgâhın ardında</h2>
       <p class="lead" data-reveal="up" data-reveal-delay="140">Dilek Şarküteri 1977'de, İstanbul'un bugünkü kalabalığından çok uzak bir Suadiye'de açıldı. Aradan geçen on yıllarda şehir değişti, sokaklar dönüştü, alışkanlıklar savruldu. Dükkân hep aynı yerde, aynı ciddiyetle kaldı.</p>
       <p class="lead" data-reveal="up" data-reveal-delay="200">Raflardaki peynirler, zeytinler, mezeler yalnızca birer gıda maddesi değil; bir semtin ve bir esnaflık ahlakının sessiz tanıkları.</p>
@@ -36,13 +36,13 @@
   </div>
 </section>
 
-<%# 02 — Kategoriler (panelden) %>
+<%# Kategoriler (panelden) %>
 <% if (categories.length) { %>
 <section class="section section--cream section--flush-top">
   <div class="container">
     <div class="section-head">
       <div>
-        <p class="eyebrow" data-reveal="up">02 — <%= categories.length === 3 ? 'Üç ana başlık' : 'Ana başlıklar' %></p>
+        <p class="eyebrow" data-reveal="up"><%= categories.length === 3 ? 'Üç ana başlık' : 'Ana başlıklar' %></p>
         <h2 class="h2" data-reveal="up" data-reveal-delay="70"><%= categories.map(function (c, i) { return i ? c.name.toLocaleLowerCase('tr-TR') : c.name; }).join(', ') %></h2>
       </div>
       <a class="link-arrow" data-reveal="up" data-reveal-delay="120" href="/urunler">Tüm ürünler →</a>
@@ -52,7 +52,6 @@
         <a class="cat-card" href="/urunler/<%= c.slug %>" data-reveal="up" data-reveal-delay="<%= (i % 3) * 90 %>">
           <img src="<%= c.imageSrc %>" alt="" loading="lazy">
           <span class="cat-card__body">
-            <% if (c.kicker) { %><span class="cat-card__kicker"><%= c.kicker %></span><% } %>
             <span class="cat-card__title"><%= c.name %></span>
             <% if (c.description) { %><span class="cat-card__desc"><%= c.description %></span><% } %>
           </span>
@@ -63,14 +62,19 @@
 </section>
 <% } %>
 
-<%- include('../partials/sourcing', { sourcingEyebrow: '03 — Tedarik' }) %>
+<%- include('../partials/sourcing') %>
 
-<%# 04 — Mutfak şeridi: öne çıkarılan ürünler, yoksa tasarımdaki örnekler %>
+<%# Mutfak şeridi: öne çıkarılan ürünler, yoksa tasarımdaki örnekler %>
 <section class="section section--sand section--clip">
   <div class="container">
-    <p class="eyebrow" data-reveal="up">04 — Mutfağımızdan</p>
-    <h2 class="h2" data-reveal="up" data-reveal-delay="70">Sami Usta'nın elinden</h2>
-    <p class="lead" data-reveal="up" data-reveal-delay="130">Dükkânın asıl ruhu mutfağında. Yüksel Bey ve onun yetiştirdiği Sami Usta'nın ellerinden çıkan mezeler yıllardır müdavimlerin dilinden düşmüyor.</p>
+    <div class="section-head">
+      <div>
+        <p class="eyebrow" data-reveal="up">Mutfağımızdan</p>
+        <h2 class="h2" data-reveal="up" data-reveal-delay="70">Sami Usta'nın elinden</h2>
+        <p class="lead" data-reveal="up" data-reveal-delay="130">Dükkânın asıl ruhu mutfağında. Yüksel Bey ve onun yetiştirdiği Sami Usta'nın ellerinden çıkan mezeler yıllardır müdavimlerin dilinden düşmüyor.</p>
+      </div>
+      <a class="link-arrow" data-reveal="up" data-reveal-delay="180" href="/urunler/meze">Tüm mezeler →</a>
+    </div>
   </div>
   <div class="rail" tabindex="0" aria-label="Mutfaktan ürünler">
     <% kitchen.forEach(function (item, i) { %>
@@ -85,16 +89,17 @@
       </figure>
     <% }); %>
   </div>
-  <div class="container">
-    <a class="link-arrow" href="/urunler/meze">Tüm mezeler →</a>
-  </div>
 </section>
 
-<%# 05 — Tabaklar %>
+<%- include('../partials/video') %>
+
+<%- include('../partials/dine-in') %>
+
+<%# Tabaklar %>
 <section class="section section--cream">
   <div class="container split split--center">
     <div data-reveal="left">
-      <p class="eyebrow">05 — Tabaklar &amp; kutular</p>
+      <p class="eyebrow">Tabaklar &amp; kutular</p>
       <h2 class="h2">Misafiriniz varsa, tabağı biz hazırlayalım</h2>
       <p class="lead">Peynir tahtası, şarküteri tabağı, bölmeli meze tabağı ve hediyeye uygun peynir kutuları. Kişi sayısını söylüyorsunuz, gerisini tezgâh düşünüyor.</p>
       <div class="btn-row">
@@ -109,10 +114,12 @@
   </div>
 </section>
 
-<%# 06 — Müdavimler %>
+<%- include('../partials/events') %>
+
+<%# Müdavimler %>
 <section class="section section--sand">
   <div class="container">
-    <p class="eyebrow" data-reveal="up">06 — Müdavimler</p>
+    <p class="eyebrow" data-reveal="up">Müdavimler</p>
     <h2 class="h2 h2--spaced" data-reveal="up" data-reveal-delay="70">Yıllardır aynı şeyi söylüyorlar</h2>
     <div class="testimonials">
       <figure class="testimonial" data-reveal="up">
@@ -131,4 +138,6 @@
   </div>
 </section>
 
-<%- include('../partials/visit', { visitEyebrow: '07 — Uğrayın' }) %>
+<%- include('../partials/branches') %>
+
+<%- include('../partials/visit') %>

@@ -1,0 +1,69 @@
+<header class="page-head">
+  <div>
+    <p class="eyebrow">Ana sayfa</p>
+    <h1>Şubeler</h1>
+    <p class="page-head__lead">Buradaki kartlar ana sayfadaki "Şubelerimiz" bölümünde görünür. Bölümün başlığını Ayarlar &gt; Şubeler'den düzenleyebilirsiniz.</p>
+  </div>
+  <div class="page-head__actions">
+    <a class="btn btn--primary" href="/admin/subeler/yeni">+ Yeni şube</a>
+  </div>
+</header>
+
+<section class="card card--flush">
+  <% if (!branches.length) { %>
+    <p class="empty">Henüz şube yok.</p>
+  <% } else { %>
+    <div class="table-wrap">
+      <table class="table">
+        <thead>
+          <tr>
+            <th class="num">Sıra</th><th>Şube</th><th>Adres</th>
+            <th>Telefon</th><th>Durum</th><th class="actions-col"><span class="sr-only">İşlem</span></th>
+          </tr>
+        </thead>
+        <tbody>
+          <% branches.forEach(function (b, i) { %>
+            <tr>
+              <td class="num">
+                <div class="reorder">
+                  <form class="inline-form" action="/admin/subeler/<%= b.id %>/tasi" method="post">
+                    <input type="hidden" name="_csrf" value="<%= csrfToken %>">
+                    <input type="hidden" name="yon" value="up">
+                    <button class="btn-icon" type="submit" title="Yukarı taşı"
+                            aria-label="<%= b.name %> yukarı taşı" <%= i === 0 ? 'disabled' : '' %>>↑</button>
+                  </form>
+                  <span class="reorder__value"><%= b.sort_order %></span>
+                  <form class="inline-form" action="/admin/subeler/<%= b.id %>/tasi" method="post">
+                    <input type="hidden" name="_csrf" value="<%= csrfToken %>">
+                    <input type="hidden" name="yon" value="down">
+                    <button class="btn-icon" type="submit" title="Aşağı taşı"
+                            aria-label="<%= b.name %> aşağı taşı" <%= i === branches.length - 1 ? 'disabled' : '' %>>↓</button>
+                  </form>
+                </div>
+              </td>
+              <td><a class="item__name" href="/admin/subeler/<%= b.id %>/duzenle"><%= b.name %></a></td>
+              <td><%= b.address || '—' %></td>
+              <td class="nowrap"><%= b.phone || '—' %></td>
+              <td class="badges">
+                <form class="inline-form" action="/admin/subeler/<%= b.id %>/durum" method="post">
+                  <input type="hidden" name="_csrf" value="<%= csrfToken %>">
+                  <button class="badge badge--btn <%= b.is_active ? 'badge--ok' : 'badge--muted' %>" type="submit"
+                          title="<%= b.is_active ? 'Ana sayfadan gizle' : 'Ana sayfada yayına al' %>">
+                    <%= b.is_active ? 'Aktif' : 'Pasif' %>
+                  </button>
+                </form>
+              </td>
+              <td class="actions">
+                <a class="btn btn--ghost btn--sm" href="/admin/subeler/<%= b.id %>/duzenle">Düzenle</a>
+                <%- include('../partials/delete-button', {
+                  action: '/admin/subeler/' + b.id,
+                  confirmText: b.name + ' şubesi silinecek. Onaylıyor musunuz?',
+                }) %>
+              </td>
+            </tr>
+          <% }); %>
+        </tbody>
+      </table>
+    </div>
+  <% } %>
+</section>

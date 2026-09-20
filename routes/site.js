@@ -4,6 +4,7 @@ const router = express.Router();
 const productModel = require('../models/product');
 const categoryModel = require('../models/category');
 const campaignModel = require('../models/campaign');
+const branchModel = require('../models/branch');
 const messageModel = require('../models/message');
 const csrf = require('../middleware/csrf');
 const { setFlash } = require('../middleware/locals');
@@ -12,11 +13,11 @@ const { excerpt, siteImage, imageUrl } = require('../utils/helpers');
 // Tabak/kutu ürünleri bu slug'daki kategoriden okunur (panelden açılabilir).
 const PLATTER_CATEGORY = 'tabaklar';
 
-// Ana sayfadaki kategori kartlarının üst yazısı ve görsel yüklenmemişse kullanılacak sabit görsel
+// Ana sayfadaki kategori kartlarında görsel yüklenmemişse kullanılacak sabit görsel
 const CATEGORY_DEFAULTS = {
-  meze: { kicker: 'Mutfağımızdan', image: 'meze-tabagi.jpg' },
-  peynir: { kicker: 'İzi sürülmüş', image: 'peynir-kutusu.jpg' },
-  sarkuteri: { kicker: 'Tezgâhtan', image: 'sarkuteri-tabagi.jpg' },
+  meze: { image: 'meze-tabagi.jpg' },
+  peynir: { image: 'peynir-kutusu.jpg' },
+  sarkuteri: { image: 'sarkuteri-tabagi.jpg' },
 };
 
 // Panelde öne çıkarılmış ürün yokken "Mutfağımızdan" şeridinde gösterilen tasarım içeriği
@@ -32,16 +33,17 @@ const KITCHEN_FALLBACK = [
 // ---- Ana sayfa ----
 router.get('/', async (req, res, next) => {
   try {
-    const [categories, featured] = await Promise.all([
+    const [categories, featured, branches] = await Promise.all([
       categoryModel.all({ activeOnly: true }),
       productModel.list({ activeOnly: true, featured: true, limit: 10 }),
+      branchModel.all({ activeOnly: true }),
     ]);
 
     const mainCategories = categories
       .filter((c) => c.slug !== PLATTER_CATEGORY)
       .map((c) => {
         const d = CATEGORY_DEFAULTS[c.slug] || {};
-        return { ...c, kicker: d.kicker || null, imageSrc: imageUrl(c.image) || siteImage(d.image) };
+        return { ...c, imageSrc: imageUrl(c.image) || siteImage(d.image) };
       });
 
     const kitchen = featured.length
@@ -53,7 +55,7 @@ router.get('/', async (req, res, next) => {
         }))
       : KITCHEN_FALLBACK.map(([name, image]) => ({ name, href: '/urunler/meze', image: siteImage(image), tag: 'Meze' }));
 
-    res.render('pages/home', { title: null, categories: mainCategories, kitchen });
+    res.render('pages/home', { title: null, categories: mainCategories, kitchen, branches });
   } catch (err) { next(err); }
 });
 

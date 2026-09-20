@@ -45,7 +45,7 @@
     <h2 class="h2 h2--spaced" data-reveal="up" data-reveal-delay="70">Tezgâhta bu aralar</h2>
 
     <% if (campaigns.length) { %>
-      <div class="campaign-grid">
+      <div class="campaign-grid<%= campaigns.length === 1 ? ' campaign-grid--single' : '' %>">
         <% campaigns.forEach(function (campaign, i) { %>
           <article class="campaign-card" data-reveal="up" data-reveal-delay="<%= (i % 3) * 90 %>">
             <a class="campaign-card__media" href="/kampanyalar/<%= campaign.slug %>" tabindex="-1" aria-hidden="true">

@@ -1,0 +1,66 @@
+<%#
+  Ana sayfa · Şubeler
+  Kartların içeriği `branches` tablosundan (Panel > Şubeler),
+  bölüm başlıkları settings'ten (Panel > Ayarlar > Ana Sayfa · Şubeler) gelir.
+  Boş alanlar hiç çizilmez; böylece bilgisi girilmemiş şube uydurma satır göstermez.
+%>
+<% if (settings.branches_enabled !== '0' && branches && branches.length) { %>
+<section class="section section--cream">
+  <div class="container">
+    <div class="section-head">
+      <div>
+        <% if (settings.branches_eyebrow) { %>
+          <p class="eyebrow" data-reveal="up"><%= settings.branches_eyebrow %></p>
+        <% } %>
+        <h2 class="h2" data-reveal="up" data-reveal-delay="70"><%= settings.branches_title || 'Şubelerimiz' %></h2>
+        <% if (settings.branches_text) { %>
+          <p class="lead" data-reveal="up" data-reveal-delay="130"><%= settings.branches_text %></p>
+        <% } %>
+      </div>
+    </div>
+
+    <div class="branch-grid">
+      <% branches.forEach(function (branch, i) { %>
+        <% const hours = lines(branch.hours); %>
+        <% const mapHref = branch.map_url || mapDirectionsUrl(branch.address); %>
+        <article class="branch" data-reveal="up" data-reveal-delay="<%= (i % 3) * 90 %>">
+          <h3 class="branch__name"><%= branch.name %></h3>
+
+          <% if (branch.address) { %>
+            <address class="branch__address"><%= branch.address %></address>
+          <% } %>
+
+          <% if (branch.phone || hours.length) { %>
+          <dl class="branch__rows">
+            <% if (branch.phone) { %>
+              <div class="branch__row">
+                <dt>Telefon</dt>
+                <dd><a href="tel:<%= telLink(branch.phone) %>"><%= branch.phone %></a></dd>
+              </div>
+            <% } %>
+            <% if (hours.length) { %>
+              <div class="branch__row">
+                <dt>Saatler</dt>
+                <dd>
+                  <% hours.forEach(function (line, n) { %><%= line %><% if (n < hours.length - 1) { %><br><% } %><% }); %>
+                </dd>
+              </div>
+            <% } %>
+          </dl>
+          <% } %>
+
+          <% if (branch.note) { %>
+            <p class="branch__note"><%= branch.note %></p>
+          <% } %>
+
+          <% if (mapHref) { %>
+            <p class="branch__more">
+              <a class="link-arrow" href="<%= mapHref %>" target="_blank" rel="noopener">Haritada gör →</a>
+            </p>
+          <% } %>
+        </article>
+      <% }); %>
+    </div>
+  </div>
+</section>
+<% } %>

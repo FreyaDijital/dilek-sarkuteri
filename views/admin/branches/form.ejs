@@ -1,0 +1,73 @@
+<header class="page-head">
+  <div>
+    <p class="eyebrow"><a href="/admin/subeler">Şubeler</a></p>
+    <h1><%= isNew ? 'Yeni şube' : branch.name || 'Şubeyi düzenle' %></h1>
+  </div>
+</header>
+
+<%- include('../partials/errors') %>
+
+<form action="<%= isNew ? '/admin/subeler' : '/admin/subeler/' + branch.id + '?_method=PUT' %>" method="post">
+  <input type="hidden" name="_csrf" value="<%= csrfToken %>">
+
+  <section class="card">
+    <h2 class="card__title">Şube bilgileri</h2>
+    <div class="form-grid">
+      <div class="field field--full">
+        <label for="name">Şube adı *</label>
+        <input type="text" id="name" name="name" value="<%= branch.name || '' %>" maxlength="100" required>
+      </div>
+
+      <div class="field field--full">
+        <label for="address">Adres</label>
+        <textarea id="address" name="address" rows="2"><%= branch.address || '' %></textarea>
+        <p class="hint">Boş bırakılırsa kartta adres satırı hiç görünmez.</p>
+      </div>
+
+      <div class="field">
+        <label for="phone">Telefon</label>
+        <input type="tel" id="phone" name="phone" value="<%= branch.phone || '' %>" maxlength="30">
+      </div>
+
+      <div class="field">
+        <label for="map_url">Harita bağlantısı</label>
+        <input type="url" id="map_url" name="map_url" value="<%= branch.map_url || '' %>" maxlength="500">
+        <p class="hint">Boş bırakılırsa adresten otomatik yol tarifi linki üretilir.</p>
+      </div>
+
+      <div class="field field--full">
+        <label for="hours">Çalışma saatleri</label>
+        <textarea id="hours" name="hours" rows="3"><%= branch.hours || '' %></textarea>
+        <p class="hint">Her satır kartta ayrı bir satır olur. Örn: "Pazartesi - Cumartesi: 08:00 - 21:00".</p>
+      </div>
+
+      <div class="field field--full">
+        <label for="note">Not</label>
+        <input type="text" id="note" name="note" value="<%= branch.note || '' %>" maxlength="200">
+        <p class="hint">Kartın altında küçük puntoyla çıkar. Örn: "Açılış hazırlıkları sürüyor".</p>
+      </div>
+    </div>
+  </section>
+
+  <section class="card">
+    <h2 class="card__title">Yayın</h2>
+    <div class="form-grid">
+      <div class="field">
+        <label for="sort_order">Sıra</label>
+        <input type="number" id="sort_order" name="sort_order" value="<%= branch.sort_order || 0 %>">
+        <p class="hint">Küçük sayı önce gösterilir.</p>
+      </div>
+      <div class="field checks">
+        <label class="check">
+          <input type="checkbox" name="is_active" value="1" <%= branch.is_active ? 'checked' : '' %>>
+          Ana sayfada göster
+        </label>
+      </div>
+    </div>
+  </section>
+
+  <div class="form-actions">
+    <button class="btn btn--primary" type="submit"><%= isNew ? 'Ekle' : 'Kaydet' %></button>
+    <a class="btn btn--ghost" href="/admin/subeler">Vazgeç</a>
+  </div>
+</form>

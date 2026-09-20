@@ -1,0 +1,45 @@
+<%#
+  Pop-up duyuru (Panel > Pop-up Duyuru).
+  `hidden` ile çizilir ve yalnızca site.js açar: JavaScript yoksa duyuru hiç
+  görünmez, çünkü kapatma düğmesi de çalışmazdı. Ziyaretçi kapattığında
+  data-popup-version değeri tarayıcısına yazılır ve aynı duyuru bir daha açılmaz.
+%>
+<% const popupOn = settings.popup_enabled === '1' && (settings.popup_title || settings.popup_text); %>
+<% if (popupOn) { %>
+<% const popupParas = paragraphs(settings.popup_text); %>
+<div class="popup" hidden data-popup data-popup-version="<%= popupVersion(settings) %>">
+  <div class="popup__backdrop" data-popup-close></div>
+
+  <div class="popup__box" role="dialog" aria-modal="true" aria-labelledby="popup-title">
+    <button class="popup__close" type="button" data-popup-close>
+      <span aria-hidden="true">×</span>
+      <span class="sr-only">Duyuruyu kapat</span>
+    </button>
+
+    <% if (hasImage(settings.popup_image)) { %>
+      <div class="popup__media">
+        <img src="<%= imageSrc(settings.popup_image) %>" alt="">
+      </div>
+    <% } %>
+
+    <div class="popup__body">
+      <h2 class="popup__title" id="popup-title"><%= settings.popup_title || 'Duyuru' %></h2>
+
+      <% if (popupParas.length) { %>
+        <div class="popup__text">
+          <% popupParas.forEach(function (p) { %><p><%= p %></p><% }); %>
+        </div>
+      <% } %>
+
+      <div class="popup__actions">
+        <% if (settings.popup_button_text && settings.popup_button_url) { %>
+          <a class="btn btn--red" href="<%= settings.popup_button_url %>"
+             <% if (/^https?:\/\//i.test(settings.popup_button_url)) { %>target="_blank" rel="noopener"<% } %>
+             data-popup-close><%= settings.popup_button_text %></a>
+        <% } %>
+        <button class="btn btn--ghost" type="button" data-popup-close>Kapat</button>
+      </div>
+    </div>
+  </div>
+</div>
+<% } %>

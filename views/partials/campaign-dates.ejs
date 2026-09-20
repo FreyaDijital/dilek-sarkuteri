@@ -1,12 +1,13 @@
 <% if (campaign.starts_at || campaign.ends_at) { %>
   <p class="campaign-dates">
     <% if (campaign.starts_at && campaign.ends_at) { %>
-      <time datetime="<%= campaign.starts_at %>"><%= formatDate(campaign.starts_at) %></time> –
-      <time datetime="<%= campaign.ends_at %>"><%= formatDate(campaign.ends_at) %></time>
+      <time datetime="<%= campaign.starts_at %>"><%= formatDateShort(campaign.starts_at) %></time>
+      <span aria-hidden="true">–</span>
+      <time datetime="<%= campaign.ends_at %>"><%= formatDateShort(campaign.ends_at) %></time>
     <% } else if (campaign.ends_at) { %>
-      Son gün: <time datetime="<%= campaign.ends_at %>"><%= formatDate(campaign.ends_at) %></time>
+      Son gün: <time datetime="<%= campaign.ends_at %>"><%= formatDateShort(campaign.ends_at) %></time>
     <% } else { %>
-      Başlangıç: <time datetime="<%= campaign.starts_at %>"><%= formatDate(campaign.starts_at) %></time>
+      <time datetime="<%= campaign.starts_at %>"><%= formatDateShort(campaign.starts_at) %></time>'den itibaren
     <% } %>
   </p>
 <% } %>

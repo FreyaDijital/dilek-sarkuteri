@@ -10,6 +10,24 @@
       <p class="eyebrow">Dükkânımız</p>
       <% if (settings.address) { %>
         <address class="contact-info__address"><%= settings.address %></address>
+        <% const directions = mapDirectionsUrl(settings.address); %>
+        <% if (directions) { %>
+          <p class="more"><a class="link-arrow" href="<%= directions %>" target="_blank" rel="noopener">Yol tarifi al →</a></p>
+        <% } %>
+      <% } %>
+
+      <%# Saat satırları panelde "Pazartesi - Cumartesi: 08:00 - 21:00" gibi
+          kendi etiketiyle girildiği için olduğu gibi basılır. %>
+      <% const hours = [settings.hours_weekday, settings.hours_sunday].filter(Boolean); %>
+      <% if (hours.length) { %>
+        <div class="contact-hours">
+          <h2 class="contact-hours__title">Çalışma saatleri</h2>
+          <ul class="contact-hours__list">
+            <% hours.forEach(function (line) { %>
+              <li class="contact-hours__row"><%= line %></li>
+            <% }); %>
+          </ul>
+        </div>
       <% } %>
       <% if (settings.hours_note) { %><p class="note note--alert"><%= settings.hours_note %></p><% } %>
 
@@ -72,10 +90,10 @@
   </div>
 </section>
 
-<% const mapSrc = mapEmbedSrc(settings.map_embed); %>
-<% if (mapSrc) { %>
+<% const embedSrc = mapSrc(settings.map_embed, settings.address); %>
+<% if (embedSrc) { %>
   <div class="map">
-    <iframe src="<%= mapSrc %>" title="Dükkân konumu" loading="lazy"
+    <iframe src="<%= embedSrc %>" title="Dükkân konumu" loading="lazy"
             referrerpolicy="no-referrer-when-downgrade" allowfullscreen></iframe>
   </div>
 <% } %>

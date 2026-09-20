@@ -1,0 +1,95 @@
+<header class="page-head">
+  <div>
+    <p class="eyebrow">Site öğeleri</p>
+    <h1>Pop-up Duyuru</h1>
+    <p class="page-head__lead">
+      Sitenin her sayfasında, ziyaretçiye <strong>bir kez</strong> açılan duyuru kutusu.
+      Kapatan kişiye tekrar gösterilmez; metni ya da görseli değiştirirseniz yeni duyuru sayılır ve herkese bir kez daha açılır.
+    </p>
+  </div>
+</header>
+
+<%- include('./partials/errors') %>
+
+<form action="/admin/duyuru" method="post" enctype="multipart/form-data">
+  <input type="hidden" name="_csrf" value="<%= csrfToken %>">
+
+  <fieldset class="card">
+    <legend class="card__legend">Yayın</legend>
+    <div class="form-grid">
+      <div class="field field--full">
+        <label class="check">
+          <input type="checkbox" name="popup_enabled" value="1" <%= popup.popup_enabled === '1' ? 'checked' : '' %>>
+          Pop-up duyuruyu sitede göster
+        </label>
+        <p class="hint">Kapalıyken duyuru hiç çizilmez. Başlık ve metin boşsa da görünmez.</p>
+      </div>
+    </div>
+  </fieldset>
+
+  <fieldset class="card">
+    <legend class="card__legend">İçerik</legend>
+    <div class="form-grid">
+      <div class="field field--full">
+        <label for="popup_title">Başlık</label>
+        <input type="text" id="popup_title" name="popup_title" value="<%= popup.popup_title || '' %>" maxlength="120">
+      </div>
+
+      <div class="field field--full">
+        <label for="popup_text">Metin</label>
+        <textarea id="popup_text" name="popup_text" rows="4"><%= popup.popup_text || '' %></textarea>
+        <p class="hint">Boş satırla ayırdığınız bölümler ayrı paragraf olur.</p>
+      </div>
+
+      <div class="field">
+        <label for="popup_button_text">Buton yazısı</label>
+        <input type="text" id="popup_button_text" name="popup_button_text" value="<%= popup.popup_button_text || '' %>" maxlength="60">
+        <p class="hint">Boş bırakılırsa duyuruda sadece "Kapat" olur.</p>
+      </div>
+
+      <div class="field">
+        <label for="popup_button_url">Buton linki</label>
+        <input type="url" id="popup_button_url" name="popup_button_url" value="<%= popup.popup_button_url || '' %>" maxlength="500">
+        <p class="hint">Örn. <code>https://www.trendyol.com/...</code> ya da site içi bir adres: <code>/tabaklar</code>.</p>
+      </div>
+    </div>
+  </fieldset>
+
+  <fieldset class="card">
+    <legend class="card__legend">Görsel</legend>
+    <div class="form-grid">
+      <div class="field field--full">
+        <div class="image-field">
+          <% if (hasImage(popup.popup_image)) { %>
+            <img class="image-field__preview" src="<%= imageSrc(popup.popup_image) %>" alt="Mevcut duyuru görseli" data-preview-target="popup_image">
+          <% } else { %>
+            <span class="image-field__preview image-field__preview--empty" aria-hidden="true" data-preview-target="popup_image">Görsel yok</span>
+          <% } %>
+
+          <div class="image-field__controls">
+            <div class="field">
+              <label for="popup_image_file">Bilgisayardan yükle</label>
+              <input type="file" id="popup_image_file" name="popup_image_file"
+                     accept="image/jpeg,image/png,image/webp,image/gif"
+                     data-preview-for="popup_image">
+              <p class="hint">JPG, PNG, WEBP veya GIF. En fazla 5 MB. Görsel isteğe bağlıdır.</p>
+            </div>
+
+            <% if (hasImage(popup.popup_image)) { %>
+              <label class="check">
+                <input type="checkbox" name="popup_image_remove" value="1" data-remove-for="popup_image">
+                Görseli kaldır
+              </label>
+              <p class="hint">Değiştirirseniz eski dosya sunucudan silinir.</p>
+            <% } %>
+          </div>
+        </div>
+      </div>
+    </div>
+  </fieldset>
+
+  <div class="form-actions">
+    <button class="btn btn--primary" type="submit">Kaydet</button>
+    <a class="btn btn--ghost" href="/" target="_blank" rel="noopener">Siteyi gör ↗</a>
+  </div>
+</form>

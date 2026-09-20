@@ -1,0 +1,31 @@
+<%#
+  Ana sayfa · Tanıtım videosu (Panel > Tanıtım Videosu).
+  Link boşsa ya da tanınmayan bir adresse videoEmbed null döner ve bölüm hiç çizilmez.
+%>
+<% const video = videoEmbed(settings.video_url); %>
+<% if (video) { %>
+<section class="section section--ink">
+  <div class="container">
+    <div class="video-head">
+      <% if (settings.video_eyebrow) { %>
+        <p class="eyebrow eyebrow--gold" data-reveal="up"><%= settings.video_eyebrow %></p>
+      <% } %>
+      <% if (settings.video_title) { %>
+        <h2 class="h2" data-reveal="up" data-reveal-delay="70"><%= settings.video_title %></h2>
+      <% } %>
+      <% if (settings.video_text) { %>
+        <p class="lead" data-reveal="up" data-reveal-delay="130"><%= settings.video_text %></p>
+      <% } %>
+    </div>
+
+    <div class="video-embed" data-reveal="scale">
+      <iframe src="<%= video.src %>"
+              title="<%= settings.video_title || (settings.site_title || 'Dilek Şarküteri') + ' tanıtım videosu' %>"
+              loading="lazy"
+              referrerpolicy="strict-origin-when-cross-origin"
+              allow="accelerometer; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
+              allowfullscreen></iframe>
+    </div>
+  </div>
+</section>
+<% } %>

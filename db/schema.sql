@@ -118,6 +118,34 @@ BEGIN
 END;
 
 -- ------------------------------------------------------------
+-- branches : Şubeler (ana sayfadaki şube kartları)
+--   Adres/telefon/saat alanları boş bırakılabilir; kartta yalnızca
+--   dolu olanlar çizilir. map_url boşsa adresten yol tarifi linki üretilir.
+-- ------------------------------------------------------------
+CREATE TABLE IF NOT EXISTS branches (
+  id          INTEGER PRIMARY KEY AUTOINCREMENT,
+  name        TEXT    NOT NULL,
+  address     TEXT,
+  phone       TEXT,
+  hours       TEXT,                                    -- satır başına bir aralık
+  map_url     TEXT,                                    -- Google Haritalar bağlantısı
+  note        TEXT,                                    -- "Açılış hazırlıkları sürüyor" gibi
+  sort_order  INTEGER NOT NULL DEFAULT 0,
+  is_active   INTEGER NOT NULL DEFAULT 1 CHECK (is_active IN (0,1)),
+  created_at  TEXT    NOT NULL DEFAULT (datetime('now')),
+  updated_at  TEXT    NOT NULL DEFAULT (datetime('now'))
+);
+
+CREATE INDEX IF NOT EXISTS ix_branches_active_order
+  ON branches (is_active, sort_order);
+
+CREATE TRIGGER IF NOT EXISTS trg_branches_updated
+AFTER UPDATE ON branches FOR EACH ROW
+BEGIN
+  UPDATE branches SET updated_at = datetime('now') WHERE id = OLD.id;
+END;
+
+-- ------------------------------------------------------------
 -- settings : İletişim bilgileri, çalışma saatleri, sosyal medya
 --   Anahtar/değer deposu - panelden düzenlenir.
 -- ------------------------------------------------------------

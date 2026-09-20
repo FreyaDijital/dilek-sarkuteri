@@ -1,0 +1,29 @@
+<%#
+  Ana sayfa · Dükkânda Yiyin
+  Metinler Panel > Ayarlar > Ana Sayfa · Dükkânda Yiyin altından düzenlenir.
+%>
+<% if (settings.dine_in_enabled !== '0' && (settings.dine_in_title || settings.dine_in_text)) { %>
+<% const items = lines(settings.dine_in_items); %>
+<section class="section section--sand">
+  <div class="container split split--center">
+    <div data-reveal="left">
+      <% if (settings.dine_in_eyebrow) { %>
+        <p class="eyebrow"><%= settings.dine_in_eyebrow %></p>
+      <% } %>
+      <h2 class="h2"><%= settings.dine_in_title || 'Dükkânda yiyin' %></h2>
+      <% if (settings.dine_in_text) { %>
+        <p class="lead"><%= settings.dine_in_text %></p>
+      <% } %>
+      <% if (items.length) { %>
+        <ul class="tag-list">
+          <% items.forEach(function (item) { %><li class="tag-list__item"><%= item %></li><% }); %>
+        </ul>
+      <% } %>
+    </div>
+    <div class="duo" data-reveal="scale">
+      <img src="<%= siteImage('sandvic.jpg') %>" alt="Dilek sandviç" loading="lazy">
+      <img src="<%= siteImage('peynir-tabagi.jpg') %>" alt="Peynir tabağı" loading="lazy">
+    </div>
+  </div>
+</section>
+<% } %>

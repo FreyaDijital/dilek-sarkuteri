@@ -54,6 +54,8 @@ router.get('/', async (req, res, next) => {
 router.use('/urunler', require('./products'));
 router.use('/kategoriler', require('./categories'));
 router.use('/kampanyalar', require('./campaigns'));
+router.use('/subeler', require('./branches'));
+router.use('/duyuru', require('./popup'));
 router.use('/ayarlar', require('./settings'));
 router.use('/mesajlar', require('./messages'));
 
