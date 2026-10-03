@@ -560,7 +560,8 @@ body:not(:has(.hero, .page-hero)) main { padding-top: 72px; }
   display: grid; grid-template-columns: repeat(auto-fit, minmax(min(100%, 340px), 1fr));
   gap: clamp(32px, 5vw, 72px); align-items: start;
 }
-.product-detail__media { overflow: hidden; background: var(--sand); }
+.product-detail__media-col { display: grid; gap: clamp(12px, 1.6vw, 20px); min-width: 0; }
+.product-detail__media { overflow: hidden; background: var(--sand); margin: 0; }
 .product-detail__media img { width: 100%; aspect-ratio: 1 / 1; object-fit: cover; }
 .product-detail__price { font: 500 clamp(26px, 2.6vw, 38px)/1.1 var(--serif); color: var(--red); }
 .product-detail .btn-row { margin-top: 26px; }
@@ -808,10 +809,22 @@ textarea::placeholder { color: rgba(110, 100, 91, .8); }
 .js [data-reveal="up"] { transform: translateY(28px); }
 .js [data-reveal="left"] { transform: translateX(-28px); }
 .js [data-reveal="scale"] { transform: scale(.96); }
-.js [data-reveal="wipe"] { opacity: 1; clip-path: inset(0 0 100% 0); }
 .js [data-reveal].is-in { opacity: 1; transform: none; }
-/* Kırpma yalnızca wipe'ta: diğerlerinde satır kutusu dışına taşan İ noktası kesilirdi */
-.js [data-reveal="wipe"].is-in { clip-path: inset(0 0 0 0); }
+
+/*
+  Wipe: kırpma gözlenen kutuya DEĞİL içeriğine uygulanır.
+  Sebep: IntersectionObserver tamamen kırpılmış (sıfır yükseklikli) bir kutuyu
+  "göründü" saymaz; kırpma elemanın kendisindeyken threshold'a hiç ulaşılamaz ve
+  eleman kendi açılma animasyonunu asla tetikleyemez, görsel kalıcı olarak gizli kalırdı.
+  Kutu açıkta kalınca gözlemci tetikleniyor, perde efekti ise aynen korunuyor.
+  Kırpma yalnızca wipe'ta: diğerlerinde satır kutusu dışına taşan İ noktası kesilirdi.
+*/
+.js [data-reveal="wipe"] { opacity: 1; }
+.js [data-reveal="wipe"] > * {
+  clip-path: inset(0 0 100% 0);
+  transition: clip-path 1.2s var(--ease);
+}
+.js [data-reveal="wipe"].is-in > * { clip-path: inset(0 0 0 0); }
 
 @keyframes dsMarquee { from { transform: translateX(0); } to { transform: translateX(-50%); } }
 @keyframes dsBob {
@@ -824,6 +837,7 @@ textarea::placeholder { color: rgba(110, 100, 91, .8); }
   *, *::before, *::after { transition-duration: .01ms !important; animation: none !important; }
   .js [data-reveal],
   .js [data-reveal].is-in { opacity: 1; transform: none; clip-path: none; }
+  .js [data-reveal="wipe"] > * { clip-path: none; }
 }
 
 /* Fiyatlar gizliyken sipariş bağlantısı sağda kalsın */
@@ -847,3 +861,22 @@ textarea::placeholder { color: rgba(110, 100, 91, .8); }
   color: var(--red);
 }
 .lead--center { max-width: 62ch; margin-inline: auto; text-align: center; text-wrap: pretty; }
+
+/* ---- Fotoğraf galerisi (Panel > Galeriler) ---- */
+.photo-grid {
+  display: grid; gap: clamp(10px, 1.4vw, 18px); list-style: none; margin: 0; padding: 0;
+  grid-template-columns: repeat(auto-fill, minmax(min(100%, 170px), 1fr));
+}
+.photo-grid--wide { grid-template-columns: repeat(auto-fill, minmax(min(100%, 240px), 1fr)); }
+/* Yarım genişlikte bir kolona (ör. Dükkânda Yiyin) sığsın diye daha küçük kareler */
+.photo-grid--compact { grid-template-columns: repeat(auto-fill, minmax(min(100%, 112px), 1fr)); gap: 8px; }
+.photo-grid--compact .photo-grid__item img { aspect-ratio: 1 / 1; }
+.photo-grid__item { display: grid; gap: 7px; margin: 0; }
+.photo-grid__item img {
+  width: 100%; aspect-ratio: 4 / 5; object-fit: cover; background: var(--sand);
+}
+.section--sand .photo-grid__item img { background: var(--cream); }
+.photo-grid__caption { font: 400 13px/1.4 var(--sans); color: var(--muted); }
+
+.gallery-group + .gallery-group { margin-top: clamp(28px, 4vw, 52px); }
+.gallery-group__title { font: 600 clamp(18px, 2vw, 22px)/1.2 var(--serif); margin: 0 0 14px; }

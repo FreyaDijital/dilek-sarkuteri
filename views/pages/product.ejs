@@ -11,9 +11,15 @@
 
 <section class="section section--cream section--tight">
   <div class="container product-detail">
-    <figure class="product-detail__media" data-reveal="wipe">
-      <img src="<%= imageSrc(product.image) %>" alt="<%= product.name %>">
-    </figure>
+    <div class="product-detail__media-col">
+      <figure class="product-detail__media" data-reveal="wipe">
+        <img src="<%= imageSrc(product.image) %>" alt="<%= product.name %>">
+      </figure>
+      <%# Ek fotoğraflar: Panel > Galeriler > Ürün fotoğrafları %>
+      <% if (photos.length) { %>
+        <%- include('../partials/photo-gallery', { photos, columns: 'compact' }) %>
+      <% } %>
+    </div>
 
     <div class="product-detail__info" data-reveal="up">
       <% if (product.category_name) { %><p class="eyebrow"><%= product.category_name %></p><% } %>
@@ -38,7 +44,7 @@
         </div>
       <% } %>
 
-      <p class="note">Online satış yoktur. Siparişlerinizi WhatsApp'tan iletebilir ya da dükkâna uğrayabilirsiniz.</p>
+      <p class="note">Siparişlerinizi WhatsApp'tan iletebilir ya da dükkâna uğrayabilirsiniz.</p>
     </div>
   </div>
 </section>

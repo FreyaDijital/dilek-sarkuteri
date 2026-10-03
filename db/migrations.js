@@ -174,6 +174,64 @@ const MIGRATIONS = [
       `);
     },
   },
+  {
+    name: '005-products-plu-brand',
+    // Tezgâh etiketindeki PLU kodu ve ürünün markası (urunler.csv içe aktarımı).
+    up(db) {
+      const cols = db.query('PRAGMA table_info(products)').map((c) => c.name);
+      if (!cols.includes('plu')) {
+        db.exec('ALTER TABLE products ADD COLUMN plu TEXT');
+      }
+      if (!cols.includes('brand')) {
+        db.exec('ALTER TABLE products ADD COLUMN brand TEXT');
+      }
+      db.exec('CREATE INDEX IF NOT EXISTS ix_products_plu ON products (plu)');
+    },
+  },
+  {
+    name: '006-gallery-photos',
+    // Fotoğraf galerileri: ürün ek fotoğrafları, Tabaklar sayfası grupları ve
+    // Dükkânda Yiyin şeridi. Üçü de aynı tabloda, `gallery` sütunuyla ayrılır.
+    up(db) {
+      db.exec(`
+        CREATE TABLE IF NOT EXISTS gallery_photos (
+          id          INTEGER PRIMARY KEY AUTOINCREMENT,
+          gallery     TEXT    NOT NULL CHECK (gallery IN ('urun','tabak','sandvic')),
+          product_id  INTEGER REFERENCES products (id) ON DELETE CASCADE,
+          group_name  TEXT,
+          image       TEXT    NOT NULL,
+          caption     TEXT,
+          sort_order  INTEGER NOT NULL DEFAULT 0,
+          is_active   INTEGER NOT NULL DEFAULT 1 CHECK (is_active IN (0,1)),
+          created_at  TEXT    NOT NULL DEFAULT (datetime('now')),
+          updated_at  TEXT    NOT NULL DEFAULT (datetime('now')),
+          UNIQUE (gallery, image)
+        );
+
+        CREATE INDEX IF NOT EXISTS ix_gallery_photos_gallery
+          ON gallery_photos (gallery, is_active, sort_order);
+        CREATE INDEX IF NOT EXISTS ix_gallery_photos_product
+          ON gallery_photos (product_id);
+
+        CREATE TRIGGER IF NOT EXISTS trg_gallery_photos_updated
+        AFTER UPDATE ON gallery_photos FOR EACH ROW
+        BEGIN
+          UPDATE gallery_photos SET updated_at = datetime('now') WHERE id = OLD.id;
+        END;
+      `);
+    },
+  },
+  {
+    name: '007-clear-imported-photo-captions',
+    // foto-eslestirme.csv'deki `not` sütunu ilk içe aktarımda caption olarak
+    // yazılmıştı; oysa o sütun eşleştirmeyi yapanın kendi çalışma notu
+    // ("ikinci kare", "kontrol et"), sitede gösterilecek bir açıklama değil.
+    // İçe aktarım artık caption'a dokunmuyor; burada yazılmış olanlar silinir.
+    // Panelden girilen yazılar bu göçten sonra geldiği için etkilenmez.
+    up(db) {
+      db.run('UPDATE gallery_photos SET caption = NULL WHERE caption IS NOT NULL');
+    },
+  },
 ];
 
 function ensureTable(db) {

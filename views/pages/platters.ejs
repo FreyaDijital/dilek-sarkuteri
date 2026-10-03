@@ -39,7 +39,29 @@
   </div>
 </section>
 
-<section class="section section--sand" id="kampanyalar">
+<%#
+  Tabak galerileri: Panel > Galeriler > "Tabaklar sayfası". Her grup adı
+  (Peynir Tabağı, Meze Tabağı, ...) kendi başlığıyla bir galeri olur.
+%>
+<% if (galleries.length) { %>
+<section class="section section--sand section--tight" id="galeri">
+  <div class="container">
+    <p class="eyebrow" data-reveal="up">Tezgâhtan</p>
+    <h2 class="h2 h2--spaced" data-reveal="up" data-reveal-delay="70">Hazırladığımız tabaklar</h2>
+
+    <% galleries.forEach(function (group) { %>
+      <div class="gallery-group">
+        <% if (group.name) { %>
+          <h3 class="gallery-group__title" data-reveal="up"><%= group.name %></h3>
+        <% } %>
+        <%- include('../partials/photo-gallery', { photos: group.photos }) %>
+      </div>
+    <% }); %>
+  </div>
+</section>
+<% } %>
+
+<section class="section section--cream" id="kampanyalar">
   <div class="container">
     <p class="eyebrow" data-reveal="up">Kampanyalar</p>
     <h2 class="h2 h2--spaced" data-reveal="up" data-reveal-delay="70">Tezgâhta bu aralar</h2>

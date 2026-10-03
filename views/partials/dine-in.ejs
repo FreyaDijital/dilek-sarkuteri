@@ -20,10 +20,21 @@
         </ul>
       <% } %>
     </div>
-    <div class="duo" data-reveal="scale">
-      <img src="<%= siteImage('sandvic.jpg') %>" alt="Dilek sandviç" loading="lazy">
-      <img src="<%= siteImage('peynir-tabagi.jpg') %>" alt="Peynir tabağı" loading="lazy">
-    </div>
+    <%#
+      Panel > Galeriler > "Dükkânda Yiyin" altına fotoğraf eklendiyse galeri çizilir;
+      hiç fotoğraf yoksa tasarımdaki sabit iki görsel durur.
+    %>
+    <% const photos = locals.dineInPhotos || []; %>
+    <% if (photos.length) { %>
+      <div data-reveal="scale">
+        <%- include('photo-gallery', { photos, columns: 'compact' }) %>
+      </div>
+    <% } else { %>
+      <div class="duo" data-reveal="scale">
+        <img src="<%= siteImage('sandvic.jpg') %>" alt="Dilek sandviç" loading="lazy">
+        <img src="<%= siteImage('peynir-tabagi.jpg') %>" alt="Peynir tabağı" loading="lazy">
+      </div>
+    <% } %>
   </div>
 </section>
 <% } %>

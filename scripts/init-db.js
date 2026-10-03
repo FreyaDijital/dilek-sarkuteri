@@ -1,34 +1,33 @@
 /**
  * Veritabanı kurulum script'i (SQLite).
- *   npm run db:init           -> sadece şema
- *   npm run db:init -- --seed -> şema + başlangıç verileri
+ *   npm run db:init           -> şema + göçler (+ veritabanı boşsa başlangıç verileri)
+ *   npm run db:init -- --seed -> başlangıç verilerini her durumda yeniden uygula
  *
- * Tekrar çalıştırmak güvenlidir: tüm ifadeler IF NOT EXISTS / ON CONFLICT ile yazılmıştır.
+ * Uygulama artık açılışta aynı işi kendi yapıyor (bkz. db/bootstrap.js), bu yüzden
+ * canlı sunucuda bu script'i elle çalıştırmak gerekmez. Yerelde veritabanını
+ * sıfırdan kurmak ya da --seed ile başlangıç metinlerini tazelemek için durur.
+ *
+ * Tekrar çalıştırmak güvenlidir.
  */
 require('dotenv').config();
-const fs = require('fs');
-const path = require('path');
 const db = require('../config/db');
-const migrations = require('../db/migrations');
+const bootstrap = require('../db/bootstrap');
 
 function main() {
-  const withSeed = process.argv.includes('--seed');
-  const files = ['schema.sql', ...(withSeed ? ['seed.sql'] : [])];
+  // --seed: seed.sql'i veritabanı dolu olsa da uygula.
+  const seed = process.argv.includes('--seed') ? true : 'auto';
+  const { applied, seeded, fresh } = bootstrap(db, { seed });
 
-  // Sıra önemli: önce tablolar, sonra şema göçleri, en son veriler.
-  const schema = fs.readFileSync(path.join(__dirname, '..', 'db', 'schema.sql'), 'utf8');
-  db.exec(schema);
   console.log('✓ schema.sql çalıştırıldı');
-
-  const applied = migrations.run(db);
   console.log(applied.length
     ? `✓ ${applied.length} göç uygulandı: ${applied.join(', ')}`
     : '✓ göçler güncel');
-
-  for (const file of files.filter((f) => f !== 'schema.sql')) {
-    const sql = fs.readFileSync(path.join(__dirname, '..', 'db', file), 'utf8');
-    db.exec(sql);
-    console.log(`✓ ${file} çalıştırıldı`);
+  if (seeded) {
+    console.log(fresh
+      ? '✓ seed.sql çalıştırıldı (ilk kurulum)'
+      : '✓ seed.sql çalıştırıldı (--seed)');
+  } else {
+    console.log('· seed.sql atlandı (veritabanı zaten dolu, --seed ile zorlayabilirsiniz)');
   }
 
   console.log(`\nVeritabanı: ${db.DB_PATH}`);

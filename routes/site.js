@@ -5,6 +5,7 @@ const productModel = require('../models/product');
 const categoryModel = require('../models/category');
 const campaignModel = require('../models/campaign');
 const branchModel = require('../models/branch');
+const galleryModel = require('../models/gallery');
 const messageModel = require('../models/message');
 const csrf = require('../middleware/csrf');
 const { setFlash } = require('../middleware/locals');
@@ -33,10 +34,11 @@ const KITCHEN_FALLBACK = [
 // ---- Ana sayfa ----
 router.get('/', async (req, res, next) => {
   try {
-    const [categories, featured, branches] = await Promise.all([
+    const [categories, featured, branches, dineInPhotos] = await Promise.all([
       categoryModel.all({ activeOnly: true }),
       productModel.list({ activeOnly: true, featured: true, limit: 10 }),
       branchModel.all({ activeOnly: true }),
+      galleryModel.list({ gallery: 'sandvic', activeOnly: true }),
     ]);
 
     const mainCategories = categories
@@ -55,7 +57,9 @@ router.get('/', async (req, res, next) => {
         }))
       : KITCHEN_FALLBACK.map(([name, image]) => ({ name, href: '/urunler/meze', image: siteImage(image), tag: 'Meze' }));
 
-    res.render('pages/home', { title: null, categories: mainCategories, kitchen, branches });
+    res.render('pages/home', {
+      title: null, categories: mainCategories, kitchen, branches, dineInPhotos,
+    });
   } catch (err) { next(err); }
 });
 
@@ -122,6 +126,7 @@ router.get('/urun/:slug', async (req, res, next) => {
       description: product.short_desc || excerpt(product.description, 160) || undefined,
       product,
       related,
+      photos: await galleryModel.list({ gallery: 'urun', productId: product.id, activeOnly: true }),
     });
   } catch (err) { next(err); }
 });
@@ -130,11 +135,12 @@ router.get('/urun/:slug', async (req, res, next) => {
 router.get('/tabaklar', async (req, res, next) => {
   try {
     const category = await categoryModel.findBySlug(PLATTER_CATEGORY);
-    const [platters, campaigns] = await Promise.all([
+    const [platters, campaigns, galleries] = await Promise.all([
       category && category.is_active
         ? productModel.list({ activeOnly: true, categoryId: category.id })
         : [],
       campaignModel.listActive(),
+      galleryModel.groups('tabak'),
     ]);
 
     res.render('pages/platters', {
@@ -142,6 +148,7 @@ router.get('/tabaklar', async (req, res, next) => {
       description: 'Peynir tahtası, şarküteri tabağı, meze tabağı ve hediye peynir kutuları.',
       platters,
       campaigns,
+      galleries,
     });
   } catch (err) { next(err); }
 });

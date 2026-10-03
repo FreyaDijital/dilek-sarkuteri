@@ -1,0 +1,97 @@
+<%
+  const key = photo.gallery || 'tabak';
+  const isProductGallery = key === 'urun';
+%>
+<header class="page-head">
+  <div>
+    <p class="eyebrow"><a href="/admin/galeri?galeri=<%= key %>">Galeriler</a></p>
+    <h1><%= isNew ? 'Yeni fotoğraf' : 'Fotoğrafı düzenle' %></h1>
+  </div>
+</header>
+
+<%- include('../partials/errors') %>
+
+<form action="<%= isNew ? '/admin/galeri' : '/admin/galeri/' + photo.id + '?_method=PUT' %>"
+      method="post" enctype="multipart/form-data">
+  <input type="hidden" name="_csrf" value="<%= csrfToken %>">
+
+  <section class="card">
+    <h2 class="card__title">Fotoğraf</h2>
+    <%- include('../partials/image-field', { record: photo, gallery, suggested }) %>
+  </section>
+
+  <section class="card">
+    <h2 class="card__title">Nereye çıkacak?</h2>
+    <div class="form-grid">
+      <div class="field">
+        <label for="gallery">Galeri *</label>
+        <select id="gallery" name="gallery" required>
+          <% Object.keys(galleries).forEach(function (g) { %>
+            <option value="<%= g %>" <%= key === g ? 'selected' : '' %>><%= galleries[g].label %></option>
+          <% }); %>
+        </select>
+        <p class="hint">
+          <strong>Tabaklar sayfası:</strong> /tabaklar sayfasında grup başlığıyla galeri olur.
+          <strong>Dükkânda Yiyin:</strong> ana sayfadaki şeritte görünür.
+          <strong>Ürün fotoğrafları:</strong> ürün detay sayfasındaki ek fotoğraflar.
+        </p>
+      </div>
+
+      <div class="field">
+        <label for="product_id">Ürün<%= isProductGallery ? ' *' : '' %></label>
+        <select id="product_id" name="product_id">
+          <option value="">— Seçilmedi —</option>
+          <% products.forEach(function (p) { %>
+            <option value="<%= p.id %>" <%= Number(photo.product_id) === p.id ? 'selected' : '' %>>
+              <%= p.name %><%= p.category_name ? ' · ' + p.category_name : '' %>
+            </option>
+          <% }); %>
+        </select>
+        <p class="hint">Yalnızca "Ürün fotoğrafları" galerisi için gerekli. Ürünün <em>ana</em> görseli Ürünler &gt; Düzenle'de ayarlanır.</p>
+      </div>
+
+      <div class="field field--full">
+        <label for="group_name">Grup adı<%= isProductGallery ? '' : ' *' %></label>
+        <input type="text" id="group_name" name="group_name" value="<%= photo.group_name || '' %>"
+               maxlength="100" list="group_name_options">
+        <% if (groupNames.length) { %>
+          <datalist id="group_name_options">
+            <% groupNames.forEach(function (g) { %><option value="<%= g %>"></option><% }); %>
+          </datalist>
+        <% } %>
+        <p class="hint">
+          Aynı grup adını taşıyan fotoğraflar sitede tek bir galeri olarak, bu ad başlıkla gösterilir.
+          Örn. "Peynir Tabağı". <%= groupNames.length ? 'Kutuya yazmaya başlayınca mevcut adlar önerilir.' : '' %>
+        </p>
+      </div>
+
+      <div class="field field--full">
+        <label for="caption">Not</label>
+        <input type="text" id="caption" name="caption" value="<%= photo.caption || '' %>" maxlength="200">
+        <p class="hint">Fotoğrafın altında küçük puntoyla çıkar. Boş bırakılabilir.</p>
+      </div>
+    </div>
+  </section>
+
+  <section class="card">
+    <h2 class="card__title">Yayın</h2>
+    <div class="form-grid">
+      <div class="field">
+        <label for="sort_order">Sıra</label>
+        <input type="number" id="sort_order" name="sort_order" value="<%= photo.sort_order || 0 %>">
+        <p class="hint">Küçük sayı önce gösterilir. Grupların sırası da buradan belirlenir.</p>
+      </div>
+      <div class="field checks">
+        <label class="check">
+          <input type="checkbox" name="is_active" value="1" <%= photo.is_active ? 'checked' : '' %>>
+          Sitede göster
+        </label>
+      </div>
+    </div>
+  </section>
+
+  <div class="form-actions">
+    <button class="btn btn--primary" type="submit"><%= isNew ? 'Ekle' : 'Kaydet' %></button>
+    <a class="btn btn--ghost" href="/admin/galeri?galeri=<%= key %>">Vazgeç</a>
+  </div>
+</form>

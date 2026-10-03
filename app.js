@@ -7,13 +7,31 @@ const SqliteStore = require('better-sqlite3-session-store')(session);
 const expressLayouts = require('express-ejs-layouts');
 const methodOverride = require('method-override');
 
-const { db, DB_PATH, close: closeDb } = require('./config/db');
+const dbModule = require('./config/db');
+const { db, DB_PATH, close: closeDb } = dbModule;
+const bootstrap = require('./db/bootstrap');
 const { UPLOAD_DIR, UPLOAD_URL_PATH, ensureUploadDir } = require('./config/paths');
 const locals = require('./middleware/locals');
 const { notFound, errorHandler } = require('./middleware/errors');
 
 const app = express();
 const PORT = Number(process.env.PORT) || 3000;
+
+// ---- Veritabanı ----
+// Tablolar ve şema göçleri HER açılışta uygulanır; sunucuda elle
+// `npm run db:init` çalıştırmak gerekmez. Oturum deposundan ve ayarları
+// okuyan `locals` ara katmanından önce çalışmalı, yoksa ilk istek
+// henüz var olmayan tablolara düşer.
+let dbStatus;
+try {
+  dbStatus = bootstrap(dbModule);
+} catch (err) {
+  throw new Error(
+    `Veritabanı hazırlanamadı: ${DB_PATH}\n` +
+    `  ${err.message}\n` +
+    '  .env içindeki DB_PATH değerini ve klasörün yazılabilir olduğunu kontrol edin.'
+  );
+}
 
 // Hostinger uygulamayı ters vekil arkasında çalıştırır; secure cookie için gerekli.
 app.set('trust proxy', 1);
@@ -83,6 +101,10 @@ if (require.main === module) {
     console.log(`Dilek Şarküteri  →  http://localhost:${PORT}`);
     console.log(`Veritabanı       →  ${DB_PATH}`);
     console.log(`Görsel klasörü   →  ${UPLOAD_DIR}`);
+    if (dbStatus.seeded) console.log('Veritabanı        →  ilk kurulum, başlangıç verileri yüklendi');
+    if (dbStatus.applied.length) {
+      console.log(`Göçler           →  ${dbStatus.applied.length} yeni: ${dbStatus.applied.join(', ')}`);
+    }
   });
 
   const shutdown = (signal) => {

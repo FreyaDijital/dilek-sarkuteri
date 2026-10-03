@@ -1,0 +1,115 @@
+<%
+  const keys = Object.keys(galleries);
+%>
+<header class="page-head">
+  <div>
+    <p class="eyebrow">Fotoğraflar</p>
+    <h1>Galeriler</h1>
+    <p class="page-head__lead">
+      Ürün detayındaki ek fotoğraflar, Tabaklar sayfasındaki galeriler ve ana sayfadaki
+      "Dükkânda Yiyin" şeridi buradan yönetilir. Ürünlerin <strong>ana görseli</strong>
+      ise Ürünler &gt; Düzenle içinde durur.
+    </p>
+  </div>
+  <div class="page-head__actions">
+    <a class="btn btn--primary" href="/admin/galeri/yeni?galeri=<%= activeGallery %>">+ Yeni fotoğraf</a>
+  </div>
+</header>
+
+<nav class="tabs" aria-label="Galeriler">
+  <% keys.forEach(function (key) { %>
+    <%
+      const c = counts[key] || { total: 0, active: 0 };
+      const isCurrent = key === activeGallery;
+    %>
+    <a class="tabs__item" href="/admin/galeri?galeri=<%= key %>"<% if (isCurrent) { %> aria-current="page"<% } %>>
+      <%= galleries[key].label %>
+      <span class="tabs__count"><%= c.total %></span>
+    </a>
+  <% }); %>
+</nav>
+
+<section class="card card--flush">
+  <% if (!photos.length) { %>
+    <p class="empty">
+      Bu galeride henüz fotoğraf yok.
+      <a href="/admin/galeri/yeni?galeri=<%= activeGallery %>">Fotoğraf ekleyin</a>.
+    </p>
+  <% } else { %>
+    <div class="table-wrap">
+      <table class="table">
+        <thead>
+          <tr>
+            <th class="num">Sıra</th>
+            <th>Fotoğraf</th>
+            <th><%= activeGallery === 'urun' ? 'Ürün' : 'Grup' %></th>
+            <th>Not</th>
+            <th>Durum</th>
+            <th class="actions-col"><span class="sr-only">İşlem</span></th>
+          </tr>
+        </thead>
+        <tbody>
+          <% photos.forEach(function (photo, i) { %>
+            <tr>
+              <td class="num">
+                <div class="reorder">
+                  <form class="inline-form" action="/admin/galeri/<%= photo.id %>/tasi" method="post">
+                    <input type="hidden" name="_csrf" value="<%= csrfToken %>">
+                    <input type="hidden" name="yon" value="up">
+                    <button class="btn-icon" type="submit" title="Yukarı taşı"
+                            aria-label="Fotoğrafı yukarı taşı" <%= i === 0 ? 'disabled' : '' %>>↑</button>
+                  </form>
+                  <span class="reorder__value"><%= photo.sort_order %></span>
+                  <form class="inline-form" action="/admin/galeri/<%= photo.id %>/tasi" method="post">
+                    <input type="hidden" name="_csrf" value="<%= csrfToken %>">
+                    <input type="hidden" name="yon" value="down">
+                    <button class="btn-icon" type="submit" title="Aşağı taşı"
+                            aria-label="Fotoğrafı aşağı taşı" <%= i === photos.length - 1 ? 'disabled' : '' %>>↓</button>
+                  </form>
+                </div>
+              </td>
+              <td>
+                <a href="/admin/galeri/<%= photo.id %>/duzenle" aria-label="Fotoğrafı düzenle">
+                  <% if (hasImage(photo.image)) { %>
+                    <img class="thumb" src="<%= imageSrc(photo.image) %>" alt="" loading="lazy">
+                  <% } else { %>
+                    <span class="thumb thumb--empty" aria-hidden="true"></span>
+                  <% } %>
+                </a>
+              </td>
+              <td>
+                <% if (activeGallery === 'urun') { %>
+                  <% if (photo.product_slug) { %>
+                    <a class="item__name" href="/urun/<%= photo.product_slug %>" target="_blank" rel="noopener"><%= photo.product_name %></a>
+                  <% } else { %>
+                    <span class="badge badge--muted">ürün silinmiş</span>
+                  <% } %>
+                <% } else { %>
+                  <span class="item__name"><%= photo.group_name || '—' %></span>
+                <% } %>
+                <br><code class="hint"><%= photo.image %></code>
+              </td>
+              <td><%= photo.caption || '—' %></td>
+              <td class="badges">
+                <form class="inline-form" action="/admin/galeri/<%= photo.id %>/durum" method="post">
+                  <input type="hidden" name="_csrf" value="<%= csrfToken %>">
+                  <button class="badge badge--btn <%= photo.is_active ? 'badge--ok' : 'badge--muted' %>" type="submit"
+                          title="<%= photo.is_active ? 'Sitede gizle' : 'Sitede yayına al' %>">
+                    <%= photo.is_active ? 'Aktif' : 'Pasif' %>
+                  </button>
+                </form>
+              </td>
+              <td class="actions">
+                <a class="btn btn--ghost btn--sm" href="/admin/galeri/<%= photo.id %>/duzenle">Düzenle</a>
+                <%- include('../partials/delete-button', {
+                  action: '/admin/galeri/' + photo.id,
+                  confirmText: 'Bu fotoğraf galeriden kaldırılacak. Onaylıyor musunuz?',
+                }) %>
+              </td>
+            </tr>
+          <% }); %>
+        </tbody>
+      </table>
+    </div>
+  <% } %>
+</section>

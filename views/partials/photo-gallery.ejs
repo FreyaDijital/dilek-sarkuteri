@@ -1,0 +1,19 @@
+<%#
+  Fotoğraf galerisi şeridi.
+    photos  : [{ image, caption }]  — gallery_photos kayıtları
+    columns : (opsiyonel) 'wide' büyük kareler, 'compact' yarım kolona sığan küçük kareler
+  Fotoğraflar Panel > Galeriler altından eklenir, sıralanır ve gizlenir.
+%>
+<% if (photos && photos.length) { %>
+<%
+  const size = typeof columns !== 'undefined' && ['wide', 'compact'].includes(columns) ? columns : null;
+%>
+<ul class="photo-grid<%= size ? ' photo-grid--' + size : '' %>">
+  <% photos.forEach(function (photo, i) { %>
+    <li class="photo-grid__item" data-reveal="scale" data-reveal-delay="<%= (i % 4) * 70 %>">
+      <img src="<%= imageSrc(photo.image) %>" alt="<%= photo.caption || '' %>" loading="lazy">
+      <% if (photo.caption) { %><span class="photo-grid__caption"><%= photo.caption %></span><% } %>
+    </li>
+  <% }); %>
+</ul>
+<% } %>

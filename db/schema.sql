@@ -70,6 +70,8 @@ CREATE TABLE IF NOT EXISTS products (
   short_desc    TEXT,                                   -- kart üzerindeki kısa açıklama
   description   TEXT,
   origin        TEXT,                                   -- yöre / menşe, örn. 'Ezine, Çanakkale'
+  plu           TEXT,                                   -- tezgâh etiketindeki PLU kodu
+  brand         TEXT,                                   -- marka, örn. 'EGETÜRK'
   price         REAL,                                   -- NULL ise "Fiyat için arayınız"
   unit          TEXT    NOT NULL DEFAULT 'kg',          -- kg / adet / porsiyon
   image         TEXT,
@@ -83,6 +85,7 @@ CREATE TABLE IF NOT EXISTS products (
 CREATE INDEX IF NOT EXISTS ix_products_category     ON products (category_id);
 CREATE INDEX IF NOT EXISTS ix_products_active_order ON products (is_active, sort_order);
 CREATE INDEX IF NOT EXISTS ix_products_featured     ON products (is_featured, is_active);
+CREATE INDEX IF NOT EXISTS ix_products_plu          ON products (plu);
 
 CREATE TRIGGER IF NOT EXISTS trg_products_updated
 AFTER UPDATE ON products FOR EACH ROW
@@ -115,6 +118,39 @@ CREATE TRIGGER IF NOT EXISTS trg_campaigns_updated
 AFTER UPDATE ON campaigns FOR EACH ROW
 BEGIN
   UPDATE campaigns SET updated_at = datetime('now') WHERE id = OLD.id;
+END;
+
+-- ------------------------------------------------------------
+-- gallery_photos : Fotoğraf galerileri
+--   gallery = 'urun'    -> ürün detay sayfasındaki ek fotoğraflar (product_id dolu)
+--   gallery = 'tabak'   -> Tabaklar sayfası, group_name başlıklı galeriler
+--   gallery = 'sandvic' -> Ana sayfa "Dükkânda Yiyin" şeridi
+--   image, products.image ile aynı biçimi kullanır: 'img/foo.jpg' (repodaki
+--   public/img) veya 'foo.jpg' (panelden yüklenmiş, UPLOAD_DIR içinde).
+-- ------------------------------------------------------------
+CREATE TABLE IF NOT EXISTS gallery_photos (
+  id          INTEGER PRIMARY KEY AUTOINCREMENT,
+  gallery     TEXT    NOT NULL CHECK (gallery IN ('urun','tabak','sandvic')),
+  product_id  INTEGER REFERENCES products (id) ON DELETE CASCADE,
+  group_name  TEXT,                                    -- 'Peynir Tabağı' gibi; 'urun' galerisinde boş
+  image       TEXT    NOT NULL,
+  caption     TEXT,                                    -- fotoğrafın altındaki kısa not
+  sort_order  INTEGER NOT NULL DEFAULT 0,
+  is_active   INTEGER NOT NULL DEFAULT 1 CHECK (is_active IN (0,1)),
+  created_at  TEXT    NOT NULL DEFAULT (datetime('now')),
+  updated_at  TEXT    NOT NULL DEFAULT (datetime('now')),
+  UNIQUE (gallery, image)                              -- aynı dosya bir galeride iki kez durmasın
+);
+
+CREATE INDEX IF NOT EXISTS ix_gallery_photos_gallery
+  ON gallery_photos (gallery, is_active, sort_order);
+CREATE INDEX IF NOT EXISTS ix_gallery_photos_product
+  ON gallery_photos (product_id);
+
+CREATE TRIGGER IF NOT EXISTS trg_gallery_photos_updated
+AFTER UPDATE ON gallery_photos FOR EACH ROW
+BEGIN
+  UPDATE gallery_photos SET updated_at = datetime('now') WHERE id = OLD.id;
 END;
 
 -- ------------------------------------------------------------
