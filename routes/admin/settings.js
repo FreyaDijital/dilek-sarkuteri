@@ -26,7 +26,7 @@ const GROUP_LABELS = {
 
 // Kendi panel sayfası olan gruplar: burada ikinci kez düzenlenmesinler.
 // (Pop-up görseli dosya yüklemesi istiyor, bu form tek dosya alanı taşıyor.)
-const OWN_PAGE_GROUPS = new Set(['popup']);
+const OWN_PAGE_GROUPS = new Set(['popup', 'fiyat']);
 
 /**
  * Ayarlar formunu çizer. `submitted` verilirse (doğrulama hatasından sonra)

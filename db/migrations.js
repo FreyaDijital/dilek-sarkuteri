@@ -232,6 +232,25 @@ const MIGRATIONS = [
       db.run('UPDATE gallery_photos SET caption = NULL WHERE caption IS NOT NULL');
     },
   },
+  {
+    name: '008-show-prices-own-group',
+    // Fiyat anahtarı artık kendi panel sayfasında (Fiyat Ayarları) yönetiliyor.
+    // Grubu 'genel'den 'fiyat'a taşınır ki Ayarlar sayfasında ikinci kez çıkmasın.
+    // DEĞER taşınmaz: sitede fiyatların açık/kapalı olması olduğu gibi kalır.
+    up(db) {
+      db.run(
+        `UPDATE settings
+            SET setting_group = 'fiyat', label = 'Fiyatları sitede göster', sort_order = 1
+          WHERE setting_key = 'show_prices'`
+      );
+      // Ayar hiç yoksa (eski bir kurulum) varsayılan kapalı olarak eklenir.
+      db.run(
+        `INSERT INTO settings (setting_key, setting_value, setting_group, label, input_type, sort_order)
+         SELECT 'show_prices', '0', 'fiyat', 'Fiyatları sitede göster', 'checkbox', 1
+          WHERE NOT EXISTS (SELECT 1 FROM settings WHERE setting_key = 'show_prices')`
+      );
+    },
+  },
 ];
 
 function ensureTable(db) {

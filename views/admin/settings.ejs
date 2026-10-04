@@ -23,12 +23,6 @@
                 <input type="checkbox" id="<%= s.setting_key %>" name="<%= s.setting_key %>" value="1" <%= s.setting_value === '1' ? 'checked' : '' %>>
                 <%= s.label || s.setting_key %>
               </label>
-              <% if (s.setting_key === 'show_prices') { %>
-                <p class="hint">
-                  Kapalıyken ürün kartlarında ve ürün sayfasında fiyat gösterilmez; sipariş
-                  butonları çalışmaya devam eder. Panelde fiyatlar her zaman görünür.
-                </p>
-              <% } %>
             </div>
 
           <% } else if (s.input_type === 'image') { %>

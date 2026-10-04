@@ -1,0 +1,60 @@
+<header class="page-head">
+  <div>
+    <p class="eyebrow">Fiyatlar</p>
+    <h1>Fiyat Ayarları</h1>
+    <p class="page-head__lead">
+      Tek anahtar sitedeki <strong>bütün</strong> fiyatları birden yönetir:
+      ürün listesi, kategori sayfaları, Tabaklar sayfası ve ürün detayı.
+    </p>
+  </div>
+</header>
+
+<form action="/admin/fiyatlar" method="post">
+  <input type="hidden" name="_csrf" value="<%= csrfToken %>">
+
+  <section class="card">
+    <h2 class="card__title">Sitede fiyat gösterimi</h2>
+    <div class="form-grid">
+      <div class="field field--full checks">
+        <label class="check">
+          <input type="checkbox" id="show_prices" name="show_prices" value="1"
+                 <%= showPricesSetting ? 'checked' : '' %>>
+          Fiyatları sitede göster
+        </label>
+        <p class="hint">
+          <strong>Kapalıyken</strong> hiçbir sayfada fiyat görünmez; ürün kartlarının
+          düzeni bozulmaz, sipariş butonları ve ürün sayfaları çalışmaya devam eder.
+          Panelde fiyatlar her zaman görünür, yalnızca ziyaretçiden gizlenir.
+        </p>
+      </div>
+
+      <div class="field field--full">
+        <p class="hint">
+          Şu anki durum:
+          <% if (showPricesSetting) { %>
+            <span class="badge badge--ok">Fiyatlar sitede görünüyor</span>
+          <% } else { %>
+            <span class="badge badge--muted">Fiyatlar gizli</span>
+          <% } %>
+        </p>
+      </div>
+
+      <% if (missingPrice) { %>
+        <div class="field field--full">
+          <p class="hint">
+            <span class="badge badge--warn">Dikkat</span>
+            <%= productCount %> üründen <strong><%= missingPrice %></strong> tanesinin fiyatı girilmemiş.
+            Anahtarı açarsanız bu ürünlerde fiyat yerine
+            <em>"Fiyat için arayınız"</em> yazar.
+            <a class="link" href="/admin/urunler">Ürünler</a> sayfasından doldurabilirsiniz.
+          </p>
+        </div>
+      <% } %>
+    </div>
+  </section>
+
+  <div class="form-actions">
+    <button class="btn btn--primary" type="submit">Kaydet</button>
+    <a class="btn btn--ghost" href="/admin">Vazgeç</a>
+  </div>
+</form>

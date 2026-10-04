@@ -28,8 +28,10 @@ INSERT INTO settings (setting_key, setting_value, setting_group, label, input_ty
   ('site_tagline',     '1977''den beri',                 'genel', 'Slogan',              'text',     2),
   ('site_description', '1977''den beri Suadiye''de meze, peynir ve şarküteri.', 'genel', 'Site Açıklaması (SEO)', 'textarea', 3),
   ('logo',             '',                               'genel', 'Logo', 'image', 4),
-  -- Fiyat toggle: '0' kapalı (varsayılan), '1' açık. Fiyatlar sitede gizlenir/gösterilir.
-  ('show_prices',      '0',                              'genel', 'Fiyatları sitede göster', 'checkbox', 5),
+
+  -- fiyat (Panel > Fiyat Ayarları; kendi sayfasından yönetilir)
+  -- '0' kapalı (varsayılan), '1' açık. Sitedeki tüm fiyatları gizler/gösterir.
+  ('show_prices',      '0',                              'fiyat', 'Fiyatları sitede göster', 'checkbox', 1),
 
   -- iletişim
   ('address',          'Suadiye Mah. Ayşe Çavuş Cad. No:12/A Kadıköy/İstanbul', 'iletisim', 'Adres', 'textarea', 1),
