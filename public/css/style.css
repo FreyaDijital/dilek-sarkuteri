@@ -131,6 +131,7 @@ a:hover { color: var(--red-dark); }
 .btn--ghost { border-color: rgba(23, 18, 15, .22); color: var(--ink); }
 .btn--ghost:hover { background: rgba(23, 18, 15, .06); color: var(--ink); }
 .btn-row { display: flex; flex-wrap: wrap; gap: 12px; margin-top: 32px; }
+.btn-row--lead { margin-top: 0; margin-bottom: clamp(20px, 2.5vw, 32px); }
 
 .link-arrow {
   display: inline-block; padding-bottom: 4px;

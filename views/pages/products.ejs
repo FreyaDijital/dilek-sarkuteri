@@ -37,13 +37,23 @@
       <p class="result-note">"<%= search %>" için <%= products.length %> sonuç · <a href="/urunler">Aramayı temizle</a></p>
     <% } %>
 
+    <%# Sandviç kategorisi: fotoğraflar + fiyat yerine iletişim çağrısı %>
+    <% const contactOnly = locals.contactOnly; %>
+    <% const photos = locals.photos || []; %>
+    <% if (contactOnly) { %>
+      <div class="btn-row btn-row--lead">
+        <a class="btn btn--red" href="<%= waLink('Merhaba, sandviçler için fiyat ve sipariş bilgisi almak istiyorum.') %>" target="_blank" rel="noopener">Fiyat ve sipariş için iletişime geçin</a>
+      </div>
+      <%- include('../partials/photo-gallery', { photos, columns: 'wide' }) %>
+    <% } %>
+
     <% if (products.length) { %>
       <div class="product-grid">
         <% products.forEach(function (product) { %>
           <%- include('../partials/product-card', { product }) %>
         <% }); %>
       </div>
-    <% } else { %>
+    <% } else if (!(contactOnly && photos.length)) { %>
       <div class="empty">
         <p><%= search ? 'Aradığınız ürün bulunamadı.' : 'Bu kategoride henüz ürün yok.' %></p>
         <p>Tezgâhta ne olduğunu sormak için <a href="<%= waLink('Merhaba, bir ürün hakkında bilgi almak istiyorum.') %>" target="_blank" rel="noopener">WhatsApp'tan yazabilirsiniz</a>.</p>

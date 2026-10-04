@@ -9,15 +9,27 @@
  * Tekrar çalıştırmak güvenlidir: ürünler ADINA göre eşleştirilir, varsa
  * güncellenir, yoksa eklenir. Görsel alanına hiç dokunulmaz (sonra panelden
  * doldurulacak), panelde elle girilmiş sıra (sort_order) da korunur.
+ *
+ * Sandviçler: CSV'den bağımsız olarak "Sandviç" kategorisi (slug: sandvic)
+ * oluşturulur ve foto-eslestirme.csv'de kullanim=sandvic olan fotoğraflar
+ * "Dükkânda Yiyin" galerisine bağlanır; Sandviç sayfası bu fotoğrafları
+ * fiyatsız listeler. Kategori slug'ına, fotoğraflar (galeri, dosya) çiftine
+ * göre eşleştirildiği için tekrar çalıştırmak kopya oluşturmaz.
  */
 require('dotenv').config();
 const fs = require('fs');
 const path = require('path');
 const db = require('../config/db');
 const migrations = require('../db/migrations');
+const galleryModel = require('../models/gallery');
 const { uniqueSlug } = require('../utils/slugify');
+const { GALLERY_PREFIX } = require('../utils/helpers');
 
 const REQUIRED_COLUMNS = ['kategori', 'ad', 'birim', 'fiyat', 'plu', 'marka'];
+
+const SANDWICH = { name: 'Sandviç', slug: 'sandvic', gallery: 'sandvic' };
+const PHOTO_MAP_FILE = path.join(__dirname, '..', 'foto-eslestirme.csv');
+const PUBLIC_IMG_DIR = path.join(__dirname, '..', 'public', 'img');
 
 /** Alıntılı (""-kaçışlı) alanları ve alan içindeki satır sonlarını destekleyen CSV ayrıştırıcı. */
 function parseCsv(text) {
@@ -102,6 +114,66 @@ async function categoryIdFor(name, cache, stats, dryRun) {
   cache.set(key, id);
   stats.categoriesCreated.push(name);
   return id;
+}
+
+/**
+ * Sandviç kategorisini ve fotoğraflarını kurar. Panelde değiştirilmiş kategori
+ * adı/görseli ve fotoğrafların sırası, gizlenmesi, yazısı korunur.
+ */
+async function importSandwiches(dryRun) {
+  const stats = { categoryCreated: false, photosAdded: 0, photosUnchanged: 0, skipped: [] };
+
+  const photos = [];
+  if (fs.existsSync(PHOTO_MAP_FILE)) {
+    const rows = parseCsv(fs.readFileSync(PHOTO_MAP_FILE, 'utf8'));
+    const header = (rows[0] || []).map((h) => h.trim().toLowerCase());
+    const [iFile, iUse, iTarget] = ['dosya', 'kullanim', 'hedef'].map((c) => header.indexOf(c));
+    if (iFile < 0 || iUse < 0) throw new Error('foto-eslestirme.csv içinde dosya/kullanim sütunu yok');
+
+    for (const cells of rows.slice(1)) {
+      if ((cells[iUse] || '').trim().toLowerCase() !== SANDWICH.gallery) continue;
+      const file = (cells[iFile] || '').trim();
+      if (!file || path.basename(file) !== file) continue;
+      if (!fs.existsSync(path.join(PUBLIC_IMG_DIR, file))) {
+        stats.skipped.push(`${file} - public/img/ içinde yok`);
+        continue;
+      }
+      photos.push({ image: GALLERY_PREFIX + file, groupName: (cells[iTarget] || '').trim() || null });
+    }
+  } else {
+    stats.skipped.push('foto-eslestirme.csv bulunamadı, fotoğraflar eklenmedi');
+  }
+
+  for (const photo of photos) {
+    if (await galleryModel.findByImage(SANDWICH.gallery, photo.image)) {
+      stats.photosUnchanged += 1;
+      continue;
+    }
+    if (!dryRun) {
+      await galleryModel.create({
+        gallery: SANDWICH.gallery, productId: null, groupName: photo.groupName,
+        image: photo.image, isActive: 1,
+      });
+    }
+    stats.photosAdded += 1;
+  }
+
+  const category = db.queryOne('SELECT id, image FROM categories WHERE slug = ? LIMIT 1', [SANDWICH.slug]);
+  const cover = photos.length ? photos[0].image : null;
+  if (!category) {
+    if (!dryRun) {
+      const { n } = db.queryOne('SELECT COALESCE(MAX(sort_order), 0) AS n FROM categories');
+      db.run(
+        'INSERT INTO categories (name, slug, image, sort_order, is_active) VALUES (?, ?, ?, ?, 1)',
+        [SANDWICH.name, SANDWICH.slug, cover, n + 1]
+      );
+    }
+    stats.categoryCreated = true;
+  } else if (!category.image && cover && !dryRun) {
+    db.run('UPDATE categories SET image = ? WHERE id = ?', [cover, category.id]);
+  }
+
+  return stats;
 }
 
 async function main() {
@@ -196,6 +268,13 @@ async function main() {
     console.log(`\n! Atlanan ${stats.skipped.length} satır:`);
     stats.skipped.forEach((s) => console.log(`  - ${s}`));
   }
+
+  const sandwich = await importSandwiches(dryRun);
+  console.log(`\n✓ Sandviç kategorisi : ${sandwich.categoryCreated ? 'oluşturuldu' : 'zaten var'}`);
+  console.log(`✓ Eklenen sandviç fotoğrafı   : ${sandwich.photosAdded}`);
+  console.log(`· Zaten olan sandviç fotoğrafı: ${sandwich.photosUnchanged}`);
+  sandwich.skipped.forEach((s) => console.log(`  ! ${s}`));
+
   console.log(`\nToplam ürün: ${db.queryOne('SELECT COUNT(*) AS n FROM products').n}`);
   console.log('Görseller boş bırakıldı; panelden yüklenebilir.');
 }

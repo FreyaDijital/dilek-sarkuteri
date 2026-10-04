@@ -23,7 +23,8 @@
 
     <div class="product-detail__info" data-reveal="up">
       <% if (product.category_name) { %><p class="eyebrow"><%= product.category_name %></p><% } %>
-      <% if (showPrices) { %>
+      <% const contactOnly = product.category_slug === 'sandvic'; %>
+      <% if (showPrices && !contactOnly) { %>
         <p class="product-detail__price"><%= formatPrice(product.price, product.unit) %></p>
       <% } %>
       <% if (product.origin) { %>
@@ -31,7 +32,7 @@
       <% } %>
 
       <div class="btn-row">
-        <a class="btn btn--red" href="<%= waLink('Merhaba, ' + product.name + ' sipariş vermek istiyorum.') %>" target="_blank" rel="noopener">WhatsApp'tan sipariş ver</a>
+        <a class="btn btn--red" href="<%= waLink('Merhaba, ' + product.name + ' sipariş vermek istiyorum.') %>" target="_blank" rel="noopener"><%= contactOnly ? 'Fiyat ve sipariş için iletişime geçin' : "WhatsApp'tan sipariş ver" %></a>
         <% if (settings.phone) { %>
           <a class="btn btn--ghost" href="tel:<%= telLink(settings.phone) %>">Ara: <%= settings.phone %></a>
         <% } %>

@@ -13,6 +13,9 @@ const { excerpt, siteImage, imageUrl } = require('../utils/helpers');
 
 // Tabak/kutu ürünleri bu slug'daki kategoriden okunur (panelden açılabilir).
 const PLATTER_CATEGORY = 'tabaklar';
+// Sandviç kategorisi: fiyat gösterilmez, sayfada "Dükkânda Yiyin" galerisindeki
+// sandviç fotoğrafları listelenir.
+const SANDWICH_CATEGORY = 'sandvic';
 
 // Ana sayfadaki kategori kartlarında görsel yüklenmemişse kullanılacak sabit görsel
 const CATEGORY_DEFAULTS = {
@@ -93,9 +96,11 @@ router.get('/urunler/:kategori', async (req, res, next) => {
     const category = await categoryModel.findBySlug(req.params.kategori);
     if (!category || !category.is_active) return next(); // 404
 
-    const [categories, products] = await Promise.all([
+    const isSandwich = category.slug === SANDWICH_CATEGORY;
+    const [categories, products, photos] = await Promise.all([
       categoryModel.all({ activeOnly: true }),
       productModel.list({ activeOnly: true, categoryId: category.id }),
+      isSandwich ? galleryModel.list({ gallery: 'sandvic', activeOnly: true }) : [],
     ]);
 
     res.render('pages/products', {
@@ -104,6 +109,8 @@ router.get('/urunler/:kategori', async (req, res, next) => {
       categories,
       category,
       products,
+      photos,
+      contactOnly: isSandwich,
       search: '',
     });
   } catch (err) { next(err); }

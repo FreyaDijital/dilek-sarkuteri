@@ -125,19 +125,19 @@ const MIGRATIONS = [
 
           ('dine_in_enabled', '1', 'dukkanda', 'Dükkânda Yiyin bölümünü ana sayfada göster', 'checkbox', 1),
           ('dine_in_eyebrow', 'Dükkânda yiyin', 'dukkanda', 'Üst Yazı', 'text', 2),
-          ('dine_in_title',   'Tezgâhın başında bir tabak', 'dukkanda', 'Başlık', 'text', 3),
+          ('dine_in_title',   'Dilek''te Sofraya Buyurun', 'dukkanda', 'Başlık', 'text', 3),
           ('dine_in_text',
-           'Aldığınızı paket yaptırmak zorunda değilsiniz. Dükkânda oturup günün mezelerinden bir tabak, serpme kahvaltı ya da tezgâhta hazırlanan sandviçlerden birini yiyebilirsiniz.',
+           'Dilek Şarküteri''de lezzetler yalnızca raflarda kalmaz, sofranıza da konuk olur. Günün mezelerinden bir tabak seçebilir, tezgâhtaki ürünlerden kendi kahvaltınızı dilediğiniz gibi oluşturabilir ya da özenle hazırlanan sandviçlerden birini tercih edebilirsiniz. Seçtiğiniz her lezzet, masanıza servis edilir.',
            'dukkanda', 'Açıklama', 'textarea', 4),
           ('dine_in_items', 'Meze tabağı\nKahvaltı\nSandviç', 'dukkanda', 'Maddeler (her satır bir madde)', 'textarea', 5),
 
           ('events_enabled', '1', 'organizasyon', 'Organizasyonlar bölümünü ana sayfada göster', 'checkbox', 1),
           ('events_eyebrow', 'Organizasyonlar', 'organizasyon', 'Üst Yazı', 'text', 2),
-          ('events_title',   'Kalabalık bir sofra mı kuruyorsunuz?', 'organizasyon', 'Başlık', 'text', 3),
+          ('events_title',   'Bir organizasyonunuz mu var?', 'organizasyon', 'Başlık', 'text', 3),
           ('events_text',
-           'Toplu meze siparişi, davet ve organizasyonlar için tezgâh sizin adınıza çalışır. Kişi sayısını ve tarihi söyleyin, menüyü birlikte çıkaralım.',
+           'Davet ve organizasyonlarınız için yapacağınız toplu siparişleriniz, Dilek Şarküteri''de özenle hazırlanır. Kişi sayısını ve tarihi iletin; sofranıza uygun menüyü sizinle birlikte oluşturalım.',
            'organizasyon', 'Açıklama', 'textarea', 4),
-          ('events_items', 'Toplu meze siparişi\nDavet ve kutlamalar\nKurumsal ikramlar', 'organizasyon', 'Maddeler (her satır bir madde)', 'textarea', 5),
+          ('events_items', 'Toplu meze siparişi\nDavet ve kutlamalar\nKurumsal Etkinlikler', 'organizasyon', 'Maddeler (her satır bir madde)', 'textarea', 5),
           ('events_cta',      'WhatsApp''tan teklif alın', 'organizasyon', 'Buton Yazısı', 'text', 6),
           ('events_wa_message', 'Merhaba, organizasyon için toplu sipariş hakkında bilgi almak istiyorum.', 'organizasyon', 'WhatsApp Mesajı', 'text', 7)
         ON CONFLICT (setting_key) DO UPDATE SET
@@ -248,6 +248,79 @@ const MIGRATIONS = [
         `INSERT INTO settings (setting_key, setting_value, setting_group, label, input_type, sort_order)
          SELECT 'show_prices', '0', 'fiyat', 'Fiyatları sitede göster', 'checkbox', 1
           WHERE NOT EXISTS (SELECT 1 FROM settings WHERE setting_key = 'show_prices')`
+      );
+    },
+  },
+  {
+    name: '009-home-section-texts',
+    // Dükkânda Yiyin ve Organizasyonlar metinleri yenilendi. Yalnızca değer hâlâ
+    // eski varsayılansa güncellenir; panelden değiştirilmiş metinlere dokunulmaz.
+    up(db) {
+      const updates = [
+        ['dine_in_title', 'Tezgâhın başında bir tabak', "Dilek'te Sofraya Buyurun"],
+        ['dine_in_text',
+         'Aldığınızı paket yaptırmak zorunda değilsiniz. Dükkânda oturup günün mezelerinden bir tabak, serpme kahvaltı ya da tezgâhta hazırlanan sandviçlerden birini yiyebilirsiniz.',
+         "Dilek Şarküteri'de lezzetler yalnızca raflarda kalmaz, sofranıza da konuk olur. Günün mezelerinden bir tabak seçebilir, tezgâhtaki ürünlerden kendi kahvaltınızı dilediğiniz gibi oluşturabilir ya da özenle hazırlanan sandviçlerden birini tercih edebilirsiniz. Seçtiğiniz her lezzet, masanıza servis edilir."],
+        ['events_title', 'Kalabalık bir sofra mı kuruyorsunuz?', 'Bir organizasyonunuz mu var?'],
+        ['events_text',
+         'Toplu meze siparişi, davet ve organizasyonlar için tezgâh sizin adınıza çalışır. Kişi sayısını ve tarihi söyleyin, menüyü birlikte çıkaralım.',
+         "Davet ve organizasyonlarınız için yapacağınız toplu siparişleriniz, Dilek Şarküteri'de özenle hazırlanır. Kişi sayısını ve tarihi iletin; sofranıza uygun menüyü sizinle birlikte oluşturalım."],
+      ];
+      for (const [key, oldValue, newValue] of updates) {
+        db.run('UPDATE settings SET setting_value = ? WHERE setting_key = ? AND setting_value = ?',
+          [newValue, key, oldValue]);
+      }
+      // Maddelerde yalnızca bu satır değişir; panelden eklenen diğer satırlar korunur.
+      db.run(
+        `UPDATE settings SET setting_value = REPLACE(setting_value, 'Kurumsal ikramlar', 'Kurumsal Etkinlikler')
+          WHERE setting_key = 'events_items'`
+      );
+    },
+  },
+  {
+    name: '010-hours-saskinbakkal-sandwich',
+    // Yeni çalışma saatleri, Şaşkınbakkal şubesinin bilgileri ve Sandviç kategorisi.
+    up(db) {
+      // İletişim sayfasındaki saatler merkez (Suadiye) şubeye aittir.
+      db.run("UPDATE settings SET setting_value = 'Her gün: 08:00 - 20:30' WHERE setting_key = 'hours_weekday'");
+      db.run("UPDATE settings SET setting_value = '' WHERE setting_key = 'hours_sunday'");
+
+      db.run(
+        "UPDATE branches SET hours = 'Her gün: 08:00 - 20:30' WHERE name LIKE 'Suadiye%'"
+      );
+
+      const saskinbakkal = {
+        address: 'Suadiye, Bağdat Cad. Kazım Kulan Çarşısı No:371/40, 34740 Kadıköy/İstanbul',
+        phone: '0546 845 00 69',
+        hours: 'Pazartesi - Cumartesi: 08:00 - 20:30\nPazar: Kapalı',
+      };
+      const existing = db.queryOne("SELECT id FROM branches WHERE name = 'Şaşkınbakkal' LIMIT 1");
+      if (existing) {
+        // Açılış notu ("Açılış hazırlıkları sürüyor…") artık geçersiz, kaldırılır.
+        db.run(
+          'UPDATE branches SET address = ?, phone = ?, hours = ?, note = NULL WHERE id = ?',
+          [saskinbakkal.address, saskinbakkal.phone, saskinbakkal.hours, existing.id]
+        );
+      } else if (db.queryOne('SELECT 1 FROM branches LIMIT 1')) {
+        // Tablo boşsa ilk kurulumdur; şubeleri seed.sql ekler.
+        db.run(
+          `INSERT INTO branches (name, address, phone, hours, sort_order, is_active)
+           VALUES ('Şaşkınbakkal', ?, ?, ?, 2, 1)`,
+          [saskinbakkal.address, saskinbakkal.phone, saskinbakkal.hours]
+        );
+      }
+
+      // Kapak görseli: "Dükkânda Yiyin" galerisindeki ilk sandviç fotoğrafı.
+      // Kategori tablosu boşsa ilk kurulumdur; kategoriyi seed.sql ekler.
+      db.run(
+        `INSERT INTO categories (name, slug, image, sort_order, is_active)
+         SELECT 'Sandviç', 'sandvic',
+                (SELECT image FROM gallery_photos WHERE gallery = 'sandvic' AND is_active = 1
+                  ORDER BY sort_order, id LIMIT 1),
+                (SELECT COALESCE(MAX(sort_order), 0) + 1 FROM categories),
+                1
+          WHERE EXISTS (SELECT 1 FROM categories)
+            AND NOT EXISTS (SELECT 1 FROM categories WHERE slug = 'sandvic')`
       );
     },
   },

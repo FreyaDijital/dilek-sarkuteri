@@ -15,7 +15,8 @@
 INSERT INTO categories (name, slug, description, image, sort_order, is_active) VALUES
   ('Meze',      'meze',      'Kadınbudu köfteden dolmaya, zeytinyağlılardan taramaya. Her gün mutfakta hazırlanıyor.', 'img/IMG-20260909-WA0125.jpg', 1, 1),
   ('Peynir',    'peynir',    'Obruk peynirinden küflüye, yerli kooperatiflerden ithal çeşitlere geniş bir yelpaze.',    'img/IMG-20260909-WA0091.jpg', 2, 1),
-  ('Şarküteri', 'sarkuteri', 'Pastırma, füme et, salam, sucuk ve dilimlenmiş çeşitler — istediğiniz kalınlıkta.',       'img/IMG-20260909-WA0143.jpg', 3, 1)
+  ('Şarküteri', 'sarkuteri', 'Pastırma, füme et, salam, sucuk ve dilimlenmiş çeşitler — istediğiniz kalınlıkta.',       'img/IMG-20260909-WA0143.jpg', 3, 1),
+  ('Sandviç',   'sandvic',   NULL,                                                                                    'img/IMG-20260909-WA0095.jpg', 4, 1)
 ON CONFLICT (slug) DO UPDATE SET
   name        = excluded.name,
   description = excluded.description,
@@ -42,8 +43,8 @@ INSERT INTO settings (setting_key, setting_value, setting_group, label, input_ty
   ('map_embed',        '',                               'iletisim', 'Google Harita Embed Kodu', 'textarea', 6),
 
   -- çalışma saatleri
-  ('hours_weekday',    'Pazartesi - Cumartesi: 08:00 - 21:00', 'saatler', 'Hafta İçi / Cumartesi', 'text', 1),
-  ('hours_sunday',     'Pazar: 08:00 - 20:00',           'saatler', 'Pazar',             'text',     2),
+  ('hours_weekday',    'Her gün: 08:00 - 20:30',         'saatler', 'Hafta İçi / Cumartesi', 'text', 1),
+  ('hours_sunday',     '',                               'saatler', 'Pazar',             'text',     2),
   ('hours_note',       '',                               'saatler', 'Ek Not (tatil vb.)','text',     3),
 
   -- sosyal medya
@@ -60,8 +61,8 @@ INSERT INTO settings (setting_key, setting_value, setting_group, label, input_ty
   -- ana sayfa: dükkânda yiyin
   ('dine_in_enabled',  '1',                              'dukkanda', 'Dükkânda Yiyin bölümünü ana sayfada göster', 'checkbox', 1),
   ('dine_in_eyebrow',  'Dükkânda yiyin',                 'dukkanda', 'Üst Yazı',           'text',     2),
-  ('dine_in_title',    'Tezgâhın başında bir tabak',     'dukkanda', 'Başlık',             'text',     3),
-  ('dine_in_text',     'Aldığınızı paket yaptırmak zorunda değilsiniz. Dükkânda oturup günün mezelerinden bir tabak, serpme kahvaltı ya da tezgâhta hazırlanan sandviçlerden birini yiyebilirsiniz.', 'dukkanda', 'Açıklama', 'textarea', 4),
+  ('dine_in_title',    'Dilek''te Sofraya Buyurun',     'dukkanda', 'Başlık',             'text',     3),
+  ('dine_in_text',     'Dilek Şarküteri''de lezzetler yalnızca raflarda kalmaz, sofranıza da konuk olur. Günün mezelerinden bir tabak seçebilir, tezgâhtaki ürünlerden kendi kahvaltınızı dilediğiniz gibi oluşturabilir ya da özenle hazırlanan sandviçlerden birini tercih edebilirsiniz. Seçtiğiniz her lezzet, masanıza servis edilir.', 'dukkanda', 'Açıklama', 'textarea', 4),
   ('dine_in_items',    'Meze tabağı
 Kahvaltı
 Sandviç',                                           'dukkanda', 'Maddeler (her satır bir madde)', 'textarea', 5),
@@ -69,11 +70,11 @@ Sandviç',                                           'dukkanda', 'Maddeler (her 
   -- ana sayfa: organizasyonlar
   ('events_enabled',   '1',                              'organizasyon', 'Organizasyonlar bölümünü ana sayfada göster', 'checkbox', 1),
   ('events_eyebrow',   'Organizasyonlar',                'organizasyon', 'Üst Yazı',       'text',     2),
-  ('events_title',     'Kalabalık bir sofra mı kuruyorsunuz?', 'organizasyon', 'Başlık',   'text',     3),
-  ('events_text',      'Toplu meze siparişi, davet ve organizasyonlar için tezgâh sizin adınıza çalışır. Kişi sayısını ve tarihi söyleyin, menüyü birlikte çıkaralım.', 'organizasyon', 'Açıklama', 'textarea', 4),
+  ('events_title',     'Bir organizasyonunuz mu var?', 'organizasyon', 'Başlık',   'text',     3),
+  ('events_text',      'Davet ve organizasyonlarınız için yapacağınız toplu siparişleriniz, Dilek Şarküteri''de özenle hazırlanır. Kişi sayısını ve tarihi iletin; sofranıza uygun menüyü sizinle birlikte oluşturalım.', 'organizasyon', 'Açıklama', 'textarea', 4),
   ('events_items',     'Toplu meze siparişi
 Davet ve kutlamalar
-Kurumsal ikramlar',                                  'organizasyon', 'Maddeler (her satır bir madde)', 'textarea', 5),
+Kurumsal Etkinlikler',                                  'organizasyon', 'Maddeler (her satır bir madde)', 'textarea', 5),
   ('events_cta',       'WhatsApp''tan teklif alın',      'organizasyon', 'Buton Yazısı',   'text',     6),
   ('events_wa_message','Merhaba, organizasyon için toplu sipariş hakkında bilgi almak istiyorum.', 'organizasyon', 'WhatsApp Mesajı', 'text', 7),
 
@@ -98,17 +99,19 @@ ON CONFLICT (setting_key) DO UPDATE SET
 
 -- ---- Şubeler -------------------------------------------------
 -- Yalnızca tablo boşken doldurulur; panelden düzenlenen kayıtların
--- üzerine yazılmaz. İkinci şubenin adresi/telefonu bilerek boş:
--- siteye uydurma bilgi çıkmasın, panelden girilsin.
+-- üzerine yazılmaz.
 INSERT INTO branches (name, address, phone, hours, note, sort_order, is_active)
 SELECT * FROM (
   SELECT 'Suadiye (Merkez)' AS name,
          'Suadiye Mah. Ayşe Çavuş Cad. No:12/A Kadıköy/İstanbul' AS address,
          '0216 373 27 52' AS phone,
-         'Pazartesi - Cumartesi: 08:00 - 21:00' || char(10) || 'Pazar: 08:00 - 20:00' AS hours,
+         'Her gün: 08:00 - 20:30' AS hours,
          NULL AS note, 1 AS sort_order, 1 AS is_active
   UNION ALL
-  SELECT 'Şaşkınbakkal', NULL, NULL, NULL,
-         'Açılış hazırlıkları sürüyor. Adres ve telefon panelden girilebilir.', 2, 1
+  SELECT 'Şaşkınbakkal',
+         'Suadiye, Bağdat Cad. Kazım Kulan Çarşısı No:371/40, 34740 Kadıköy/İstanbul',
+         '0546 845 00 69',
+         'Pazartesi - Cumartesi: 08:00 - 20:30' || char(10) || 'Pazar: Kapalı',
+         NULL, 2, 1
 )
 WHERE NOT EXISTS (SELECT 1 FROM branches);

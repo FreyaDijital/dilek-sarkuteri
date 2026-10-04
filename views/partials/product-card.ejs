@@ -6,11 +6,13 @@
     <% if (product.category_name) { %><p class="label"><%= product.category_name %></p><% } %>
     <h3 class="product-card__title"><a href="/urun/<%= product.slug %>"><%= product.name %></a></h3>
     <% if (product.short_desc) { %><p class="product-card__desc"><%= product.short_desc %></p><% } %>
-    <div class="product-card__foot<%= showPrices ? '' : ' product-card__foot--no-price' %>">
-      <% if (showPrices) { %>
+    <% const contactOnly = product.category_slug === 'sandvic'; %>
+    <% const withPrice = showPrices && !contactOnly; %>
+    <div class="product-card__foot<%= withPrice ? '' : ' product-card__foot--no-price' %>">
+      <% if (withPrice) { %>
         <span class="product-card__price"><%= formatPrice(product.price, product.unit) %></span>
       <% } %>
-      <a class="product-card__order" href="<%= waLink('Merhaba, ' + product.name + ' sipariş vermek istiyorum.') %>" target="_blank" rel="noopener">Sipariş ver <span aria-hidden="true">→</span></a>
+      <a class="product-card__order" href="<%= waLink('Merhaba, ' + product.name + ' sipariş vermek istiyorum.') %>" target="_blank" rel="noopener"><%= contactOnly ? 'Fiyat ve sipariş için iletişime geçin' : 'Sipariş ver' %> <span aria-hidden="true">→</span></a>
     </div>
   </div>
 </article>
