@@ -70,11 +70,13 @@ function toRecords(rows, file) {
     return i < 0 ? '' : (cells[i] || '').trim();
   };
 
+  // macOS dosya adlarını ayrışık (NFD) Unicode verir; git ve Linux sunucu ise
+  // birleşik (NFC) tutar. NFD yazılan 'Mücver.jpg' sunucuda bulunamaz.
   return rows.slice(1).map((cells, i) => ({
     line: i + 2,
-    dosya: at(cells, 'dosya'),
+    dosya: at(cells, 'dosya').normalize('NFC'),
     kullanim: at(cells, 'kullanim').toLowerCase(),
-    hedef: at(cells, 'hedef'),
+    hedef: at(cells, 'hedef').normalize('NFC'),
     guven: at(cells, 'guven').toLowerCase(),
     not: at(cells, 'not'),
   }));
