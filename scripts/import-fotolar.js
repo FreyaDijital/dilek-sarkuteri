@@ -3,6 +3,9 @@
  *   npm run import:fotolar                 -> kökteki foto-eslestirme.csv
  *   npm run import:fotolar -- dosya.csv    -> başka bir dosya
  *   npm run import:fotolar -- --dry-run    -> hiçbir şey yazmaz, sadece raporlar
+ *   npm run import:fotolar -- --auto       -> CSV yerine public/img/ içindeki dosya
+ *                                             adlarını ürün adlarıyla eşleştirir
+ *                                             (--dry-run ve --force ile birlikte de çalışır)
  *
  * CSV sütunları: dosya, kullanim, hedef, guven, not
  *   `not` ve `guven` yalnızca raporlama içindir; veritabanına yazılmazlar.
@@ -16,10 +19,21 @@
  * panelin "hazır fotoğraflardan seç" listesiyle aynıdır, yani her bağlantı
  * panelden değiştirilebilir kalır.
  *
+ * --auto eşleştirmesi:
+ *   - Türkçe karakter, büyük/küçük harf, boşluk ve tire farkı yok sayılır
+ *     ("GiritKabağı.jpg" = "Girit Kabağı"), sondaki numara da ("Atom 2.jpg",
+ *     "Köpoğlu(1).jpg"). Birebir tutmayan adlar AUTO_ALIASES'ta eşlenir.
+ *   - Aynı ürüne düşen dosyalardan ilki (numarasız, sonra küçük numara) ana
+ *     görsel, kalanlar ürün galerisi olur.
+ *   - Tabak/kutu/sandviç fotoğrafları AUTO_GROUPS'taki galerilere gider.
+ *   - IMG-...-WA ile başlayan eski fotoğraflara ve sitenin kendi görsellerine
+ *     (küçük harf-tireli adlar: meze-tabagi.jpg, logo.png) dokunulmaz.
+ *
  * Tekrar çalıştırmak güvenlidir: galeri kayıtları (galeri, dosya) çiftine göre
  * eşleştirilir, ürünün ana görseli yalnızca boşsa ya da CSV'deki ilk fotoğraftan
  * farklıysa yazılır. Panelden elle yapılan değişiklikleri ezmemek için
- * --force verilmedikçe dolu bir ana görsel KORUNUR.
+ * --force verilmedikçe dolu bir ana görsel KORUNUR. Tek istisna: ana görsel
+ * eski bir WhatsApp fotoğrafıysa (IMG-...-WA) isimli fotoğraf onun yerini alır.
  */
 require('dotenv').config();
 const fs = require('fs');
@@ -32,6 +46,99 @@ const { GALLERY_PREFIX } = require('../utils/helpers');
 const REQUIRED_COLUMNS = ['dosya', 'kullanim', 'hedef'];
 const PUBLIC_IMG_DIR = path.join(__dirname, '..', 'public', 'img');
 const SHAKY = new Set(['orta', 'düşük']);
+
+const OLD_PHOTO = /^IMG-\d{8}-WA/i;
+const IMAGE_EXT = /\.(jpe?g|png|webp)$/i;
+// Sitenin kendi görselleri (siteImage ile kullanılır): küçük harf, tire, rakam.
+const SITE_ASSET = /^[a-z0-9-]+\.[a-z]+$/;
+
+// Dosya adı ürün adıyla birebir tutmuyorsa: normalize dosya adı -> ürün adı
+const AUTO_ALIASES = {
+  acilikurudomates: 'Acılı Yoğurtlu Kuru Domates Salatası',
+  amerikansalata: 'Amerikan Salatası',
+  biberliyesilzeytin: 'Yeşil Zeytin Biberli Kokteyl',
+  bombaypilaki: 'Bombay Fasulye Pilaki',
+  dublesiyahzeytin: 'Siyah İri Duble Zeytin',
+  giritezme: 'Fesleğenli Girit Ezme',
+  mercimekkoftesi: 'Mercimek Köfte',
+  saksuka: 'Şakşuka (soslu Patlıcan)',
+  visnelisarma: 'Zeytinyağlı Vişneli Yaprak Sarma',
+  yesildomatzeytin: 'Yeşil Zeytin İri Domat',
+  zeytinyaglibademlipazi: 'Bademli Pazı Kavurma',
+  zeytinyaglienginar: 'Zeytinyağlı Enginar Çanak',
+};
+
+// Ürün olmayan fotoğraflar: normalize dosya adı -> [galeri, grup adı]
+const AUTO_GROUPS = {
+  peynirtabagi: ['tabak', 'Peynir Tabağı'],
+  sarkuteritabagi: ['tabak', 'Şarküteri Tabağı'],
+  bolmelimezetabagi: ['tabak', 'Meze Tabağı'],
+  peynirkutusu: ['tabak', 'Peynir Kutusu'],
+  sarkuterikutusu: ['tabak', 'Şarküteri Kutusu'],
+  sandvic: ['sandvic', 'Dükkanda Yiyin / Sandviç'],
+};
+
+const TR_ASCII = { ı: 'i', ş: 's', ğ: 'g', ü: 'u', ö: 'o', ç: 'c', â: 'a', î: 'i', û: 'u' };
+const TRAILING_NUMBER = /[\s_-]*(?:\((\d+)\)|(\d+))$/;
+
+/** "Çerkez Tavuğu" ve "ÇerkezTavuğu" -> "cerkeztavugu" */
+function nameKey(text) {
+  return String(text).normalize('NFC').toLocaleLowerCase('tr')
+    .replace(/[ışğüöçâîû]/g, (c) => TR_ASCII[c])
+    .normalize('NFD').replace(/[\u0300-\u036f]/g, '')
+    .replace(/[^a-z0-9]/g, '');
+}
+
+/** "Paçanga Böreği 3.jpg" -> { key: 'pacangaboregi', n: 3 } */
+function parseFileName(file) {
+  const base = file.replace(/\.[^.]+$/, '');
+  const m = base.match(TRAILING_NUMBER);
+  return {
+    key: nameKey(m ? base.slice(0, m.index) : base),
+    n: m ? Number(m[1] || m[2]) : 0,
+  };
+}
+
+/**
+ * public/img/ dosyalarından CSV ile aynı biçimde kayıt üretir. Her hedefin
+ * dosyaları numaraya göre sıralanır; böylece ilk kayıt ana görsel olur.
+ */
+function autoRecords(products) {
+  const byKey = new Map(products.map((p) => [nameKey(p.name), p.name]));
+  const targets = new Map();   // 'kullanim|hedef' -> [{ dosya, n }]
+  const unmatched = [];
+  const ignored = [];
+
+  const files = fs.readdirSync(PUBLIC_IMG_DIR, { withFileTypes: true })
+    .filter((d) => d.isFile())
+    .map((d) => d.name.normalize('NFC'));
+
+  for (const dosya of files) {
+    if (OLD_PHOTO.test(dosya) || !IMAGE_EXT.test(dosya)) continue;
+    if (SITE_ASSET.test(dosya)) { ignored.push(dosya); continue; }
+
+    const { key, n } = parseFileName(dosya);
+    const productName = byKey.get(key) || AUTO_ALIASES[key];
+    const group = AUTO_GROUPS[key];
+    let target = null;
+    if (productName) target = `urun|${productName}`;
+    else if (group) target = group.join('|');
+
+    if (!target) { unmatched.push(dosya); continue; }
+    if (!targets.has(target)) targets.set(target, []);
+    targets.get(target).push({ dosya, n });
+  }
+
+  const records = [];
+  for (const [target, list] of targets) {
+    const [kullanim, hedef] = target.split('|');
+    list.sort((a, b) => a.n - b.n || (a.dosya < b.dosya ? -1 : 1));
+    list.forEach(({ dosya }) => records.push({
+      line: dosya, dosya, kullanim, hedef, guven: '', not: '',
+    }));
+  }
+  return { records, unmatched, ignored };
+}
 
 /** Alıntılı (""-kaçışlı) alanları destekleyen CSV ayrıştırıcı. */
 function parseCsv(text) {
@@ -86,16 +193,25 @@ async function main() {
   const args = process.argv.slice(2);
   const dryRun = args.includes('--dry-run');
   const force = args.includes('--force');
+  const auto = args.includes('--auto');
   const fileArg = args.find((a) => !a.startsWith('--'));
   const file = path.resolve(fileArg || path.join(__dirname, '..', 'foto-eslestirme.csv'));
-
-  if (!fs.existsSync(file)) throw new Error(`Dosya bulunamadı: ${file}`);
-
-  const records = toRecords(parseCsv(fs.readFileSync(file, 'utf8')), path.basename(file));
-  console.log(`${path.basename(file)}: ${records.length} satır okundu${dryRun ? ' (DENEME, yazma yok)' : ''}`);
+  const dryNote = dryRun ? ' (DENEME, yazma yok)' : '';
 
   const applied = migrations.run(db);
   if (applied.length) console.log(`✓ ${applied.length} göç uygulandı: ${applied.join(', ')}`);
+
+  let records;
+  let autoResult = null;
+  if (auto) {
+    autoResult = autoRecords(db.query('SELECT name FROM products'));
+    records = autoResult.records;
+    console.log(`public/img/: ${records.length} dosya eşleşti${dryNote}`);
+  } else {
+    if (!fs.existsSync(file)) throw new Error(`Dosya bulunamadı: ${file}`);
+    records = toRecords(parseCsv(fs.readFileSync(file, 'utf8')), path.basename(file));
+    console.log(`${path.basename(file)}: ${records.length} satır okundu${dryNote}`);
+  }
 
   const stats = {
     mainSet: 0, mainKept: [], galleryAdded: 0, galleryUpdated: 0, galleryUnchanged: 0,
@@ -154,10 +270,13 @@ async function main() {
       // CSV'deki ilk fotoğraf ana görsel olur.
       if (nth === 1) {
         const current = product.image;
-        if (current && current !== image && !force) {
+        const replaceable = !current
+          || (OLD_PHOTO.test(path.basename(current)) && !OLD_PHOTO.test(r.dosya));
+        if (current !== image && !replaceable && !force) {
           stats.mainKept.push(`${product.name}: panelde "${current}" var, "${image}" atlandı`);
         } else if (current !== image) {
           if (!dryRun) db.run('UPDATE products SET image = ? WHERE id = ?', [image, product.id]);
+          product.image = image;
           stats.mainSet += 1;
         }
         continue;
@@ -179,6 +298,26 @@ async function main() {
   }
 
   report(stats, dryRun);
+  if (autoResult) reportAuto(autoResult, records, products);
+}
+
+/** --auto özeti: görsel alan ürünler, hâlâ görselsizler, eşleşmeyen dosyalar. */
+function reportAuto({ unmatched, ignored }, records, products) {
+  const matched = new Set(records.filter((r) => r.kullanim === 'urun').map((r) => r.hedef));
+  const groups = new Map();
+  records.filter((r) => r.kullanim !== 'urun')
+    .forEach((r) => groups.set(r.hedef, (groups.get(r.hedef) || 0) + 1));
+  const withoutImage = [...products.values()].filter((p) => !p.image)
+    .map((p) => p.name).sort((a, b) => a.localeCompare(b, 'tr'));
+
+  console.log(`\n=== Otomatik eşleştirme ===`);
+  console.log(`1. Fotoğrafı eşleşen ürün: ${matched.size}`);
+  groups.forEach((n, name) => console.log(`   + ${name}: ${n} fotoğraf (galeri)`));
+  console.log(`\n2. Hâlâ görselsiz ${withoutImage.length} ürün:`);
+  withoutImage.forEach((n) => console.log(`  - ${n}`));
+  console.log(`\n3. Hiçbir ürünle eşleşmeyen ${unmatched.length} dosya:`);
+  unmatched.forEach((f) => console.log(`  - ${f}`));
+  if (ignored.length) console.log(`\n· Site görseli olduğu için atlanan ${ignored.length} dosya: ${ignored.join(', ')}`);
 }
 
 /**

@@ -13,7 +13,8 @@
     "db:init": "node scripts/init-db.js",
     "admin:create": "node scripts/create-admin.js",
     "import:urunler": "node scripts/import-urunler.js",
-    "import:fotolar": "node scripts/import-fotolar.js"
+    "import:fotolar": "node scripts/import-fotolar.js",
+    "import:fotolar:auto": "node scripts/import-fotolar.js --auto"
   },
   "dependencies": {
     "bcryptjs": "^2.4.3",
