@@ -1,0 +1,35 @@
+<%#
+  Ana sayfa · Kampanyalar (Panel > Kampanyalar). Yayında ve tarihi geçmemiş
+  kampanyalar listelenir; detay sayfası /kampanyalar/:slug.
+%>
+<section class="section section--sand" id="kampanyalar">
+  <div class="container">
+    <p class="eyebrow" data-reveal="up">Kampanyalar</p>
+    <h2 class="h2 h2--spaced" data-reveal="up" data-reveal-delay="70">Tezgâhta bu aralar</h2>
+
+    <% if (campaigns.length) { %>
+      <div class="campaign-grid<%= campaigns.length === 1 ? ' campaign-grid--single' : '' %>">
+        <% campaigns.forEach(function (campaign, i) { %>
+          <article class="campaign-card" data-reveal="up" data-reveal-delay="<%= (i % 3) * 90 %>">
+            <a class="campaign-card__media" href="/kampanyalar/<%= campaign.slug %>" tabindex="-1" aria-hidden="true">
+              <img src="<%= imageSrc(campaign.image) %>" alt="" loading="lazy">
+            </a>
+            <div class="campaign-card__body">
+              <%- include('../partials/campaign-dates', { campaign }) %>
+              <h3 class="campaign-card__title"><a href="/kampanyalar/<%= campaign.slug %>"><%= campaign.title %></a></h3>
+              <% if (campaign.short_desc) { %><p><%= campaign.short_desc %></p><% } %>
+              <a class="link-arrow" href="/kampanyalar/<%= campaign.slug %>">Detaylar →</a>
+            </div>
+          </article>
+        <% }); %>
+      </div>
+    <% } else { %>
+      <div class="empty">
+        <p>Şu an aktif bir kampanyamız yok.</p>
+        <% if (settings.instagram_1) { %>
+          <p>Yenilerinden haberdar olmak için Instagram'da <a href="https://www.instagram.com/<%= settings.instagram_1 %>" target="_blank" rel="noopener">@<%= settings.instagram_1 %></a> hesabımızı takip edebilirsiniz.</p>
+        <% } %>
+      </div>
+    <% } %>
+  </div>
+</section>

@@ -77,6 +77,7 @@ a:hover { color: var(--red-dark); }
   display: flex; flex-wrap: wrap; align-items: flex-end; justify-content: space-between;
   gap: 22px; margin-bottom: clamp(30px, 4vw, 52px);
 }
+.section-head--end { justify-content: flex-end; margin-bottom: clamp(18px, 2.4vw, 28px); }
 
 /* ---- Tipografi ---- */
 .eyebrow {
@@ -429,6 +430,10 @@ body:not(:has(.hero, .page-hero)) main { padding-top: 72px; }
 .duo img { width: 100%; aspect-ratio: 4 / 5; object-fit: cover; background: var(--sand); }
 .duo img:last-child { margin-top: clamp(18px, 3vw, 44px); }
 .section--sand .duo img { background: var(--cream); }
+.trio { display: grid; grid-template-columns: repeat(3, 1fr); gap: clamp(8px, 1.2vw, 16px); }
+.trio img { width: 100%; aspect-ratio: 3 / 4; object-fit: cover; background: var(--sand); }
+.trio img:nth-child(2) { margin-top: clamp(16px, 2.6vw, 38px); }
+.section--sand .trio img { background: var(--cream); }
 
 /* ---- Müdavim yorumları ---- */
 .testimonials {

@@ -60,7 +60,7 @@ INSERT INTO settings (setting_key, setting_value, setting_group, label, input_ty
 
   -- ana sayfa: dükkânda yiyin
   ('dine_in_enabled',  '1',                              'dukkanda', 'Dükkânda Yiyin bölümünü ana sayfada göster', 'checkbox', 1),
-  ('dine_in_eyebrow',  'Dükkânda yiyin',                 'dukkanda', 'Üst Yazı',           'text',     2),
+  ('dine_in_eyebrow',  '',                               'dukkanda', 'Üst Yazı',           'text',     2),
   ('dine_in_title',    'Dilek''te Sofraya Buyurun',     'dukkanda', 'Başlık',             'text',     3),
   ('dine_in_text',     'Dilek Şarküteri''de lezzetler yalnızca raflarda kalmaz, sofranıza da konuk olur. Günün mezelerinden bir tabak seçebilir, tezgâhtaki ürünlerden kendi kahvaltınızı dilediğiniz gibi oluşturabilir ya da özenle hazırlanan sandviçlerden birini tercih edebilirsiniz. Seçtiğiniz her lezzet, masanıza servis edilir.', 'dukkanda', 'Açıklama', 'textarea', 4),
   ('dine_in_items',    'Meze tabağı

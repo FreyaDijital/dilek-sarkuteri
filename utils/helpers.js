@@ -80,6 +80,23 @@ function formatDateShort(value) {
   return d.toLocaleDateString('tr-TR', opts);
 }
 
+/** "12 Ekim 2026"; year: false -> "12 Ekim". Kampanya tarihlerinde yıl hep açık yazılır. */
+function formatDateLong(value, { year = true } = {}) {
+  if (!value) return '';
+  const d = value instanceof Date ? value : new Date(value);
+  if (Number.isNaN(d.getTime())) return '';
+  const opts = { day: 'numeric', month: 'long' };
+  if (year) opts.year = 'numeric';
+  return d.toLocaleDateString('tr-TR', opts);
+}
+
+/** Aynı yıl içindeyse başlangıçta yıl tekrarlanmaz: "12 Ekim – 30 Ekim 2026". */
+function sameYear(a, b) {
+  const x = new Date(a);
+  const y = new Date(b);
+  return !Number.isNaN(x.getTime()) && x.getFullYear() === y.getFullYear();
+}
+
 /** "12 Ekim – 30 Ekim". Uçlardan biri boşsa tek taraflı metin döner. */
 function formatDateRange(startsAt, endsAt) {
   const start = formatDateShort(startsAt);
@@ -231,7 +248,7 @@ function siteImage(name, { background = false } = {}) {
 module.exports = {
   PLACEHOLDER_IMG,
   GALLERY_PREFIX, isGalleryImage, galleryImages, prettyFileName, imageUrl,
-  formatPrice, formatDate, formatDateShort, formatDateRange, telLink, whatsappLink,
+  formatPrice, formatDate, formatDateShort, formatDateLong, sameYear, formatDateRange, telLink, whatsappLink,
   excerpt, paragraphs, lines, mapEmbedSrc, mapSrc, mapDirectionsUrl, siteImage,
   videoEmbed, popupVersion,
 };

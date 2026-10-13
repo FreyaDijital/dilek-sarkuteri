@@ -21,20 +21,14 @@
       <% } %>
     </div>
     <%#
-      Panel > Galeriler > "Dükkânda Yiyin" altına fotoğraf eklendiyse galeri çizilir;
-      hiç fotoğraf yoksa tasarımdaki sabit iki görsel durur.
+      Sabit üç görsel: meze tabağı, sandviç, kahvaltı. Dosya public/img/ içinde
+      yoksa yer tutucu görünür; kahvaltı fotoğrafı için public/img/kahvalti.jpg.
     %>
-    <% const photos = locals.dineInPhotos || []; %>
-    <% if (photos.length) { %>
-      <div data-reveal="scale">
-        <%- include('photo-gallery', { photos, columns: 'compact' }) %>
-      </div>
-    <% } else { %>
-      <div class="duo" data-reveal="scale">
-        <img src="<%= siteImage('sandvic.jpg') %>" alt="Dilek sandviç" loading="lazy">
-        <img src="<%= siteImage('peynir-tabagi.jpg') %>" alt="Peynir tabağı" loading="lazy">
-      </div>
-    <% } %>
+    <div class="trio" data-reveal="scale">
+      <img src="<%= siteImage('meze-tabagi.jpg') %>" alt="Meze tabağı" loading="lazy">
+      <img src="<%= siteImage('sandvic.jpg') %>" alt="Sandviç" loading="lazy">
+      <img src="<%= siteImage('kahvalti.jpg') %>" alt="Kahvaltı" loading="lazy">
+    </div>
   </div>
 </section>
 <% } %>

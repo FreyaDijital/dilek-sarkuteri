@@ -1,5 +1,5 @@
 <%- include('../partials/page-hero', {
-  crumbs: [['/', 'Ana Sayfa'], ['/tabaklar#kampanyalar', 'Kampanyalar'], [null, campaign.title]],
+  crumbs: [['/', 'Ana Sayfa'], ['/#kampanyalar', 'Kampanyalar'], [null, campaign.title]],
   eyebrow: 'Kampanya',
   heading: campaign.title,
   lead: campaign.short_desc || null,
@@ -23,7 +23,7 @@
 
       <div class="btn-row">
         <a class="btn btn--red" href="<%= waLink('Merhaba, ' + campaign.title + ' kampanyası hakkında bilgi almak istiyorum.') %>" target="_blank" rel="noopener">WhatsApp'tan bilgi al</a>
-        <a class="btn btn--ghost" href="/tabaklar#kampanyalar">Tüm kampanyalar</a>
+        <a class="btn btn--ghost" href="/#kampanyalar">Tüm kampanyalar</a>
       </div>
     </div>
   </div>

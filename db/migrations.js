@@ -324,6 +324,16 @@ const MIGRATIONS = [
       );
     },
   },
+  {
+    name: '011-clear-dine-in-eyebrow',
+    // Ana sayfadaki "Dükkânda yiyin" üst yazısı kaldırıldı. Panelden başka bir
+    // metin girilmişse ona dokunulmaz.
+    up(db) {
+      db.run(
+        "UPDATE settings SET setting_value = '' WHERE setting_key = 'dine_in_eyebrow' AND setting_value = 'Dükkânda yiyin'"
+      );
+    },
+  },
 ];
 
 function ensureTable(db) {

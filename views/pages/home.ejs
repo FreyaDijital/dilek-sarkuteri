@@ -4,7 +4,7 @@
   <div class="hero__inner">
     <p class="eyebrow eyebrow--gold" data-reveal="up">Suadiye · Kadıköy · <%= settings.site_tagline || "1977'den beri" %></p>
     <h1 class="display" data-reveal="up" data-reveal-delay="90">Suadiye'nin lezzet nöbetçisi</h1>
-    <p class="hero__lead" data-reveal="up" data-reveal-delay="180">Ayşe Çavuş Caddesi'nde yarım asra yaklaşan bir tezgâh. El yapımı mezeler, tek tek seçilmiş peynirler, güvenilir şarküteri.</p>
+    <p class="hero__lead" data-reveal="up" data-reveal-delay="180">Ayşe Çavuş Caddesi'nde yarım asra yaklaşan bir tezgâh. Ustalarımızın elinden mezeler, özenle seçilmiş peynirler, güvenilir şarküteri.</p>
     <div class="btn-row" data-reveal="up" data-reveal-delay="260">
       <a class="btn btn--light" href="/urunler">Ürünleri gör <span class="mono" aria-hidden="true">→</span></a>
       <a class="btn btn--ghost-light" href="<%= waLink('Merhaba, sipariş vermek istiyorum.') %>" target="_blank" rel="noopener">WhatsApp'tan sipariş</a>
@@ -24,7 +24,7 @@
     <div>
       <p class="eyebrow" data-reveal="up">Hikâyemiz</p>
       <h2 class="h2" data-reveal="up" data-reveal-delay="70">Bir semtin hafızası, bir tezgâhın ardında</h2>
-      <p class="lead" data-reveal="up" data-reveal-delay="140">Dilek Şarküteri 1977'de, İstanbul'un bugünkü kalabalığından çok uzak bir Suadiye'de açıldı. Aradan geçen on yıllarda şehir değişti, sokaklar dönüştü, alışkanlıklar savruldu. Dükkân hep aynı yerde, aynı ciddiyetle kaldı.</p>
+      <p class="lead" data-reveal="up" data-reveal-delay="140">Dilek Şarküteri 1977'de, İstanbul'un bugünkü kalabalığından uzak bir semt olan Suadiye'de açıldı. Aradan geçen on yıllarda şehir gelişti, sokaklar dönüştü, alışkanlıklar değişti. Dilek Şarküteri hep aynı yerde, aynı kalite, aynı lezzet ve aynı ciddiyetle kaldı.</p>
       <p class="lead" data-reveal="up" data-reveal-delay="200">Raflardaki peynirler, zeytinler, mezeler yalnızca birer gıda maddesi değil; bir semtin ve bir esnaflık ahlakının sessiz tanıkları.</p>
       <p class="more" data-reveal="up" data-reveal-delay="250"><a class="link-arrow" href="/hakkimizda">Hikâyenin tamamı →</a></p>
       <%- include('../partials/stats') %>
@@ -40,12 +40,8 @@
 <% if (categories.length) { %>
 <section class="section section--cream section--flush-top">
   <div class="container">
-    <div class="section-head">
-      <div>
-        <p class="eyebrow" data-reveal="up"><%= categories.length === 3 ? 'Üç ana başlık' : 'Ana başlıklar' %></p>
-        <h2 class="h2" data-reveal="up" data-reveal-delay="70"><%= categories.map(function (c, i) { return i ? c.name.toLocaleLowerCase('tr-TR') : c.name; }).join(', ') %></h2>
-      </div>
-      <a class="link-arrow" data-reveal="up" data-reveal-delay="120" href="/urunler">Tüm ürünler →</a>
+    <div class="section-head section-head--end">
+      <a class="link-arrow" data-reveal="up" href="/urunler">Tüm ürünler →</a>
     </div>
     <div class="cat-grid">
       <% categories.forEach(function (c, i) { %>
@@ -70,8 +66,8 @@
     <div class="section-head">
       <div>
         <p class="eyebrow" data-reveal="up">Mutfağımızdan</p>
-        <h2 class="h2" data-reveal="up" data-reveal-delay="70">Sami Usta'nın elinden</h2>
-        <p class="lead" data-reveal="up" data-reveal-delay="130">Dükkânın asıl ruhu mutfağında. Yüksel Bey ve onun yetiştirdiği Sami Usta'nın ellerinden çıkan mezeler yıllardır müdavimlerin dilinden düşmüyor.</p>
+        <h2 class="h2" data-reveal="up" data-reveal-delay="70">Ustalarımızın Elinden</h2>
+        <p class="lead" data-reveal="up" data-reveal-delay="130">Dilek Şarküteri'nin asıl ruhu mutfağında. Kuruluşundan beri bizimle olan ustalarımızın ellerinden çıkan mezeler yıllardır müdavimlerin dilinden düşmüyor.</p>
       </div>
       <a class="link-arrow" data-reveal="up" data-reveal-delay="180" href="/urunler/meze">Tüm mezeler →</a>
     </div>
@@ -113,6 +109,8 @@
     </div>
   </div>
 </section>
+
+<%- include('../partials/campaigns') %>
 
 <%- include('../partials/events') %>
 

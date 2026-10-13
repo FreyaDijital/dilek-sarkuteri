@@ -37,11 +37,11 @@ const KITCHEN_FALLBACK = [
 // ---- Ana sayfa ----
 router.get('/', async (req, res, next) => {
   try {
-    const [categories, featured, branches, dineInPhotos] = await Promise.all([
+    const [categories, featured, branches, campaigns] = await Promise.all([
       categoryModel.all({ activeOnly: true }),
       productModel.list({ activeOnly: true, featured: true, limit: 10 }),
       branchModel.all({ activeOnly: true }),
-      galleryModel.list({ gallery: 'sandvic', activeOnly: true }),
+      campaignModel.listActive(),
     ]);
 
     const mainCategories = categories
@@ -61,7 +61,7 @@ router.get('/', async (req, res, next) => {
       : KITCHEN_FALLBACK.map(([name, image]) => ({ name, href: '/urunler/meze', image: siteImage(image), tag: 'Meze' }));
 
     res.render('pages/home', {
-      title: null, categories: mainCategories, kitchen, branches, dineInPhotos,
+      title: null, categories: mainCategories, kitchen, branches, campaigns,
     });
   } catch (err) { next(err); }
 });
@@ -138,30 +138,28 @@ router.get('/urun/:slug', async (req, res, next) => {
   } catch (err) { next(err); }
 });
 
-// ---- Tabaklar & kampanyalar ----
+// ---- Tabaklar ----
 router.get('/tabaklar', async (req, res, next) => {
   try {
     const category = await categoryModel.findBySlug(PLATTER_CATEGORY);
-    const [platters, campaigns, galleries] = await Promise.all([
+    const [platters, galleries] = await Promise.all([
       category && category.is_active
         ? productModel.list({ activeOnly: true, categoryId: category.id })
         : [],
-      campaignModel.listActive(),
       galleryModel.groups('tabak'),
     ]);
 
     res.render('pages/platters', {
-      title: 'Tabaklar & kampanyalar',
+      title: 'Tabaklar',
       description: 'Peynir tahtası, şarküteri tabağı, meze tabağı ve hediye peynir kutuları.',
       platters,
-      campaigns,
       galleries,
     });
   } catch (err) { next(err); }
 });
 
-// Kampanyalar artık Tabaklar sayfasında listeleniyor; detay adresi aynı kaldı.
-router.get('/kampanyalar', (req, res) => res.redirect(301, '/tabaklar#kampanyalar'));
+// Kampanyalar ana sayfada listeleniyor; detay adresi aynı kaldı.
+router.get('/kampanyalar', (req, res) => res.redirect(301, '/#kampanyalar'));
 
 router.get('/kampanyalar/:slug', async (req, res, next) => {
   try {
